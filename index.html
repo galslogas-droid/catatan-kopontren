@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Buku Catatan Jaga Kopontren — Gus Lim</title>
+  <meta name="theme-color" content="#064E3B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kopontren">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%23064E3B'/%3E%3Cpath d='M96 28 C80 50, 72 65, 72 78 C72 90, 82 98, 96 98 C110 98, 120 90, 120 78 C120 65, 112 50, 96 28 Z' fill='%23F59E0B'/%3E%3Crect x='54' y='96' width='84' height='60' rx='8' fill='%23F59E0B'/%3E%3Cpath d='M84 156 A12 18 0 0 1 108 156 Z' fill='%23064E3B'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #064E3B;
+      --primary-dark: #022C22;
+      --primary-light: #D1FAE5;
+      --amber: #D97706;
+      --amber-light: #FEF3C7;
+      --amber-gold: #F59E0B;
+      --surface: #FFFFFF;
+      --bg: #F8F9FA;
+      --border: #E5E7EB;
+      --text: #111827;
+      --text-muted: #6B7280;
+      --danger: #EF4444;
+      --success: #10B981;
+      --radius: 16px;
+      --shadow: 0 4px 18px rgba(6, 78, 59, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 100px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      color: white;
+      padding: 1.25rem 1rem 1.6rem;
+      border-radius: 0 0 24px 24px;
+      box-shadow: 0 8px 24px rgba(2, 44, 34, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .brand-icon-box {
+      width: 32px;
+      height: 32px;
+      background: var(--amber-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-dark);
+    }
+    .badge-user {
+      background: rgba(245, 158, 11, 0.25);
+      border: 1px solid var(--amber-gold);
+      color: #FDE68A;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.28rem 0.65rem;
+      border-radius: 999px;
+    }
+    .header-sub {
+      font-size: 0.78rem;
+      color: #A7F3D0;
+      margin-top: 0.35rem;
+    }
+    
+    /* Backup Bar */
+    .backup-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 12px;
+      padding: 0.55rem 0.85rem;
+      margin: 0.85rem 0 0.2rem;
+      font-size: 0.75rem;
+      color: #065F46;
+      font-weight: 600;
+    }
+    .backup-bar-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .backup-btns {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .btn-mini-backup {
+      background: #FFFFFF;
+      border: 1px solid #10B981;
+      color: #065F46;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .rekap-card {
+      background: white;
+      border-radius: var(--radius);
+      margin: 0.85rem 0;
+      padding: 1.15rem;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      border: 1px solid var(--border);
+    }
+    .rekap-item {
+      padding: 0.75rem 0.85rem;
+      border-radius: 12px;
+      border-left: 4px solid var(--amber-gold);
+      background: #FFFBEB;
+    }
+    .rekap-item.hijau {
+      border-left-color: var(--success);
+      background: #ECFDF5;
+    }
+    .rekap-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .rekap-val {
+      font-size: 1.25rem;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      margin-top: 0.25rem;
+      color: var(--text);
+    }
+    .container {
+      padding: 0 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .btn-wa-broadcast {
+      width: 100%;
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: white;
+      border: none;
+      padding: 0.95rem;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+      margin-bottom: 1.2rem;
+      transition: all 0.2s;
+    }
+    .btn-wa-broadcast:active { transform: scale(0.97); }
+
+    /* PWA Install Banner */
+    .pwa-install-card {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 1.5px solid var(--amber-gold);
+      border-radius: var(--radius);
+      padding: 0.95rem 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .pwa-install-left {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .pwa-install-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--amber-gold);
+      color: var(--primary-dark);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pwa-install-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #78350F;
+    }
+    .pwa-install-desc {
+      font-size: 0.72rem;
+      color: #92400E;
+      margin-top: 0.15rem;
+    }
+    .btn-install-app {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #FFFFFF;
+      border: none;
+      padding: 0.55rem 0.95rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 3px 8px rgba(6, 78, 59, 0.25);
+      transition: all 0.2s;
+    }
+    .btn-install-app:active { transform: scale(0.96); }
+
+    .sec-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 0.65rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    /* Quick Tap Baitina */
+    .quick-section {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+    .quick-btn {
+      background: #FAFAFA;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 0.75rem 0.7rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .quick-btn:active {
+      transform: scale(0.96);
+      border-color: var(--amber-gold);
+      background: #FFFBEB;
+    }
+    .quick-btn.baitina {
+      background: #FFFDF7;
+      border-color: #FDE68A;
+    }
+    .quick-name-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .quick-icon-box {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: #FEF3C7;
+      color: var(--amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .quick-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1F2937;
+      line-height: 1.2;
+    }
+    .quick-price-wrap {
+      margin-top: 0.4rem;
+      padding-left: 30px;
+    }
+    .quick-price {
+      font-size: 0.76rem;
+      color: var(--amber);
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+    }
+    .quick-tier-hint {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 1px;
+    }
+
+    /* Tier Price Pill / Box in Modal */
+    .tier-box {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      margin-top: 0.35rem;
+      margin-bottom: 0.85rem;
+      font-size: 0.73rem;
+      color: #78350F;
+      line-height: 1.5;
+    }
+    .tier-box-title {
+      font-weight: 800;
+      color: var(--amber);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .tier-active-badge {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      margin-left: 0.3rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0.3rem;
+      background: #E5E7EB;
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+    }
+    .tab {
+      flex: 1;
+      border: none;
+      padding: 0.6rem 0.4rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      background: transparent;
+      cursor: pointer;
+      text-align: center;
+    }
+    .tab.active {
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    /* Transaction List */
+    .trans-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .trans-card {
+      background: white;
+      border-radius: 14px;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .trans-card.pending {
+      border-left: 4px solid var(--amber-gold);
+    }
+    .trans-card.settled {
+      border-left: 4px solid var(--success);
+      background: #FCFDFD;
+    }
+    .trans-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .trans-title {
+      font-weight: 800;
+      font-size: 0.96rem;
+      color: var(--text);
+    }
+    .trans-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      align-items: center;
+      background: #F9FAFB;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+    }
+    .info-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: 600;
+    }
+    .badge-metode {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+    .badge-cash {
+      background: #D1FAE5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+    }
+    .badge-tf {
+      background: #DBEAFE;
+      color: #1E40AF;
+      border: 1px solid #BFDBFE;
+    }
+    .badge-utang {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+    }
+    .badge-status.pending {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    .badge-status.settled {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+    .trans-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--border);
+      padding-top: 0.55rem;
+      margin-top: 0.25rem;
+    }
+    .btn-toggle-status {
+      background: #EEF2F6;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .btn-del {
+      background: transparent;
+      border: none;
+      color: var(--danger);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.35rem 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* Bottom Floating Action */
+    .fab-btn {
+      position: fixed;
+      bottom: 1.2rem;
+      left: 1rem;
+      right: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, var(--amber-gold) 0%, var(--amber) 100%);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 1rem;
+      font-weight: 800;
+      font-size: 0.98rem;
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    /* Modal Form */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      backdrop-filter: blur(3px);
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal.show { display: flex; }
+    .modal-sheet {
+      background: white;
+      width: 100%;
+      max-width: 550px;
+      border-radius: 24px 24px 0 0;
+      padding: 1.4rem;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .form-group {
+      margin-bottom: 0.95rem;
+    }
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: inherit;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--amber-gold);
+    }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      padding: 0.95rem;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .btn-cancel {
+      width: 100%;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 0.65rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 0.3rem;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <header>
+    <div class="header-top">
+      <div class="brand-title">
+        <div class="brand-icon-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C10.5 4 9.5 5.5 9.5 7C9.5 8.2 10.5 9 12 9C13.5 9 14.5 8.2 14.5 7C14.5 5.5 13.5 4 12 2ZM5 10H19V13H5V10ZM6 14H18V21H14V17C14 15.9 13.1 15 12 15C10.9 15 10 15.9 10 17V21H6V14ZM3 21H21V23H3V21Z"/>
+          </svg>
+        </div>
+        <span>KOPONTREN AL ITTIHAD</span>
+      </div>
+      <div class="badge-user">Catatan Gus Lim</div>
+    </div>
+    <div class="header-sub">Buku Catatan Digital — Riwayat Disimpen Aman & Awet</div>
+  </header>
+
+  <!-- Container -->
+  <div class="container">
+
+    <!-- Bar Status & Backup Data -->
+    <div class="backup-bar">
+      <div class="backup-bar-label">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V7L17 3ZM12 19C10.34 19 9 17.66 9 16C9 14.34 10.34 13 12 13C13.66 13 15 14.34 15 16C15 17.66 13.66 19 12 19ZM15 9H5V5H15V9Z"/>
+        </svg>
+        <span>Riwayat Kesimpen Permanen</span>
+      </div>
+      <div class="backup-btns">
+        <button class="btn-mini-backup" onclick="exportDataExcel()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z"/>
+          </svg>
+          <span>Unduh Excel/CSV</span>
+        </button>
+        <button class="btn-mini-backup" onclick="backupJSON()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 6H12L10 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6Z"/>
+          </svg>
+          <span>Backup</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Banner Download / Install Aplikasi Langsung -->
+    <div class="pwa-install-card" id="pwaInstallBanner">
+      <div class="pwa-install-left">
+        <div class="pwa-install-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="pwa-install-title">Pasang Aplikasi Kopontren</div>
+          <div class="pwa-install-desc">Download dadi aplikasi ing layar HP Gus Lim</div>
+        </div>
+      </div>
+      <button class="btn-install-app" id="btnInstallPwa" onclick="pasangAplikasiPwa()">
+        Pasang Saiki
+      </button>
+    </div>
+
+    <!-- Rekap Ringkas -->
+    <div class="rekap-card">
+      <div class="rekap-item">
+        <div class="rekap-label">Belum Lapor Pak Kholiq</div>
+        <div class="rekap-val" id="rekapBelumLapor">Rp 0</div>
+        <div style="font-size: 0.7rem; color: var(--amber); font-weight: 700; margin-top: 2px;" id="countBelumLapor">0 Trx</div>
+      </div>
+      <div class="rekap-item hijau">
+        <div class="rekap-label">Sudah Disetor (Arsip Aman)</div>
+        <div class="rekap-val" id="rekapSudahLapor">Rp 0</div>
+        <div style="font-size: 0.7rem; color: var(--success); font-weight: 700; margin-top: 2px;" id="countSudahLapor">0 Trx</div>
+      </div>
+    </div>
+
+    <!-- Tombol 1-Klik Kirim Rekap ke Pak Kholiq -->
+    <button class="btn-wa-broadcast" onclick="kirimWhatsAppPakKholiq()">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+      </svg>
+      <span>Kirim Laporan WA ke Pak Kholiq</span>
+    </button>
+
+    <!-- Quick Tap Produk Baitina (Sesuai Daftar Harga Resmi) -->
+    <div class="quick-section">
+      <div class="sec-title">
+        <span style="display:flex; align-items:center; gap:0.4rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 2V13H10V22L17 10H13L17 2H7Z"/>
+          </svg>
+          Quick Tap Produk Baitina
+        </span>
+        <small style="color: var(--amber); font-weight:700;">Harga Bertingkat Otomatis</small>
+      </div>
+      <div class="quick-grid">
+        
+        <!-- Madu Baitina: 58K / 55K / 52.5K / 51K -->
+        <button class="quick-btn baitina" onclick="bukaModalProduk('madu')">
+          <div class="quick-name-wrap">
+            <div class="quick-icon-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7 3H17V5H7V3ZM5 7H19C19 14 17 21 12 21C7 21 5 14 5 7ZM9 10H15V12H9V10Z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="quick-name">Madu Baitina</span>
+              <span style="font-size:0.68rem; color:var(--text-muted); display:block;">Box (10 Sachet)</span>
+            </div>
+          </div>
+          <div class="quick-price-wrap">
+            <span class="quick-price">Rp 58.000</span>
+            <span class="quick-tier-hint">5+ box: @55rb &bull; 10+: @52.5rb</span>
+          </div>
+        </button>
+
+        <!-- Garam Ruqyah Baitina: 6K (300g) -->
+        <button class="quick-btn baitina" onclick="bukaModalProduk('garam')">
+          <div class="quick-name-wrap">
+            <div class="quick-icon-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 3H15V5H9V3ZM7 7H17L18 21H6L7 7ZM10 10V14H14V10H10Z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="quick-name">Garam Ruqyah</span>
+              <span style="font-size:0.68rem; color:var(--text-muted); display:block;">Pouch 300g</span>
+            </div>
+          </div>
+          <div class="quick-price-wrap">
+            <span class="quick-price">Rp 6.000</span>
+            <span class="quick-tier-hint">5+ pcs: @5.5rb &bull; 10+: @5.25rb</span>
+          </div>
+        </button>
+
+        <!-- Nasi Jagung: 10K / 9.5K / 9.25K / 9.1K -->
+        <button class="quick-btn baitina" onclick="bukaModalProduk('nasijagung')">
+          <div class="quick-name-wrap">
+            <div class="quick-icon-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8 2 6 6 6 10C6 14 8 18 12 22C16 18 18 14 18 10C18 6 16 2 12 2ZM10 6C10.55 6 11 6.45 11 7V9C11 9.55 10.55 10 10 10C9.45 10 9 9.55 9 9V7C9 6.45 9.45 6 10 6ZM14 6C14.55 6 15 6.45 15 7V9C15 9.55 14.55 10 14 10C13.45 10 13 9.55 13 9V7C13 6.45 13.45 6 14 6Z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="quick-name">Nasi Jagung</span>
+              <span style="font-size:0.68rem; color:var(--text-muted); display:block;">3 Varian Rasa</span>
+            </div>
+          </div>
+          <div class="quick-price-wrap">
+            <span class="quick-price">Rp 10.000</span>
+            <span class="quick-tier-hint">5+ pcs: @9.5rb &bull; 10+: @9.25rb</span>
+          </div>
+        </button>
+
+        <!-- Sabun Ruqyah: 50K / pack (10 pcs) -->
+        <button class="quick-btn baitina" onclick="bukaModalProduk('sabun')">
+          <div class="quick-name-wrap">
+            <div class="quick-icon-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="4" y="6" width="16" height="12" rx="4"/>
+                <path d="M8 10H16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <span class="quick-name">Sabun Ruqyah</span>
+              <span style="font-size:0.68rem; color:var(--text-muted); display:block;">Pack (10 Pcs)</span>
+            </div>
+          </div>
+          <div class="quick-price-wrap">
+            <span class="quick-price">Rp 50.000</span>
+            <span class="quick-tier-hint">5+ pack: @45rb &bull; 10+: @42.5rb</span>
+          </div>
+        </button>
+
+        <!-- Es Krim Baitina (5.000) -->
+        <button class="quick-btn baitina" onclick="bukaModalProduk('eskrim')">
+          <div class="quick-name-wrap">
+            <div class="quick-icon-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C9.24 2 7 4.24 7 7C7 7.74 7.16 8.44 7.45 9.07L12 22L16.55 9.07C16.84 8.44 17 7.74 17 7C17 4.24 14.76 2 12 2ZM12 4C13.66 4 15 5.34 15 7C15 7.35 14.93 7.68 14.82 8H9.18C9.07 7.68 9 7.35 9 7C9 5.34 10.34 4 12 4Z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="quick-name">Es Krim Baitina</span>
+              <span style="font-size:0.68rem; color:var(--text-muted); display:block;">Pcs</span>
+            </div>
+          </div>
+          <div class="quick-price-wrap">
+            <span class="quick-price">Rp 5.000</span>
+            <span class="quick-tier-hint">Harga Satuan</span>
+          </div>
+        </button>
+
+        <!-- Sarung Santri -->
+        <button class="quick-btn" onclick="bukaModalProduk('sarung')">
+          <div class="quick-name-wrap">
+            <div class="quick-icon-box" style="background:#E5E7EB; color:#374151;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 2L21 7L18 10L16 8.5V21H8V8.5L6 10L3 7L8 2H16ZM10 4V7H14V4H10Z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="quick-name">Sarung Santri</span>
+              <span style="font-size:0.68rem; color:var(--text-muted); display:block;">Pcs</span>
+            </div>
+          </div>
+          <div class="quick-price-wrap">
+            <span class="quick-price" style="color:var(--primary);">Rp 65.000</span>
+            <span class="quick-tier-hint">Produk Kopontren</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs Filter Transaksi (Ada Tab SEMUA RIWAYAT) -->
+    <div class="tabs">
+      <button class="tab active" id="tabPending" onclick="switchTab('pending')">Belum Lapor (<span id="tabPendingCount">0</span>)</button>
+      <button class="tab" id="tabSettled" onclick="switchTab('settled')">Sudah Disetor (<span id="tabSettledCount">0</span>)</button>
+      <button class="tab" id="tabAll" onclick="switchTab('all')">Semua Riwayat (<span id="tabAllCount">0</span>)</button>
+    </div>
+
+    <!-- List Transaksi -->
+    <div class="trans-list" id="transList">
+      <!-- Item rendered by JS -->
+    </div>
+  </div>
+
+  <!-- Tombol Tambah Manual (FAB) -->
+  <button class="fab-btn" onclick="bukaModalManual()">
+    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/>
+    </svg>
+    <span>Catat Barang Lain / Custom</span>
+  </button>
+
+  <!-- Modal Form Input Lengkap -->
+  <div class="modal" id="inputModal">
+    <div class="modal-sheet">
+      <h3 style="margin-bottom: 1rem; color: var(--primary-dark); font-weight:800;" id="modalHeading">Catat Pembelian Baru</h3>
+      
+      <!-- Tanggal dan Jam Input -->
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 0.6rem; margin-bottom: 0.95rem;">
+        <div>
+          <label>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3 4.9 3 6V20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V9H19V20Z"/></svg>
+            Tanggal
+          </label>
+          <input type="date" id="inpTanggal" style="width:100%; padding:0.75rem 0.85rem; border:1.5px solid var(--border); border-radius:10px; font-size:0.9rem;">
+        </div>
+        <div>
+          <label>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z"/></svg>
+            Jam & Menit
+          </label>
+          <input type="time" id="inpJam" style="width:100%; padding:0.75rem 0.85rem; border:1.5px solid var(--border); border-radius:10px; font-size:0.9rem;">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19Z"/></svg>
+          Nama Barang / Produk
+        </label>
+        <input type="text" id="inpBarang" placeholder="Misal: Madu Ruqyah / Sarung / Buku...">
+      </div>
+
+      <!-- Pilihan Rasa (Khusus Nasi Jagung) -->
+      <div class="form-group" id="groupVarianRasa" style="display:none;">
+        <label>Pilihan Rasa Nasi Jagung</label>
+        <select id="inpVarianRasa">
+          <option value="Original">Original</option>
+          <option value="Sapi Panggang">Sapi Panggang</option>
+          <option value="Ayam Bawang">Ayam Bawang</option>
+          <option value="Campur">Campur / Mix Rasa</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 0.6rem;">
+        <div class="form-group">
+          <label>Jumlah (Qty)</label>
+          <input type="number" id="inpQty" value="1" min="1" oninput="hitungHargaBertingkat()">
+        </div>
+        <div class="form-group">
+          <label>Total Harga (Rp)</label>
+          <input type="number" id="inpHarga" placeholder="0">
+        </div>
+      </div>
+
+      <!-- Box Keterangan Diskon Bertingkat Aktif -->
+      <div id="tierPriceInfo" class="tier-box" style="display:none;">
+        <div class="tier-box-title">
+          <span>Daftar Harga Bertingkat:</span>
+          <span id="badgeTierAktif" class="tier-active-badge"></span>
+        </div>
+        <div id="tierPriceList"></div>
+      </div>
+
+      <!-- Detail Pembeli -->
+      <div class="form-group">
+        <label>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/></svg>
+          Sapa Sing Tuku? (Nama / Keterangan Pembeli)
+        </label>
+        <input type="text" id="inpNamaPembeli" placeholder="Misal: Kang Zaid (Kamar 3) / Wali Santri Putri / Pak Guru...">
+      </div>
+
+      <div class="form-group">
+        <label>Kategori Pembeli</label>
+        <select id="inpKategoriPembeli">
+          <option value="Santri Putra">Santri Putra</option>
+          <option value="Santri Putri">Santri Putri</option>
+          <option value="Wali Santri / Tamu">Wali Santri / Tamu</option>
+          <option value="Ustadz / Guru">Ustadz / Guru</option>
+          <option value="Warga Sekitar / Umum">Warga Sekitar / Umum</option>
+        </select>
+      </div>
+
+      <!-- Metode Pembayaran: CASH vs TRANSFER -->
+      <div class="form-group">
+        <label>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4C2.89 4 2 4.89 2 6V18C2 19.11 2.89 20 4 20H20C21.11 20 22 19.11 22 18V6C22 4.89 21.11 4 20 4ZM20 18H4V12H20V18ZM20 8H4V6H20V8Z"/></svg>
+          Cara Bayar (Cash utawa Transfer?)
+        </label>
+        <select id="inpMetode" style="font-weight: 700;">
+          <option value="CASH">CASH / Tunai (Uang dipegang Gus Lim)</option>
+          <option value="TRANSFER">TRANSFER (Rekening / QRIS)</option>
+          <option value="UTANG">Kasih Dulu / Utang (Santri)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Catatan Tambahan (Opsional)</label>
+        <input type="text" id="inpCatatan" placeholder="Misal: Uang dilebokake laci / Bukti transfer wis difoto...">
+      </div>
+
+      <button class="btn-submit" onclick="simpanTransaksi()">Simpan Catatan</button>
+      <button class="btn-cancel" onclick="tutupModal()">Batal</button>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'kopontren_guslim_records';
+    let currentTab = 'pending';
+    let currentProductKey = null; // 'madu', 'garam', 'nasijagung', 'sabun', 'eskrim', 'sarung'
+
+    // Master Skema Harga Resmi Baitina
+    const MASTER_PRODUK = {
+      madu: {
+        nama: 'Madu Baitina',
+        satuan: 'box (10 sachet)',
+        tiers: [
+          { min: 1, max: 4, harga: 58000, label: '1 - 4 box' },
+          { min: 5, max: 9, harga: 55000, label: '5 - 9 box' },
+          { min: 10, max: 19, harga: 52500, label: '10 - 19 box' },
+          { min: 20, max: 999999, harga: 51000, label: '20+ box' }
+        ]
+      },
+      garam: {
+        nama: 'Garam Ruqyah Baitina',
+        satuan: 'pouch 300g',
+        tiers: [
+          { min: 1, max: 4, harga: 6000, label: '1 - 4 pouch' },
+          { min: 5, max: 9, harga: 5500, label: '5 - 9 pouch' },
+          { min: 10, max: 19, harga: 5250, label: '10 - 19 pouch' },
+          { min: 20, max: 999999, harga: 5100, label: '20+ pouch' }
+        ]
+      },
+      nasijagung: {
+        nama: 'Nasi Jagung Baitina',
+        satuan: 'pcs',
+        hasFlavor: true,
+        tiers: [
+          { min: 1, max: 4, harga: 10000, label: '1 - 4 pcs' },
+          { min: 5, max: 9, harga: 9500, label: '5 - 9 pcs' },
+          { min: 10, max: 19, harga: 9250, label: '10 - 19 pcs' },
+          { min: 20, max: 999999, harga: 9100, label: '20+ pcs' }
+        ]
+      },
+      sabun: {
+        nama: 'Sabun Ruqyah Baitina',
+        satuan: 'pack (10 pcs)',
+        tiers: [
+          { min: 1, max: 4, harga: 50000, label: '1 - 4 pack' },
+          { min: 5, max: 9, harga: 45000, label: '5 - 9 pack' },
+          { min: 10, max: 19, harga: 42500, label: '10 - 19 pack' },
+          { min: 20, max: 999999, harga: 41000, label: '20+ pack' }
+        ]
+      },
+      eskrim: {
+        nama: 'Es Krim Baitina',
+        satuan: 'pcs',
+        tiers: [
+          { min: 1, max: 999999, harga: 5000, label: 'Semua qty: 5.000/pcs' }
+        ]
+      },
+      sarung: {
+        nama: 'Sarung Santri',
+        satuan: 'pcs',
+        tiers: [
+          { min: 1, max: 999999, harga: 65000, label: 'Semua qty: 65.000/pcs' }
+        ]
+      }
+    };
+
+    // SVG Icons Helper untuk Javascript Render
+    const SVG_ICONS = {
+      clock: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z"/></svg>`,
+      user: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/></svg>`,
+      money: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M5 6H19V8H5V6ZM3 10H21V18H3V10ZM12 16C13.1 16 14 15.1 14 14C14 12.9 13.1 12 12 12C10.9 12 10 12.9 10 14C10 15.1 10.9 16 12 16Z"/></svg>`,
+      phone: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1C5.9 1 5 1.9 5 3V21C5 22.1 5.9 23 7 23H17C18.1 23 19 22.1 19 21V3C19 1.9 18.1 1.01 17 1.01ZM17 19H7V5H17V19Z"/></svg>`,
+      note: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z"/></svg>`,
+      check: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z"/></svg>`,
+      hour: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2V8H6.01L6 8.01L10 12L6 16L6.01 16.01H6V22H18V16.01H17.99L18 16L14 12L18 8.01L17.99 8H18V2H6ZM16 16.5V20H8V16.5L12 12.5L16 16.5ZM12 11.5L8 7.5V4H16V7.5L12 11.5Z"/></svg>`,
+      trash: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"/></svg>`,
+      undo: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 8C9.85 8 7.45 9 5.6 10.6L2 7V16H11L7.38 12.38C8.77 11.22 10.54 10.5 12.5 10.5C16.04 10.5 19.05 12.81 20.1 16L22.47 15.22C21.08 11.03 17.15 8 12.5 8Z"/></svg>`
+    };
+
+    function getStoredData() {
+      try {
+        const d = localStorage.getItem(STORAGE_KEY);
+        return d ? JSON.parse(d) : [];
+      } catch (e) {
+        console.error('Error membaca storage:', e);
+        return [];
+      }
+    }
+
+    function saveData(data) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {
+        alert('Memori penyimpanan browser penuh atau tidak didukung!');
+      }
+      render();
+    }
+
+    function setDefaultDateTime() {
+      const now = new Date();
+      const yr = now.getFullYear();
+      const mo = String(now.getMonth() + 1).padStart(2, '0');
+      const da = String(now.getDate()).padStart(2, '0');
+      const hr = String(now.getHours()).padStart(2, '0');
+      const mi = String(now.getMinutes()).padStart(2, '0');
+
+      document.getElementById('inpTanggal').value = `${yr}-${mo}-${da}`;
+      document.getElementById('inpJam').value = `${hr}:${mi}`;
+    }
+
+    function bukaModalProduk(productKey) {
+      currentProductKey = productKey;
+      const prod = MASTER_PRODUK[productKey];
+      setDefaultDateTime();
+
+      document.getElementById('modalHeading').innerText = `Catat: ${prod.nama}`;
+      document.getElementById('inpBarang').value = prod.nama;
+      document.getElementById('inpQty').value = 1;
+      document.getElementById('inpNamaPembeli').value = '';
+      document.getElementById('inpKategoriPembeli').value = 'Santri Putra';
+      document.getElementById('inpMetode').value = 'CASH';
+      document.getElementById('inpCatatan').value = '';
+
+      // Tampilkan varian rasa jika ada
+      const flavorGroup = document.getElementById('groupVarianRasa');
+      if (prod.hasFlavor) {
+        flavorGroup.style.display = 'block';
+      } else {
+        flavorGroup.style.display = 'none';
+      }
+
+      // Tampilkan skema tier harga
+      const tierBox = document.getElementById('tierPriceInfo');
+      const tierList = document.getElementById('tierPriceList');
+      if (prod.tiers && prod.tiers.length > 1) {
+        tierBox.style.display = 'block';
+        tierList.innerHTML = prod.tiers.map(t => `&bull; ${t.label}: <b>Rp ${t.harga.toLocaleString('id-ID')}/${prod.satuan.split(' ')[0]}</b>`).join('<br>');
+      } else {
+        tierBox.style.display = 'none';
+      }
+
+      hitungHargaBertingkat();
+      document.getElementById('inputModal').classList.add('show');
+    }
+
+    function bukaModalManual() {
+      currentProductKey = null;
+      setDefaultDateTime();
+      document.getElementById('modalHeading').innerText = 'Catat Pembelian Baru';
+      document.getElementById('inpBarang').value = '';
+      document.getElementById('inpQty').value = 1;
+      document.getElementById('inpHarga').value = '';
+      document.getElementById('inpNamaPembeli').value = '';
+      document.getElementById('inpKategoriPembeli').value = 'Santri Putra';
+      document.getElementById('inpMetode').value = 'CASH';
+      document.getElementById('inpCatatan').value = '';
+      document.getElementById('groupVarianRasa').style.display = 'none';
+      document.getElementById('tierPriceInfo').style.display = 'none';
+      document.getElementById('inputModal').classList.add('show');
+    }
+
+    // Fungsi Otomatis Hitung Harga Sesuai Tier Qty
+    function hitungHargaBertingkat() {
+      const qty = Math.max(1, Number(document.getElementById('inpQty').value) || 1);
+      
+      if (currentProductKey && MASTER_PRODUK[currentProductKey]) {
+        const prod = MASTER_PRODUK[currentProductKey];
+        let unitPrice = prod.tiers[0].harga;
+        let activeLabel = prod.tiers[0].label;
+
+        for (const t of prod.tiers) {
+          if (qty >= t.min && qty <= t.max) {
+            unitPrice = t.harga;
+            activeLabel = `@Rp ${t.harga.toLocaleString('id-ID')}`;
+            break;
+          }
+        }
+
+        const total = qty * unitPrice;
+        document.getElementById('inpHarga').value = total;
+
+        const badgeTier = document.getElementById('badgeTierAktif');
+        if (badgeTier) {
+          badgeTier.innerText = `${activeLabel} (Hemat: Otomatis)`;
+        }
+      }
+    }
+
+    function tutupModal() {
+      document.getElementById('inputModal').classList.remove('show');
+    }
+
+    function formatTanggalIndonesia(dateStr, timeStr) {
+      if (!dateStr) return timeStr || '';
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        const bln = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        const bIndex = parseInt(parts[1], 10) - 1;
+        return `${parseInt(parts[2], 10)} ${bln[bIndex]} ${parts[0]}, ${timeStr || ''} WIB`;
+      }
+      return `${dateStr} ${timeStr || ''}`;
+    }
+
+    function simpanTransaksi() {
+      const tanggal = document.getElementById('inpTanggal').value;
+      const jam = document.getElementById('inpJam').value;
+      let barang = document.getElementById('inpBarang').value.trim();
+      const qty = document.getElementById('inpQty').value || 1;
+      const harga = Number(document.getElementById('inpHarga').value);
+      const namaPembeli = document.getElementById('inpNamaPembeli').value.trim();
+      const kategoriPembeli = document.getElementById('inpKategoriPembeli').value;
+      const metode = document.getElementById('inpMetode').value;
+      const catatan = document.getElementById('inpCatatan').value.trim();
+
+      if (!barang) {
+        alert('Nama barang mohon diisi');
+        return;
+      }
+      if (!harga || harga <= 0) {
+        alert('Harga mohon diisi dengan benar');
+        return;
+      }
+
+      // Tambahkan info rasa jika nasi jagung
+      if (currentProductKey === 'nasijagung') {
+        const rasa = document.getElementById('inpVarianRasa').value;
+        barang = `${barang} [${rasa}]`;
+      }
+
+      const pembeliLengkap = namaPembeli ? `${namaPembeli} (${kategoriPembeli})` : kategoriPembeli;
+      const formatWaktu = formatTanggalIndonesia(tanggal, jam);
+
+      const newItem = {
+        id: 'TRX-' + Date.now(),
+        tanggal: tanggal,
+        jam: jam,
+        waktuFormat: formatWaktu,
+        barang: `${barang} (x${qty})`,
+        namaPembeli: namaPembeli || kategoriPembeli,
+        kategoriPembeli: kategoriPembeli,
+        pembeli: pembeliLengkap,
+        harga: harga,
+        metode: metode,
+        catatan: catatan,
+        status: 'pending'
+      };
+
+      const data = getStoredData();
+      data.unshift(newItem);
+      saveData(data);
+      tutupModal();
+    }
+
+    function toggleStatus(id) {
+      const data = getStoredData();
+      const item = data.find(x => x.id === id);
+      if (item) {
+        item.status = (item.status === 'pending') ? 'settled' : 'pending';
+        item.waktuSetor = (item.status === 'settled') ? new Date().toLocaleString('id-ID') : null;
+        saveData(data);
+      }
+    }
+
+    function hapusItem(id) {
+      if (!confirm('Yakin ingin menghapus catatan transaksi ini dari riwayat?')) return;
+      let data = getStoredData();
+      data = data.filter(x => x.id !== id);
+      saveData(data);
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.getElementById('tabPending').classList.toggle('active', tab === 'pending');
+      document.getElementById('tabSettled').classList.toggle('active', tab === 'settled');
+      document.getElementById('tabAll').classList.toggle('active', tab === 'all');
+      render();
+    }
+
+    function render() {
+      const data = getStoredData();
+
+      let pendingTotal = 0;
+      let pendingCash = 0;
+      let pendingTransfer = 0;
+      let pendingCount = 0;
+      let settledTotal = 0;
+      let settledCount = 0;
+
+      data.forEach(item => {
+        if (item.status === 'pending') {
+          pendingTotal += item.harga;
+          pendingCount++;
+          if (item.metode === 'CASH') pendingCash += item.harga;
+          if (item.metode === 'TRANSFER') pendingTransfer += item.harga;
+        } else {
+          settledTotal += item.harga;
+          settledCount++;
+        }
+      });
+
+      document.getElementById('rekapBelumLapor').innerText = 'Rp ' + pendingTotal.toLocaleString('id-ID');
+      document.getElementById('countBelumLapor').innerHTML = `${pendingCount} Trx <span style="font-weight:400; color:var(--text-muted);">(Cash: Rp ${pendingCash.toLocaleString('id-ID')} | TF: Rp ${pendingTransfer.toLocaleString('id-ID')})</span>`;
+      document.getElementById('rekapSudahLapor').innerText = 'Rp ' + settledTotal.toLocaleString('id-ID');
+      document.getElementById('countSudahLapor').innerText = `${settledCount} Trx (Arsip)`;
+
+      document.getElementById('tabPendingCount').innerText = pendingCount;
+      document.getElementById('tabSettledCount').innerText = settledCount;
+      document.getElementById('tabAllCount').innerText = data.length;
+
+      let filtered = data;
+      if (currentTab === 'pending') {
+        filtered = data.filter(x => x.status === 'pending');
+      } else if (currentTab === 'settled') {
+        filtered = data.filter(x => x.status === 'settled');
+      }
+
+      const container = document.getElementById('transList');
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>Ora ana catatan transaksi ning tab iki.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        const isCash = item.metode === 'CASH';
+        const isTF = item.metode === 'TRANSFER';
+        const badgeMetodeClass = isCash ? 'badge-cash' : (isTF ? 'badge-tf' : 'badge-utang');
+        const badgeMetodeIcon = isCash ? SVG_ICONS.money : (isTF ? SVG_ICONS.phone : SVG_ICONS.note);
+        const badgeMetodeText = isCash ? 'CASH' : (isTF ? 'TRANSFER' : 'UTANG');
+        const waktuTampil = item.waktuFormat || item.waktu || '-';
+
+        return `
+          <div class="trans-card ${item.status}">
+            <div class="trans-header">
+              <div>
+                <div class="trans-title">${item.barang}</div>
+              </div>
+              <div class="trans-price">Rp ${item.harga.toLocaleString('id-ID')}</div>
+            </div>
+
+            <!-- Detail Waktu, Pembeli, Metode -->
+            <div class="info-row">
+              <span class="info-tag">${SVG_ICONS.clock} <b>${waktuTampil}</b></span>
+              <span class="info-tag">${SVG_ICONS.user} <b>${item.pembeli}</b></span>
+              <span class="badge-metode ${badgeMetodeClass}">
+                ${badgeMetodeIcon}
+                <span>${badgeMetodeText}</span>
+              </span>
+              <span class="badge-status ${item.status === 'pending' ? 'pending' : 'settled'}">
+                ${item.status === 'pending' ? SVG_ICONS.hour : SVG_ICONS.check}
+                <span>${item.status === 'pending' ? 'Belum Lapor' : 'Sudah Disetor'}</span>
+              </span>
+              ${item.catatan ? `<span class="info-tag"><i>"${item.catatan}"</i></span>` : ''}
+            </div>
+
+            <div class="trans-actions">
+              <button class="btn-toggle-status" onclick="toggleStatus('${item.id}')">
+                ${item.status === 'pending' ? SVG_ICONS.check + ' Tandai Sudah Disetor ke Pak Kholiq' : SVG_ICONS.undo + ' Kembalikan ke Belum Lapor'}
+              </button>
+              <button class="btn-del" onclick="hapusItem('${item.id}')">
+                ${SVG_ICONS.trash} Hapus
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function kirimWhatsAppPakKholiq() {
+      const data = getStoredData().filter(x => x.status === 'pending');
+      if (data.length === 0) {
+        alert('Alhamdulillah! Kabeh transaksi wis dilaporke / disetor maring Pak Kholiq.');
+        return;
+      }
+
+      let totalCash = 0;
+      let totalTransfer = 0;
+      let totalSemua = 0;
+      let textList = '';
+
+      data.forEach((item, idx) => {
+        totalSemua += item.harga;
+        if (item.metode === 'CASH') totalCash += item.harga;
+        if (item.metode === 'TRANSFER') totalTransfer += item.harga;
+
+        const waktuTampil = item.waktuFormat || item.waktu || '';
+        const metodeLabel = item.metode === 'CASH' ? 'CASH' : (item.metode === 'TRANSFER' ? 'TRANSFER' : 'UTANG');
+        textList += `${idx + 1}. *[${waktuTampil}]* ${item.barang}\n   - Pembeli: ${item.pembeli}\n   - Nominal: Rp ${item.harga.toLocaleString('id-ID')} (*${metodeLabel}*)${item.catatan ? '\n   - Catatan: ' + item.catatan : ''}\n\n`;
+      });
+
+      const pesan = `*Assalamu'alaikum Pak Kholiq,*\nNiki rekap titipan penjualan Kopontren sakjabane jam jaga (Catatan Gus Lim):\n\n${textList}----------------------------------\n*Rincian Pembayaran:*\nTotal Uang Tunai (CASH): *Rp ${totalCash.toLocaleString('id-ID')}*\nTotal Masuk Rekening (TRANSFER): *Rp ${totalTransfer.toLocaleString('id-ID')}*\n*TOTAL SEMUA: Rp ${totalSemua.toLocaleString('id-ID')}*\n----------------------------------\nUang fisik (CASH) kulo cekel/setorake. Matur suwun.`;
+
+      const encoded = encodeURI(pesan);
+      const url = `https://api.whatsapp.com/send?text=${encoded}`;
+      
+      if (confirm(`Rangkuman ${data.length} transaksi:\n- CASH: Rp ${totalCash.toLocaleString('id-ID')}\n- TRANSFER: Rp ${totalTransfer.toLocaleString('id-ID')}\n- TOTAL: Rp ${totalSemua.toLocaleString('id-ID')}\n\nKirim menyang WhatsApp Pak Kholiq saiki?`)) {
+        window.open(url, '_blank');
+      }
+    }
+
+    function exportDataExcel() {
+      const data = getStoredData();
+      if (data.length === 0) {
+        alert('Ora ana data transaksi sing bisa diundhuh.');
+        return;
+      }
+
+      let csv = "ID,Tanggal & Waktu,Nama Barang,Pembeli,Harga (Rp),Metode,Status,Catatan\n";
+      data.forEach(item => {
+        const waktu = `"${item.waktuFormat || item.waktu || ''}"`;
+        const barang = `"${item.barang || ''}"`;
+        const pembeli = `"${item.pembeli || ''}"`;
+        const harga = item.harga || 0;
+        const metode = `"${item.metode || ''}"`;
+        const status = item.status === 'pending' ? 'Belum Lapor' : 'Sudah Disetor';
+        const catatan = `"${item.catatan || ''}"`;
+
+        csv += `${item.id},${waktu},${barang},${pembeli},${harga},${metode},${status},${catatan}\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `Riwayat_Kopontren_GusLim_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function backupJSON() {
+      const data = getStoredData();
+      const str = JSON.stringify(data, null, 2);
+      const blob = new Blob([str], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `Backup_Catatan_Kopontren_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Default sample data awal (diperbarui sesuai harga resmi)
+    if (getStoredData().length === 0) {
+      const sample = [
+        {
+          id: 'TRX-1',
+          tanggal: '2026-09-11',
+          jam: '14:25',
+          waktuFormat: '11 Sep 2026, 14:25 WIB',
+          barang: 'Madu Baitina (x2)',
+          namaPembeli: 'Pak Ahmad (Wali Santri Putri)',
+          kategoriPembeli: 'Wali Santri / Tamu',
+          pembeli: 'Pak Ahmad (Wali Santri Putri)',
+          harga: 116000,
+          metode: 'CASH',
+          catatan: 'Uang fisik dicekel Gus Lim',
+          status: 'pending'
+        },
+        {
+          id: 'TRX-2',
+          tanggal: '2026-09-11',
+          jam: '15:10',
+          waktuFormat: '11 Sep 2026, 15:10 WIB',
+          barang: 'Nasi Jagung Baitina [Sapi Panggang] (x2)',
+          namaPembeli: 'Kang Zaid (Kamar 5)',
+          kategoriPembeli: 'Santri Putra',
+          pembeli: 'Kang Zaid (Kamar 5)',
+          harga: 20000,
+          metode: 'TRANSFER',
+          catatan: 'Bukti transfer wis dicek',
+          status: 'pending'
+        }
+      ];
+      saveData(sample);
+    } else {
+      render();
+    }
+
+    // Logika Download / Pasang PWA
+    let deferredPrompt;
+    const btnInstall = document.getElementById('btnInstallPwa');
+    const bannerInstall = document.getElementById('pwaInstallBanner');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (bannerInstall) bannerInstall.style.display = 'flex';
+      if (btnInstall) btnInstall.innerText = 'Pasang Saiki';
+    });
+
+    function pasangAplikasiPwa() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User nampa instalasi aplikasi Kopontren');
+            if (bannerInstall) bannerInstall.style.display = 'none';
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          alert('Cara Pasang ing iPhone (Safari):\n1. Pencet tombol Share (kothak panah munggah ing ngisor)\n2. Pilih "Add to Home Screen" (Tambah menyang Layar Utama)');
+        } else {
+          alert('Cara Pasang ing Android (Chrome):\n1. Pencet titik 3 (⋮) ing pojok tengen ndhuwur browser\n2. Pilih menu "Install app" utawa "Tambahkan ke Layar Utama" (Add to Home screen)');
+        }
+      }
+    }
+
+    window.addEventListener('appinstalled', () => {
+      if (bannerInstall) bannerInstall.style.display = 'none';
+      alert('Alhamdulillah! Aplikasi Kopontren wis kasil dipasang ing layar HP.');
+    });
+
+    // Registrasi Service Worker PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('PWA Service Worker registered:', reg.scope))
+          .catch(err => console.log('PWA SW error:', err));
+      });
+    }
+  </script>
+</body>
+</html>
