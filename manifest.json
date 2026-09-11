@@ -1,6 +1,6 @@
 {
-  "name": "Kopontren Al Ittihad — Catatan Gus Lim",
-  "short_name": "Kopontren",
+  "name": "Catatan Kopontren — Gus Lim",
+  "short_name": "Baitina",
   "description": "Buku Catatan Penjualan Kopontren Khusus Gus Lim",
   "start_url": "./index.html",
   "display": "standalone",
@@ -9,16 +9,28 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%23064E3B'/%3E%3Cpath d='M96 28 C80 50, 72 65, 72 78 C72 90, 82 98, 96 98 C110 98, 120 90, 120 78 C120 65, 112 50, 96 28 Z' fill='%23F59E0B'/%3E%3Crect x='54' y='96' width='84' height='60' rx='8' fill='%23F59E0B'/%3E%3Cpath d='M84 156 A12 18 0 0 1 108 156 Z' fill='%23064E3B'/%3E%3Ccircle cx='96' cy='22' r='4' fill='%23FDE68A'/%3E%3C/svg%3E",
+      "src": "./icon-192.svg",
       "sizes": "192x192",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23064E3B'/%3E%3Cpath d='M256 75 C213 133, 192 173, 192 208 C192 240, 219 261, 256 261 C293 261, 320 240, 320 208 C320 173, 299 133, 256 75 Z' fill='%23F59E0B'/%3E%3Crect x='144' y='256' width='224' height='160' rx='20' fill='%23F59E0B'/%3E%3Cpath d='M224 416 A32 48 0 0 1 288 416 Z' fill='%23064E3B'/%3E%3Ccircle cx='256' cy='58' r='10' fill='%23FDE68A'/%3E%3C/svg%3E",
+      "src": "./icon-512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }

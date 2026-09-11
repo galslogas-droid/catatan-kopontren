@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background rounded square -->
+  <rect width="512" height="512" rx="108" fill="#064E3B"/>
+
+  <!-- Honeycomb hex pattern subtle background -->
+  <g opacity="0.08" fill="#F59E0B">
+    <polygon points="55,65 80,52 105,65 105,90 80,103 55,90"/>
+    <polygon points="105,90 130,77 155,90 155,115 130,128 105,115"/>
+    <polygon points="380,65 405,52 430,65 430,90 405,103 380,90"/>
+    <polygon points="330,90 355,77 380,90 380,115 355,128 330,115"/>
+    <polygon points="20,380 45,367 70,380 70,405 45,418 20,405"/>
+    <polygon points="442,380 467,367 492,380 492,405 467,418 442,405"/>
+  </g>
+
+  <!-- Bee body -->
+  <ellipse cx="256" cy="235" rx="58" ry="75" fill="#F59E0B"/>
+
+  <!-- Bee stripes -->
+  <rect x="198" y="217" width="116" height="22" rx="11" fill="#1a1a1a" opacity="0.7"/>
+  <rect x="198" y="248" width="116" height="22" rx="11" fill="#1a1a1a" opacity="0.7"/>
+
+  <!-- Bee head -->
+  <ellipse cx="256" cy="158" rx="38" ry="35" fill="#F59E0B"/>
+
+  <!-- Bee eyes -->
+  <circle cx="239" cy="150" r="8" fill="#1a1a1a"/>
+  <circle cx="273" cy="150" r="8" fill="#1a1a1a"/>
+  <circle cx="241" cy="148" r="3" fill="white"/>
+  <circle cx="275" cy="148" r="3" fill="white"/>
+
+  <!-- Bee antennae -->
+  <line x1="241" y1="125" x2="220" y2="92" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="220" cy="92" r="7" fill="#F59E0B" stroke="#1a1a1a" stroke-width="4"/>
+  <line x1="271" y1="125" x2="292" y2="92" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="292" cy="92" r="7" fill="#F59E0B" stroke="#1a1a1a" stroke-width="4"/>
+
+  <!-- Wings left -->
+  <ellipse cx="178" cy="192" rx="54" ry="27" fill="#A7F3D0" opacity="0.75" transform="rotate(-25 178 192)"/>
+  <ellipse cx="170" cy="228" rx="38" ry="19" fill="#6EE7B7" opacity="0.65" transform="rotate(-15 170 228)"/>
+
+  <!-- Wings right -->
+  <ellipse cx="334" cy="192" rx="54" ry="27" fill="#A7F3D0" opacity="0.75" transform="rotate(25 334 192)"/>
+  <ellipse cx="342" cy="228" rx="38" ry="19" fill="#6EE7B7" opacity="0.65" transform="rotate(15 342 228)"/>
+
+  <!-- Bee stinger -->
+  <polygon points="256,310 242,335 270,335" fill="#F59E0B"/>
+
+  <!-- Text "Baitina" -->
+  <text x="256" y="415" font-family="'Arial Rounded MT Bold', 'Arial', sans-serif" font-size="60" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="3">Baitina</text>
+
+  <!-- Subtle honey drip accent -->
+  <path d="M236,310 Q256,325 276,310" stroke="#F59E0B" stroke-width="3" fill="none" opacity="0.5"/>
+</svg>
