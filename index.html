@@ -1475,50 +1475,36 @@
       document.body.removeChild(link);
     }
 
-    // Default sample data awal (diperbarui sesuai harga resmi)
-    if (getStoredData().length === 0) {
-      const sample = [
-        {
-          id: 'TRX-1',
-          tanggal: '2026-09-11',
-          jam: '14:25',
-          waktuFormat: '11 Sep 2026, 14:25 WIB',
-          barang: 'Madu Baitina (x2)',
-          namaPembeli: 'Pak Ahmad (Wali Santri Putri)',
-          kategoriPembeli: 'Wali Santri / Tamu',
-          pembeli: 'Pak Ahmad (Wali Santri Putri)',
-          harga: 116000,
-          metode: 'CASH',
-          catatan: 'Uang fisik dicekel Gus Lim',
-          status: 'pending'
-        },
-        {
-          id: 'TRX-2',
-          tanggal: '2026-09-11',
-          jam: '15:10',
-          waktuFormat: '11 Sep 2026, 15:10 WIB',
-          barang: 'Nasi Jagung Baitina [Sapi Panggang] (x2)',
-          namaPembeli: 'Kang Zaid (Kamar 5)',
-          kategoriPembeli: 'Santri Putra',
-          pembeli: 'Kang Zaid (Kamar 5)',
-          harga: 20000,
-          metode: 'TRANSFER',
-          catatan: 'Bukti transfer wis dicek',
-          status: 'pending'
-        }
-      ];
-      saveData(sample);
-    } else {
-      render();
-    }
+    render();
+
+    // Bersihkan data lama dari versi sebelumnya (versi lama isi sample otomatis)
+    const LAST_VERSION = '2.0';
+    try {
+      const savedVer = localStorage.getItem('kopontren_version');
+      if (!savedVer || savedVer < LAST_VERSION) {
+        // Hapus localStorage lama yang mungkin masih ada data sample
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.setItem('kopontren_version', LAST_VERSION);
+        console.log('Data lama dibersihkan, version:', LAST_VERSION);
+      }
+    } catch(e) {}
 
 
     // Registrasi Service Worker PWA
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
+      window.addEventListener('load', async () => {
+        try {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const reg of regs) {
+            if (reg.scope.includes('kopontren')) {
+              await reg.unregister();
+              console.log('Old SW unregistered');
+            }
+          }
+        } catch(e) {}
         navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('PWA Service Worker registered:', reg.scope))
-          .catch(err => console.log('PWA SW error:', err));
+          .then(reg => console.log('SW registered:', reg.scope))
+          .catch(err => console.log('SW error:', err));
       });
     }
   </script>
