@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Kopontren">
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%23064E3B'/%3E%3Cpath d='M96 28 C80 50, 72 65, 72 78 C72 90, 82 98, 96 98 C110 98, 120 90, 120 78 C120 65, 112 50, 96 28 Z' fill='%23F59E0B'/%3E%3Crect x='54' y='96' width='84' height='60' rx='8' fill='%23F59E0B'/%3E%3Cpath d='M84 156 A12 18 0 0 1 108 156 Z' fill='%23064E3B'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="icon-192.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -70,7 +70,7 @@
       box-shadow: var(--shadow);
     }
     .today-bar-left { display: flex; align-items: center; gap: 0.5rem; }
-    .today-bar-icon { font-size: 1.2rem; }
+    .today-bar-icon { width: 20px; height: 20px; color: var(--primary); }
     .today-bar-text { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
     .today-bar-text strong { color: var(--text); font-size: 0.88rem; display: block; }
     .today-bar-right { text-align: right; }
@@ -175,7 +175,8 @@
     }
     .prod-btn:active { transform: scale(0.95); }
     .prod-btn.in-cart { border-color: var(--amber-gold); background: var(--amber-light); }
-    .prod-btn .p-icon { font-size: 1.2rem; margin-bottom: 0.1rem; }
+    .prod-btn .p-icon { width: 24px; height: 24px; margin: 0 auto 0.1rem; }
+    .prod-btn .p-icon svg { width: 100%; height: 100%; }
     .prod-btn .p-name { font-size: 0.62rem; font-weight: 700; color: var(--text); line-height: 1.2; }
     .prod-btn .p-price { font-size: 0.58rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); margin-top: 0.08rem; }
     .p-badge { position: absolute; top: -5px; right: -5px; background: var(--amber-gold); color: white; font-size: 0.55rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--card-bg); }
@@ -201,11 +202,22 @@
     .pay-btn { border: 2px solid var(--border); border-radius: 10px; padding: 0.6rem 0.4rem; text-align: center; cursor: pointer; background: var(--input-bg); transition: all 0.15s; }
     .pay-btn:active { transform: scale(0.96); }
     .pay-btn.selected { border-color: var(--primary); background: var(--primary-light); }
-    .pay-btn .pay-icon { font-size: 1.2rem; }
+    .pay-btn .pay-icon { width: 20px; height: 20px; margin: 0 auto 0.1rem; }
     .pay-btn .pay-label { font-size: 0.7rem; font-weight: 700; color: var(--text); }
     .pay-btn.utang.selected { border-color: var(--danger); background: #FEF2F2; }
     .pay-btn.utang .pay-label { color: var(--danger); }
     [data-theme="dark"] .pay-btn.utang.selected { background: #2D1515; }
+    .manual-price-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; }
+    .manual-price-row label { margin: 0; font-size: 0.7rem; white-space: nowrap; }
+    .qty-control { display: flex; align-items: center; gap: 0.4rem; }
+    .qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1.5px solid var(--border); background: var(--input-bg); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .qty-btn:active { transform: scale(0.93); }
+    .prod-total { font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); font-size: 0.9rem; margin-left: auto; }
+    .manual-price-row-inline { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; flex-wrap: wrap; }
+    .manual-price-row-inline label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin: 0; white-space: nowrap; }
+    .manual-price-row-inline input { flex: 1; min-width: 80px; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
+    .manual-price-row input { flex: 1; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
+    .manual-price-row input:focus { outline: none; border-color: var(--amber-gold); }
 
     /* NAV BUTTONS */
     .nav-btns { display: flex; gap: 0.5rem; margin-top: 1rem; }
@@ -233,6 +245,7 @@
     .detail-btn.setor { background: var(--primary); color: white; }
     .detail-btn.edit { background: var(--surface-alt); color: var(--text); border: 1.5px solid var(--border); }
     .detail-btn.delete { background: transparent; color: var(--danger); border: 1.5px solid #FECACA; }
+    .detail-btn svg { width: 15px; height: 15px; }
 
     /* REPORT SCREEN */
     .report-header {
@@ -298,7 +311,8 @@
 
     /* EMPTY STATE */
     .empty-state { text-align: center; padding: 2rem 1rem; color: var(--text-muted); }
-    .empty-state .empty-icon { font-size: 2.2rem; margin-bottom: 0.4rem; }
+    .empty-state .empty-icon { width: 44px; height: 44px; margin: 0 auto 0.4rem; color: var(--text-muted); }
+    .empty-state .empty-icon svg { width: 100%; height: 100%; }
     .empty-state p { font-size: 0.82rem; margin-bottom: 0.75rem; }
     .empty-state .empty-sub { font-size: 0.75rem; color: var(--text-muted); }
 
@@ -335,6 +349,7 @@
     .ctx-item.danger { color: var(--danger); }
     .ctx-item.danger:active { background: #FEF2F2; }
     [data-theme="dark"] .ctx-item.danger:active { background: #2D1515; }
+    .ctx-item svg { width: 16px; height: 16px; flex-shrink: 0; }
 
     /* PRICE SETTINGS */
     .price-product-header {
@@ -350,6 +365,7 @@
     .price-tier-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); }
     .price-tier-input { width: 100%; padding: 0.45rem 0.55rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; font-weight: 700; background: var(--input-bg); color: var(--text); }
     .price-tier-input:focus { outline: none; border-color: var(--amber-gold); }
+    .manual-price-label { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 600; }
 
     /* DARK MODE TOGGLE */
     .theme-toggle { display: flex; align-items: center; gap: 0.5rem; }
@@ -357,6 +373,7 @@
     .theme-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.2s; }
     .theme-switch.on { background: var(--amber-gold); }
     .theme-switch.on::after { transform: translateX(20px); }
+    .lyr-close { width: 100%; background: transparent; border: none; padding: 0.7rem; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); cursor: pointer; border-top: 1px solid var(--border); margin-top: 0.5rem; }
   </style>
 </head>
 <body>
@@ -384,7 +401,9 @@
     <!-- TODAY BAR -->
     <div class="today-bar">
       <div class="today-bar-left">
-        <div class="today-bar-icon">📅</div>
+        <div class="today-bar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
         <div class="today-bar-text">
           <strong id="todayLabel">Hari Ini</strong>
           <span id="todayDate"></span>
@@ -399,12 +418,12 @@
     <!-- STATUS CARDS -->
     <div class="status-cards">
       <div class="status-card red">
-        <div class="status-card-label">⏳ Belum Dilaporkan</div>
+        <div class="status-card-label">Belum Dilaporkan</div>
         <div class="status-card-amount" id="belumTotal">Rp 0</div>
         <div class="status-card-count" id="belumCount">0 transaksi</div>
       </div>
       <div class="status-card green">
-        <div class="status-card-label">✅ Sudah Dilaporkan</div>
+        <div class="status-card-label">Sudah Dilaporkan</div>
         <div class="status-card-amount" id="sudahTotal">Rp 0</div>
         <div class="status-card-count" id="sudahCount">0 transaksi</div>
       </div>
@@ -412,8 +431,14 @@
 
     <!-- ACTION ROW -->
     <div class="action-row">
-      <button class="btn-action btn-report" onclick="bukaLaporan()">📤 Laporan ke Pak Kholiq</button>
-      <button class="btn-action btn-history" onclick="bukaRiwayat()">📋 Riwayat</button>
+      <button class="btn-action btn-report" onclick="bukaLaporan()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Laporan ke Pak Kholiq
+      </button>
+      <button class="btn-action btn-history" onclick="bukaRiwayat()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Riwayat
+      </button>
     </div>
 
     <!-- RECENT TRANSACTIONS -->
@@ -477,19 +502,26 @@
           <label>Metode Pembayaran</label>
           <div class="pay-options">
             <div class="pay-btn selected" data-pay="CASH" onclick="pilihMetode('CASH')">
-              <div class="pay-icon">💵</div><div class="pay-label">Cash</div>
+              <div class="pay-icon"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-12.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 1.95-1.43 1.17 0 1.95.57 1.95 1.52h1.75c0-1.63-1.43-2.78-3.67-2.78-2.07 0-3.71 1.17-3.71 2.96 0 1.65 1.17 2.49 3.09 2.96 1.9.47 2.24 1.17 2.24 1.76 0 .94-.88 1.56-2.17 1.56-1.36 0-2.24-.71-2.24-1.83H8.7c0 1.63 1.26 2.73 3.53 2.73 2.14 0 3.63-1.12 3.63-3 0-1.79-1.17-2.6-3.05-3.05z"/></svg></div>
+              <div class="pay-label">Cash</div>
             </div>
             <div class="pay-btn" data-pay="TRANSFER" onclick="pilihMetode('TRANSFER')">
-              <div class="pay-icon">📱</div><div class="pay-label">Transfer</div>
+              <div class="pay-icon"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div>
+              <div class="pay-label">Transfer</div>
             </div>
             <div class="pay-btn utang" data-pay="UTANG" onclick="pilihMetode('UTANG')">
-              <div class="pay-icon">📒</div><div class="pay-label">Utang</div>
+              <div class="pay-icon"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+              <div class="pay-label">Utang</div>
             </div>
           </div>
         </div>
         <div class="form-group">
           <label>Catatan <span style="font-weight:400">(opsional)</span></label>
           <input type="text" id="wCatatan" placeholder="Misal: Uang dilebokake laci...">
+        </div>
+        <div id="manualPriceStep2" style="display:none;margin-bottom:0.5rem;">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:0.3rem;display:block;">Harga Manual:</label>
+          <div id="manualPriceInputs"></div>
         </div>
         <div class="cart-summary" id="wizardCartStep2"></div>
       </div>
@@ -517,7 +549,10 @@
         <div class="detail-item"><div class="detail-item-label">Tanggal</div><div class="detail-item-val" id="dTgl">-</div></div>
         <div class="detail-item"><div class="detail-item-label">Pembayaran</div><div class="detail-item-val" id="dMetode">-</div></div>
       </div>
-      <div class="detail-note" id="dNote" style="display:none;">📝 <span id="dNoteText"></span></div>
+      <div class="detail-note" id="dNote" style="display:none;">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:4px;"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+        <span id="dNoteText"></span>
+      </div>
       <div class="detail-actions">
         <button class="detail-btn setor" id="dSetorBtn" onclick="toggleStatus()">
           <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
@@ -558,7 +593,7 @@
         <button class="btn-back" style="flex:0;" onclick="tutupRiwayat()">Tutup</button>
       </div>
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="🔎 Cari nama / barang..." oninput="renderRiwayat()">
+        <input type="text" id="searchInput" placeholder="Cari nama / barang..." oninput="renderRiwayat()">
       </div>
       <div class="filter-bar" id="filterBar">
         <button class="filter-btn active" data-filter="today" onclick="setFilter('today')">Hari Ini</button>
@@ -579,38 +614,50 @@
       <div class="modal-subtitle">Pengaturan & Administrasi</div>
       <div class="other-menu">
         <div class="other-item" onclick="bukaPengaturanHarga()">
-          <div class="other-icon amber">💰</div>
+          <div class="other-icon amber">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+          </div>
           <div class="other-text"><strong>Produk & Harga</strong><small>Kelola harga & tier diskon</small></div>
           <div class="other-arrow">›</div>
         </div>
         <div class="other-item" onclick="eksporData()">
-          <div class="other-icon blue">📥</div>
+          <div class="other-icon blue">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          </div>
           <div class="other-text"><strong>Ekspor Data</strong><small>Unduh Excel/CSV atau JSON</small></div>
           <div class="other-arrow">›</div>
         </div>
         <div class="other-item" onclick="backupData()">
-          <div class="other-icon green">💾</div>
+          <div class="other-icon green">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          </div>
           <div class="other-text"><strong>Backup</strong><small>Simpan data ke file</small></div>
           <div class="other-arrow">›</div>
         </div>
         <div class="other-item" onclick="restoreData()">
-          <div class="other-icon blue">📤</div>
+          <div class="other-icon blue">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          </div>
           <div class="other-text"><strong>Restore</strong><small>Pulihkan dari file backup</small></div>
           <div class="other-arrow">›</div>
         </div>
         <div class="other-item" onclick="toggleTheme()">
-          <div class="other-icon green">🌙</div>
+          <div class="other-icon green">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg>
+          </div>
           <div class="other-text"><strong>Mode Gelap</strong><small>Ubah tampilan terang/gelap</small></div>
           <div class="other-arrow" id="themeArrow">›</div>
         </div>
         <div class="other-item" onclick="resetAllData()">
-          <div class="other-icon red">🗑️</div>
+          <div class="other-icon red">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          </div>
           <div class="other-text"><strong>Hapus Semua Data</strong><small>Reset aplikasi ke kosong</small></div>
           <div class="other-arrow">›</div>
         </div>
       </div>
       <div style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:var(--amber-light);border-radius:10px;font-size:0.7rem;color:#92400E;line-height:1.5;">
-        📱 <strong>Data tersimpan di perangkat ini</strong><br>
+        Data tersimpan di perangkat ini<br>
         Backup terakhir: <span id="lastBackup">—</span>
       </div>
       <button class="lyr-close" onclick="tutupLiyane()" style="width:100%;background:transparent;border:none;padding:0.7rem;font-size:0.85rem;font-weight:700;color:var(--text-muted);cursor:pointer;border-top:1px solid var(--border);margin-top:0.5rem;">Tutup</button>
@@ -626,7 +673,7 @@
       <div id="priceBody"></div>
       <div class="nav-btns">
         <button class="btn-back" onclick="tutupPengaturanHarga()">Tutup</button>
-        <button class="btn-next" onclick="simpanHarga()">💾 Simpan Harga</button>
+        <button class="btn-next" onclick="simpanHarga()">Simpan Harga</button>
       </div>
     </div>
   </div>
@@ -639,11 +686,15 @@
       <div class="modal-subtitle">Pilih format unduhan</div>
       <div class="other-menu">
         <div class="other-item" onclick="downloadCSV()">
-          <div class="other-icon blue">📊</div>
+          <div class="other-icon blue">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+          </div>
           <div class="other-text"><strong>Excel / CSV</strong><small>Format spreadsheet</small></div>
         </div>
         <div class="other-item" onclick="downloadJSON()">
-          <div class="other-icon amber">📦</div>
+          <div class="other-icon amber">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 10H8v-2h6v2zm-3-5c.83 0 1.5-.67 1.5-1.5S12.83 8 12 8s-1.5.67-1.5 1.5S11.17 11 12 11z"/></svg>
+          </div>
           <div class="other-text"><strong>Backup JSON</strong><small>File lengkap semua data</small></div>
         </div>
       </div>
@@ -669,9 +720,18 @@
 
   <!-- ===== CONTEXT MENU ===== -->
   <div class="ctx-menu" id="ctxMenu">
-    <button class="ctx-item" onclick="ctxEdit()">✏️ Edit</button>
-    <button class="ctx-item" onclick="ctxSetor()">✅ Tandai Dilaporkan</button>
-    <button class="ctx-item danger" onclick="ctxHapus()">🗑️ Hapus</button>
+    <button class="ctx-item" onclick="ctxEdit()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+      Edit
+    </button>
+    <button class="ctx-item" onclick="ctxSetor()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+      Tandai Dilaporkan
+    </button>
+    <button class="ctx-item danger" onclick="ctxHapus()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      Hapus
+    </button>
   </div>
 
   <!-- TOAST CONTAINER -->
@@ -684,48 +744,28 @@
     const PRODUCTS_DATA = [
       { id:'madu_sachet',name:'Madu Sachet Baitina',cat:'Baitina', icon:'🍯', unit:'sachet',
         tiers:[{min:1,max:99999,price:6000}]},
-      { id:'madu',    name:'Madu Baitina',       cat:'Baitina', icon:'🍯', unit:'box',
-        tiers:[
-          {min:1,max:4, price:58000},
-          {min:5,max:9, price:55000},
-          {min:10,max:19,price:52500},
-          {min:20,max:99999,price:51000}
-        ]},
-      { id:'garam',   name:'Garam Ruqyah',       cat:'Baitina', icon:'🧂', unit:'pcs',
-        tiers:[
-          {min:1,max:4, price:6000},
-          {min:5,max:9, price:5500},
-          {min:10,max:19,price:5250},
-          {min:20,max:99999,price:5100}
-        ]},
-      { id:'nasijagung',name:'Nasi Jagung',      cat:'Baitina', icon:'🌽', unit:'porsi',
-        tiers:[
-          {min:1,max:4, price:10000},
-          {min:5,max:9, price:9500},
-          {min:10,max:19,price:9250},
-          {min:20,max:99999,price:9100}
-        ]},
-      { id:'sabun',   name:'Sabun Ruqyah',       cat:'Baitina', icon:'🧼', unit:'pcs',
-        tiers:[
-          {min:1,max:4, price:5000},
-          {min:5,max:9, price:4500},
-          {min:10,max:19,price:4250},
-          {min:20,max:99999,price:4100}
-        ]},
-      { id:'eskrim',  name:'Es Krim Baitina',    cat:'Baitina', icon:'🍦', unit:'pcs',
+      { id:'madu',    name:'Madu Box Baitina',     cat:'Baitina', icon:'🍯', unit:'box',
+        tiers:[{min:1,max:4, price:58000},{min:5,max:9, price:55000},{min:10,max:19,price:52500},{min:20,max:99999,price:51000}]},
+      { id:'nasijagung',name:'Nasi Jagung',        cat:'Baitina', icon:'🌽', unit:'porsi',
+        tiers:[{min:1,max:4, price:10000},{min:5,max:9, price:9500},{min:10,max:19,price:9250},{min:20,max:99999,price:9100}]},
+      { id:'garam',   name:'Garam Ruqyah',         cat:'Baitina', icon:'🧂', unit:'pcs',
+        tiers:[{min:1,max:4, price:6000},{min:5,max:9, price:5500},{min:10,max:19,price:5250},{min:20,max:99999,price:5100}]},
+      { id:'sabun',   name:'Sabun Ruqyah',         cat:'Baitina', icon:'🧼', unit:'pcs',
+        tiers:[{min:1,max:4, price:5000},{min:5,max:9, price:4500},{min:10,max:19,price:4250},{min:20,max:99999,price:4100}]},
+      { id:'eskrim',  name:'Es Krim Baitina',      cat:'Baitina', icon:'🍦', unit:'pcs',
         tiers:[{min:1,max:99999,price:5000}]},
-      { id:'sarung',  name:'Sarung Santri',      cat:'Kopontren', icon:'🧣', unit:'pcs',
-        tiers:[{min:1,max:99999,price:65000}]},
-      { id:'mbako',   name:'Mbako Linthingan',   cat:'Kopontren', icon:'🍃', unit:'bungkus',
-        tiers:[{min:1,max:99999,price:5000}]},
-      { id:'gula',    name:'Gula Baitina',       cat:'Kopontren', icon:'🍬', unit:'kg',
-        tiers:[{min:1,max:99999,price:12000}]},
-      { id:'beras',   name:'Beras Baitina',      cat:'Kopontren', icon:'🍚', unit:'kg',
-        tiers:[{min:1,max:99999,price:15000}]},
-      { id:'atkkop',  name:'ATK / Alat Tulis',   cat:'Kopontren', icon:'✏️', unit:'pcs',
-        tiers:[{min:1,max:99999,price:0}], manualPrice:true},
-      { id:'custom',  name:'Barang Lain',        cat:'Kopontren', icon:'📦', unit:'pcs',
-        tiers:[{min:1,max:99999,price:0}], manualPrice:true},
+      { id:'sarung',  name:'Sarung Santri',        cat:'Kopontren', icon:'🧣', unit:'pcs',
+        tiers:[], manualPrice:true},
+      { id:'mbako',   name:'Mbako Linthingan',     cat:'Kopontren', icon:'🍃', unit:'bungkus',
+        tiers:[], manualPrice:true},
+      { id:'gula',    name:'Gula Baitina',         cat:'Kopontren', icon:'🍬', unit:'kg',
+        tiers:[], manualPrice:true},
+      { id:'beras',   name:'Beras Baitina',        cat:'Kopontren', icon:'🍚', unit:'kg',
+        tiers:[], manualPrice:true},
+      { id:'atkkop',  name:'ATK / Alat Tulis',     cat:'Kopontren', icon:'✏️', unit:'pcs',
+        tiers:[], manualPrice:true},
+      { id:'custom',  name:'Barang Lain',          cat:'Kopontren', icon:'📦', unit:'pcs',
+        tiers:[], manualPrice:true},
     ];
 
     // =============================================
@@ -736,7 +776,7 @@
     const BACKUP_KEY = 'kopontren_last_backup';
     const THEME_KEY = 'kopontren_theme';
 
-    let currentView = 'home'; // home, riwayat, laporan
+    let currentView = 'home';
     let currentFilter = 'today';
     let currentSearch = '';
     let wizardStep = 1;
@@ -744,34 +784,38 @@
     let wizardMetode = 'CASH';
     let detailId = null;
     let ctxId = null;
-    let undoItem = null; // untuk undo hapus
+    let undoItem = null;
     let undoTimer = null;
 
-    // Load prices from localStorage or use defaults
     let products = {};
     function loadProducts() {
       try {
         const saved = localStorage.getItem(PRICE_KEY);
         if (saved) { products = JSON.parse(saved); return; }
       } catch(e) {}
-      // Build products object from PRODUCTS_DATA with defaults
       products = {};
-      PRODUCTS_DATA.forEach(p => {
-        products[p.id] = JSON.parse(JSON.stringify(p));
-      });
+      PRODUCTS_DATA.forEach(p => { products[p.id] = JSON.parse(JSON.stringify(p)); });
     }
     function saveProducts() {
       try { localStorage.setItem(PRICE_KEY, JSON.stringify(products)); } catch(e) { showToast('Gagal menyimpan harga', 'error'); }
     }
-    function getProductName(id) {
-      return products[id]?.name || id;
-    }
+    function getProductName(id) { return products[id]?.name || id; }
     function getProductPrice(p, qty) {
       if (!p?.tiers?.length) return 0;
       for (const t of p.tiers) {
         if (qty >= t.min && qty <= t.max) return t.price;
       }
       return p.tiers[0]?.price || 0;
+    }
+    // Harga manual per item di cart — key: productId
+    const manualPrices = {};
+    function setManualPrice(productId, price) {
+      if (price > 0) manualPrices[productId] = price;
+      else delete manualPrices[productId];
+    }
+    function getEffectivePrice(p, qty) {
+      if (p.manualPrice && manualPrices[p.id]) return manualPrices[p.id];
+      return getProductPrice(p, qty);
     }
 
     // =============================================
@@ -810,9 +854,9 @@
       updateLastBackup();
       try {
         const savedVer = localStorage.getItem('kopontren_ver');
-        if (!savedVer || savedVer < '5.0') {
+        if (!savedVer || savedVer < '6.0') {
           localStorage.removeItem(STORAGE_KEY);
-          localStorage.setItem('kopontren_ver', '5.0');
+          localStorage.setItem('kopontren_ver', '6.0');
         }
       } catch(e) {}
     }
@@ -858,16 +902,10 @@
       document.getElementById('belumCount').textContent = pending.length + ' transaksi';
       document.getElementById('sudahCount').textContent = settled.length + ' transaksi';
 
-      // Recent 5 transactions
       const recent = [...data].reverse().slice(0, 5);
       const list = document.getElementById('recentList');
       if (recent.length === 0) {
-        list.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">📭</div>
-            <p>Belum ada penjualan</p>
-            <div class="empty-sub">Catat pembelian pertama hari ini</div>
-          </div>`;
+        list.innerHTML = `<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg></div><p>Belum ada penjualan</p><div class="empty-sub">Catat pembelian pertama hari ini</div></div>`;
       } else {
         list.innerHTML = recent.map(t => renderTxCard(t)).join('');
       }
@@ -876,23 +914,22 @@
     function renderTxCard(t) {
       const names = t.items ? t.items.map(i => i.name).join(', ') : (t.barang || 'Transaksi');
       const qtyInfo = t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||''));
-      return `
-        <div class="tx-card ${t.status}" onclick="bukaDetail('${t.id}')">
-          <button class="tx-menu-btn" onclick="event.stopPropagation();bukaCtxMenu(event,'${t.id}')" aria-label="Menu transaksi">•••</button>
-          <div class="tx-top">
-            <div>
-              <div class="tx-name">${escHtml(names)}</div>
-              <div class="tx-buyer">${escHtml(t.pembeli || '-')} · ${qtyInfo}</div>
-            </div>
-            <div class="tx-total">${formatRupiah(t.totalHarga||0)}</div>
+      return `<div class="tx-card ${t.status}" onclick="bukaDetail('${t.id}')">
+        <button class="tx-menu-btn" onclick="event.stopPropagation();bukaCtxMenu(event,'${t.id}')" aria-label="Menu transaksi">•••</button>
+        <div class="tx-top">
+          <div>
+            <div class="tx-name">${escHtml(names)}</div>
+            <div class="tx-buyer">${escHtml(t.pembeli || '-')} · ${qtyInfo}</div>
           </div>
-          <div class="tx-meta">
-            <span>🕐 ${escHtml(t.waktuFormat||t.tanggal)}</span>
-            <span class="badge badge-${t.metode==='CASH'?'cash':t.metode==='TRANSFER'?'tf':'utang'}">${t.metode}</span>
-            <span class="badge badge-${t.status}">${t.status==='pending'?'⏳ Belum':'✅ Lapor'}</span>
-          </div>
-          <div class="tx-id">${escHtml(t.id)}</div>
-        </div>`;
+          <div class="tx-total">${formatRupiah(t.totalHarga||0)}</div>
+        </div>
+        <div class="tx-meta">
+          <span><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg> ${escHtml(t.waktuFormat||t.tanggal)}</span>
+          <span class="badge badge-${t.metode==='CASH'?'cash':t.metode==='TRANSFER'?'tf':'utang'}">${t.metode}</span>
+          <span class="badge badge-${t.status}">${t.status==='pending'?'Belum Lapor':'Sudah Lapor'}</span>
+        </div>
+        <div class="tx-id">${escHtml(t.id)}</div>
+      </div>`;
     }
 
     // =============================================
@@ -920,15 +957,25 @@
       document.getElementById('wdot2').className = 'w-dot ' + (step>=2?(step>2?'done':'active'): '');
       document.getElementById('stepLabel').textContent = step;
       document.getElementById('wBack').style.display = step > 1 ? 'block' : 'none';
-      document.getElementById('wNext').textContent = step === 2 ? '✓ Simpan' : 'Lanjut →';
+      document.getElementById('wNext').textContent = step === 2 ? 'Simpan' : 'Lanjut →';
       if (step === 1) { renderWizardProducts(); renderWizardCart(); }
       if (step === 2) { setDefaultDateTime(); renderWizardCart2(); validateWizard(); }
       validateWizard();
     }
 
     function renderWizardProducts() {
+      // Sort: Baitina first (Madu Sachet, Nasi Jagung, Garam, Sabun, Es Krim, Madu Box), then Kopontren
+      const order = ['madu_sachet','madu','nasijagung','garam','sabun','eskrim','sarung','mbako','gula','beras','atkkop','custom'];
+      const sorted = [...Object.entries(products)].sort((a,b) => {
+        const ia = order.indexOf(a[0]), ib = order.indexOf(b[0]);
+        if (ia !== -1 && ib !== -1) return ia - ib;
+        if (ia !== -1) return -1;
+        if (ib !== -1) return 1;
+        return a[0].localeCompare(b[0]);
+      });
+
       const cats = {};
-      Object.entries(products).forEach(([id, p]) => {
+      sorted.forEach(([id, p]) => {
         const cat = p.cat || 'Lainnya';
         if (!cats[cat]) cats[cat] = [];
         cats[cat].push({id, ...p});
@@ -940,7 +987,7 @@
           const inCart = cart.find(c => c.productId === p.id);
           const qty = inCart ? inCart.qty : 0;
           const price = getProductPrice(p, qty || 1);
-          const priceStr = price > 0 ? formatRupiah(price) : 'Hubungi';
+          const priceStr = p.manualPrice ? 'Manual' : (price > 0 ? formatRupiah(price) : 'Hubungi');
           html += `<div class="prod-btn ${qty>0?'in-cart':''}" onclick="addToCart('${p.id}')">
             <div class="p-icon">${p.icon}</div>
             <div class="p-name">${p.name}</div>
@@ -977,15 +1024,15 @@
         el.innerHTML = '<div class="cart-empty">Keranjang masih kosong — pilih produk di atas</div>';
         return;
       }
-      let html = '<div class="cart-title">🛒 Keranjang</div>';
+      let html = '<div class="cart-title">Keranjang</div>';
       let grand = 0;
       cart.forEach(item => {
         const p = products[item.productId];
         if (!p) return;
-        const price = getProductPrice(p, item.qty);
+        const price = getEffectivePrice(p, item.qty);
         const sub = price * item.qty;
         grand += sub;
-        const priceStr = price > 0 ? formatRupiah(price) : 'Manual';
+        const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Setel →') : formatRupiah(price);
         html += `<div class="cart-item">
           <div><div class="cart-item-name">${p.icon} ${p.name}</div>
           <div style="font-size:0.65rem;color:var(--text-muted);">${item.qty} ${p.unit} × ${priceStr}</div></div>
@@ -998,30 +1045,57 @@
           </div>
         </div>`;
       });
-      html += `<div class="cart-total-row"><span class="cart-total-label">Total</span><span class="cart-total-amount">${formatRupiah(grand)}</span></div>`;
+      html += `<div class="cart-total-row"><span class="cart-total-label">Total</span><span class="cart-total-amount">${grand>0?formatRupiah(grand):'-'}</span></div>`;
       el.innerHTML = html;
       validateWizard();
     }
 
     function renderWizardCart2() {
       const el = document.getElementById('wizardCartStep2');
+      const manualRow = document.getElementById('manualPriceStep2');
+      const manualInputs = document.getElementById('manualPriceInputs');
       if (cart.length === 0) {
-        el.innerHTML = '<div class="cart-empty">⚠️ Keranjang kosong!</div>';
+        el.innerHTML = '<div class="cart-empty">Keranjang kosong!</div>';
+        manualRow.style.display = 'none';
         return;
       }
-      let html = '<div class="cart-title">🛒 Ringkasan Pesanan</div>';
+      let html = '<div class="cart-title">Ringkasan Pesanan</div>';
       let grand = 0;
+      let hasManual = false;
+      let manualHtml = '';
       cart.forEach(item => {
         const p = products[item.productId];
         if (!p) return;
-        const price = getProductPrice(p, item.qty);
+        const price = getEffectivePrice(p, item.qty);
         const sub = price * item.qty;
         grand += sub;
-        const priceStr = price > 0 ? formatRupiah(price) : 'Manual';
-        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">×${item.qty} ${priceStr}</span></div><span class="cart-item-total">${sub>0?formatRupiah(sub):'Manual'}</span></div>`;
+        const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Belum disetel!') : formatRupiah(price);
+        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">×${item.qty} ${priceStr}</span></div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
+        if (p.manualPrice) {
+          hasManual = true;
+          const currentVal = manualPrices[p.id] || '';
+          manualHtml += `<div class="manual-price-row-inline" style="margin-bottom:0.3rem;">
+            <label>${p.icon} ${p.name} (${p.unit}):</label>
+            <input type="number" min="0" placeholder="Harga..." value="${currentVal}" 
+              data-product-id="${p.id}"
+              onchange="onManualPriceChange('${p.id}', this.value)" onfocus="this.select()">
+          </div>`;
+        }
       });
-      html += `<div class="cart-total-row"><span class="cart-total-label">Total</span><span class="cart-total-amount">${formatRupiah(grand)}</span></div>`;
+      html += `<div class="cart-total-row"><span class="cart-total-label">Total</span><span class="cart-total-amount">${grand>0?formatRupiah(grand):'-'}</span></div>`;
       el.innerHTML = html;
+      if (hasManual) {
+        manualRow.style.display = 'block';
+        manualInputs.innerHTML = manualHtml;
+      } else {
+        manualRow.style.display = 'none';
+      }
+    }
+
+    function onManualPriceChange(productId, value) {
+      const val = parseInt(value) || 0;
+      setManualPrice(productId, val);
+      renderWizardCart2();
     }
 
     function pilihMetode(m) {
@@ -1036,6 +1110,12 @@
       } else if (wizardStep === 2) {
         const nama = document.getElementById('wNama').value.trim();
         if (!nama) { showToast('Isi nama pembeli dulu ya', 'error'); return; }
+        // Validate manual prices before saving
+        const missingManual = cart.some(item => {
+          const p = products[item.productId];
+          return p?.manualPrice && !manualPrices[p.id];
+        });
+        if (missingManual) { showToast('Isi harga manual untuk semua produk Kopontren!', 'error'); return; }
         simpanPenjualan();
       }
     }
@@ -1045,22 +1125,14 @@
     function simpanPenjualan() {
       const items = cart.map(item => {
         const p = products[item.productId];
-        const unitPrice = getProductPrice(p, item.qty);
-        return {
-          productId: item.productId,
-          name: p.name,
-          qty: item.qty,
-          unit: p.unit,
-          hargaSatuan: unitPrice,
-          subtotal: unitPrice * item.qty
-        };
+        const unitPrice = getEffectivePrice(p, item.qty);
+        return { productId: item.productId, name: p.name, qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty };
       });
       const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
       const tanggal = document.getElementById('wTanggal').value;
       const jam = document.getElementById('wJam').value;
       const record = {
-        id: genId(),
-        tanggal, jam,
+        id: genId(), tanggal, jam,
         waktuFormat: formatWaktu(tanggal, jam),
         items, totalHarga,
         pembeli: document.getElementById('wNama').value.trim(),
@@ -1075,7 +1147,7 @@
       tutupModal('wizardModal');
       renderHome();
       updateTodayBar();
-      showToast('✅ Tercatat: ' + items.map(i=>i.name+' ×'+i.qty).join(', '), 'success');
+      showToast('Tercatat: ' + items.map(i=>i.name+' ×'+i.qty).join(', '), 'success');
     }
 
     // =============================================
@@ -1128,7 +1200,7 @@
       saveData(data);
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
-      showToast(data[idx].status === 'settled' ? '✅ Sudah ditandai dilaporkan' : '↩️ Dibatalkan — kembali belum dilaporkan', 'success');
+      showToast(data[idx].status === 'settled' ? 'Sudah ditandai dilaporkan' : 'Dibatalkan — kembali belum dilaporkan', 'success');
     }
 
     function editTransaksi() {
@@ -1137,7 +1209,6 @@
       const t = data.find(r => r.id === detailId);
       if (!t) return;
       tutupModal('detailModal');
-      // Open wizard pre-filled
       cart = t.items ? t.items.map(i => ({productId: i.productId, qty: i.qty})) : [];
       wizardStep = 2; wizardMetode = t.metode || 'CASH';
       document.getElementById('wNama').value = t.pembeli || '';
@@ -1148,7 +1219,7 @@
       pilihMetode(wizardMetode);
       showWizardStep(2);
       document.getElementById('wizardModal').classList.add('show');
-      document.getElementById('wNext').textContent = '✓ Update Transaksi';
+      document.getElementById('wNext').textContent = 'Update Transaksi';
       document.getElementById('wNext').onclick = () => updateTransaksi();
       document.body.style.overflow = 'hidden';
     }
@@ -1158,21 +1229,34 @@
       const data = loadData();
       const idx = data.findIndex(r => r.id === detailId);
       if (idx === -1) return;
+      // Re-populate manual prices from inputs
+      cart.forEach(item => {
+        const p = products[item.productId];
+        if (p?.manualPrice) {
+          const input = document.querySelector(`#manualPriceInputs input`);
+          // We'll read from the inputs after rendering
+        }
+      });
+      // Read manual prices from inputs
+      document.querySelectorAll('#manualPriceInputs input[data-product-id]').forEach(input => {
+        const val = parseInt(input.value) || 0;
+        const pid = input.dataset.productId;
+        if (pid) setManualPrice(pid, val);
+      });
       const items = cart.map(item => {
         const p = products[item.productId];
-        const unitPrice = getProductPrice(p, item.qty);
+        const unitPrice = getEffectivePrice(p, item.qty);
         return {productId: item.productId, name: p.name, qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty};
       });
       const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
       data[idx] = {...data[idx], items, totalHarga, pembeli: document.getElementById('wNama').value.trim(), kategoriPembeli: document.getElementById('wKategori').value, tanggal: document.getElementById('wTanggal').value, jam: document.getElementById('wJam').value, waktuFormat: formatWaktu(document.getElementById('wTanggal').value, document.getElementById('wJam').value), metode: wizardMetode, catatan: document.getElementById('wCatatan').value.trim()};
       saveData(data);
       tutupModal('wizardModal');
-      // Reset wizard next btn
-      document.getElementById('wNext').textContent = '✓ Simpan';
+      document.getElementById('wNext').textContent = 'Simpan';
       document.getElementById('wNext').onclick = wizardNext;
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
-      showToast('✅ Transaksi berhasil diupdate', 'success');
+      showToast('Transaksi berhasil diupdate', 'success');
     }
 
     function hapusTransaksi() {
@@ -1186,12 +1270,11 @@
       detailId = null;
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
-      showToast(`🗑️ ${newName} dihapus`, 'info', () => {
-        // Undo
+      showToast(`${newName} dihapus`, 'info', () => {
         data.push(t);
         saveData(data);
         renderHome(); updateTodayBar();
-        showToast('↩️ Dibatalkan — transaksi dikembalikan', 'success');
+        showToast('Dibatalkan — transaksi dikembalikan', 'success');
       });
     }
 
@@ -1228,7 +1311,7 @@
       }
       saveData(data);
       renderHome(); updateTodayBar();
-      showToast(data[idx].status === 'settled' ? '✅ Sudah dilaporkan' : '↩️ Dibatalkan', 'success');
+      showToast(data[idx].status === 'settled' ? 'Sudah dilaporkan' : 'Dibatalkan', 'success');
     }
     function ctxHapus() {
       tutupCtxMenu();
@@ -1241,11 +1324,11 @@
       data.splice(idx, 1);
       saveData(data);
       renderHome(); updateTodayBar();
-      showToast(`🗑️ ${newName} dihapus`, 'info', () => {
+      showToast(`${newName} dihapus`, 'info', () => {
         data.splice(idx, 0, t);
         saveData(data);
         renderHome(); updateTodayBar();
-        showToast('↩️ Dibatalkan', 'success');
+        showToast('Dibatalkan', 'success');
       });
     }
     document.addEventListener('click', (e) => {
@@ -1260,12 +1343,7 @@
       const pending = data.filter(t => t.status === 'pending');
       const content = document.getElementById('laporanContent');
       if (pending.length === 0) {
-        content.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">✅</div>
-            <p>Alhamdulillah, semua sudah dilaporkan!</p>
-            <div class="empty-sub">Tidak ada transaksi yang perlu dilaporan</div>
-          </div>`;
+        content.innerHTML = `<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div><p>Alhamdulillah, semua sudah dilaporkan!</p><div class="empty-sub">Tidak ada transaksi yang perlu dilaporan</div></div>`;
         document.getElementById('laporanBtn').style.display = 'none';
       } else {
         const total = pending.reduce((s,t) => s + (t.totalHarga||0), 0);
@@ -1275,6 +1353,10 @@
             <div class="report-total-amount">${formatRupiah(total)}</div>
             <div class="report-total-count">${pending.length} transaksi</div>
           </div>
+          <button class="btn-report-wa" onclick="kirimRekapWA()" style="margin-bottom:0.75rem;">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Kirim Rekap via WhatsApp
+          </button>
           <div class="tx-list">`;
         pending.slice().reverse().forEach(t => {
           const names = t.items ? t.items.map(i=>i.name).join(', ') : (t.barang||'Transaksi');
@@ -1285,7 +1367,7 @@
               <div class="tx-buyer">${escHtml(t.pembeli||'-')} · ${qtyInfo}</div></div>
               <div class="tx-total">${formatRupiah(t.totalHarga||0)}</div>
             </div>
-            <div class="tx-meta"><span>🕐 ${escHtml(t.waktuFormat||t.tanggal)}</span>
+            <div class="tx-meta"><span><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg> ${escHtml(t.waktuFormat||t.tanggal)}</span>
             <span class="badge badge-${t.metode==='CASH'?'cash':t.metode==='TRANSFER'?'tf':'utang'}">${t.metode}</span></div>
             <div class="tx-id">${escHtml(t.id)}</div>
           </div>`;
@@ -1310,7 +1392,7 @@
       saveData(data);
       tutupLaporan();
       renderHome(); updateTodayBar();
-      showToast(`✅ ${pending.length} transaksi ditandai dilaporkan`, 'success');
+      showToast(`${pending.length} transaksi ditandai dilaporkan`, 'success');
     }
 
     // =============================================
@@ -1358,7 +1440,7 @@
       const data = getFilteredData();
       const list = document.getElementById('riwayatList');
       if (data.length === 0) {
-        list.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>Tidak ada transaksi</p><div class="empty-sub">Coba ubah filter atau kata kunci</div></div>`;
+        list.innerHTML = `<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div><p>Tidak ada transaksi</p><div class="empty-sub">Coba ubah filter atau kata kunci</div></div>`;
         return;
       }
       list.innerHTML = data.slice().reverse().map(t => renderTxCard(t)).join('');
@@ -1392,22 +1474,28 @@
         if (!cats[cat]) cats[cat] = [];
         cats[cat].push({id, ...p});
       });
+      let idx = 0;
       for (const [cat, items] of Object.entries(cats)) {
         html += `<div class="cat-label" style="margin-top:0.5rem;">${cat}</div>`;
-        items.forEach((p, idx) => {
-          html += `<div class="price-product-header" onclick="togglePriceSection(${idx})">
+        items.forEach(p => {
+          const cardIdx = idx++;
+          html += `<div class="price-product-header" onclick="togglePriceSection(${cardIdx})">
             <span class="pp-name">${p.icon} ${p.name}</span>
-            <span class="pp-toggle" id="ppToggle${idx}">▼</span>
+            <span class="pp-toggle" id="ppToggle${cardIdx}">▼</span>
           </div>
-          <div class="price-tiers" id="priceTiers${idx}">
-            <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:0.3rem;font-weight:600;">Tier harga (per ${p.unit}):</div>`;
-          p.tiers.forEach((tier, tidx) => {
-            const label = tier.min >= 20 ? '20+' + p.unit : tier.min + '-' + (tier.max >= 99999 ? '' : tier.max) + ' ' + p.unit;
-            html += `<div class="price-tier-row">
-              <span class="price-tier-label">${label}</span>
-              <input class="price-tier-input" type="number" min="0" value="${tier.price}" data-key="${p.id}" data-tier="${tidx}">
-            </div>`;
-          });
+          <div class="price-tiers" id="priceTiers${cardIdx}">`;
+          if (p.manualPrice) {
+            html += `<div class="manual-price-label">Harga bisa diubah manual per transaksi</div>`;
+          } else {
+            html += `<div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:0.3rem;font-weight:600;">Tier harga (per ${p.unit}):</div>`;
+            p.tiers.forEach((tier, tidx) => {
+              const label = tier.min >= 20 ? '20+' + p.unit : tier.min + '-' + (tier.max >= 99999 ? '' : tier.max) + ' ' + p.unit;
+              html += `<div class="price-tier-row">
+                <span class="price-tier-label">${label}</span>
+                <input class="price-tier-input" type="number" min="0" value="${tier.price}" data-key="${p.id}" data-tier="${tidx}">
+              </div>`;
+            });
+          }
           html += '</div>';
         });
       }
@@ -1427,7 +1515,7 @@
         products[key].tiers[tierIdx].price = val;
       });
       saveProducts();
-      showToast('✅ Harga berhasil disimpan!', 'success');
+      showToast('Harga berhasil disimpan!', 'success');
     }
 
     // =============================================
@@ -1450,7 +1538,7 @@
       a.href = url; a.download = 'kopontren_' + getTodayStr() + '.csv';
       a.click(); URL.revokeObjectURL(url);
       tutupExport();
-      showToast('✅ File CSV berhasil diunduh', 'success');
+      showToast('File CSV berhasil diunduh', 'success');
     }
     function downloadJSON() {
       const data = loadData();
@@ -1463,7 +1551,7 @@
       tutupExport();
       localStorage.setItem(BACKUP_KEY, new Date().toISOString());
       updateLastBackup();
-      showToast('✅ Backup JSON berhasil diunduh', 'success');
+      showToast('Backup JSON berhasil diunduh', 'success');
     }
     function backupData() {
       tutupLiyane();
@@ -1476,7 +1564,7 @@
       a.click(); URL.revokeObjectURL(url);
       localStorage.setItem(BACKUP_KEY, new Date().toISOString());
       updateLastBackup();
-      showToast('✅ Backup berhasil diunduh', 'success');
+      showToast('Backup berhasil diunduh', 'success');
     }
     function restoreData() {
       tutupLiyane();
@@ -1499,7 +1587,7 @@
           document.getElementById('restorePreview').style.display = 'block';
           document.getElementById('restorePreview').innerHTML = `
             <div style="background:var(--amber-light);border:1.5px solid #FDE68A;border-radius:10px;padding:0.7rem;font-size:0.8rem;color:#92400E;line-height:1.5;">
-              ⚠️ Pilih cara combine:<br>
+              Pilih cara combine:<br>
               <strong style="margin-top:0.3rem;display:block;">Tambah</strong> = tambahkan ke data sekarang<br>
               <strong style="margin-top:0.2rem;display:block;">Ganti Semua</strong> = timpa semua data sekarang
             </div>`;
@@ -1510,8 +1598,6 @@
       e.target.value = '';
     }
     function doRestore(mode) {
-      const preview = document.getElementById('restorePreview').innerHTML;
-      // Re-read the file
       const input = document.getElementById('fileRestore');
       if (!input.files[0]) { showToast('Pilih file dulu!', 'error'); return; }
       const reader = new FileReader();
@@ -1520,12 +1606,12 @@
           const newData = JSON.parse(ev.target.result);
           if (mode === 'replace') {
             saveData(newData);
-            showToast(`✅ ${newData.length} transaksi berhasil dipulihkan`, 'success');
+            showToast(`${newData.length} transaksi berhasil dipulihkan`, 'success');
           } else {
             const existing = loadData();
             const combined = [...existing, ...newData];
             saveData(combined);
-            showToast(`✅ ${newData.length} transaksi ditambahkan (${combined.length} total)`, 'success');
+            showToast(`${newData.length} transaksi ditambahkan (${combined.length} total)`, 'success');
           }
           tutupRestore();
           renderHome(); updateTodayBar();
@@ -1538,12 +1624,12 @@
     // RESET
     // =============================================
     function resetAllData() {
+      tutupLiyane();
       if (!confirm('Yakin hapus SEMUA data transaksi?')) return;
       if (!confirm('Benar-benar yakin? Data tidak bisa dikembalikan.')) return;
       localStorage.removeItem(STORAGE_KEY);
       renderHome(); updateTodayBar();
-      tutupLiyane();
-      showToast('🗑️ Semua data sudah dihapus', 'info');
+      showToast('Semua data sudah dihapus', 'info');
     }
 
     // =============================================
@@ -1564,7 +1650,8 @@
         msg += `*Total: ${formatRupiah(totalBelum)}*\n\n`;
         pending.forEach(t => {
           const names = t.items ? t.items.map(i => `${i.name} (${i.qty}${i.unit})`).join(', ') : `${t.barang} (${t.qty}${t.unit})`;
-          msg += `• ${names} — ${formatRupiah(t.totalHarga||t.harga||0)}\n  ${t.pembeli} | ${t.metode}\n`;
+          msg += `• ${names} — ${formatRupiah(t.totalHarga||t.harga||0)}\n`;
+          msg += `  ${t.pembeli} | ${t.metode}\n`;
         });
         msg += '\n';
       }
@@ -1576,7 +1663,7 @@
       msg += `_Catatan Penjualan Gus Lim_`;
       navigator.clipboard.writeText(msg).then(() => {
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-        showToast('📋 Teks rekap disalin! Kirim via WA.', 'success');
+        showToast('Rekap disalin! Kirim via WA.', 'success');
       }).catch(() => {
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
       });
@@ -1591,7 +1678,7 @@
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem(THEME_KEY, next);
       document.getElementById('themeArrow').textContent = next === 'dark' ? '☀️' : '🌙';
-      showToast(next === 'dark' ? '🌙 Mode gelap aktif' : '☀️ Mode terang aktif', 'info');
+      showToast(next === 'dark' ? 'Mode gelap aktif' : 'Mode terang aktif', 'info');
     }
     function applyTheme() {
       const saved = localStorage.getItem(THEME_KEY);
