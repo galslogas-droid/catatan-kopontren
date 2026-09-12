@@ -1,9 +1,8 @@
 // Service Worker Cache Offline untuk Kopontren Gus Lim
-const CACHE_NAME = 'kopontren-v4';
+const CACHE_NAME = 'kopontren-v7';
 const ASSETS = [
   './',
   './index.html',
-  './catatan_kopontren_guslim.html',
   './manifest.json',
   './icon-192.svg',
   './icon-512.svg'
@@ -32,7 +31,7 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((res) => {
-      return res || fetch(e.request).catch(() => caches.match('./catatan_kopontren_guslim.html'));
+      return res || fetch(e.request).catch(() => caches.match('./index.html'));
     })
   );
 });
