@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Generate Baitina Icon</title>
+<style>
+  body { margin: 0; background: #1a1a1a; display: flex; gap: 20px; padding: 20px; flex-wrap: wrap; }
+  canvas { border-radius: 20px; }
+  .info { color: white; font-family: sans-serif; }
+  button { padding: 10px 20px; margin: 5px; cursor: pointer; background: #064E3B; color: white; border: none; border-radius: 8px; font-size: 14px; }
+</style>
+</head>
+<body>
+<div>
+  <div class="info"><h3>Icon Preview</h3></div>
+  <canvas id="c512" width="512" height="512"></canvas>
+  <canvas id="c192" width="192" height="192"></canvas>
+  <br>
+  <button onclick="download('c512','icon-512.png')">⬇ Download icon-512.png</button>
+  <button onclick="download('c192','icon-192.png')">⬇ Download icon-192.png</button>
+</div>
+
+<script>
+const img = new Image();
+img.src = 'logo madu png.png';
+img.onload = () => {
+  drawIcon('c512', 512);
+  drawIcon('c192', 192);
+};
+img.onerror = () => {
+  drawIcon('c512', 512, true);
+  drawIcon('c192', 192, true);
+};
+
+function drawIcon(canvasId, size, noLogo) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  const s = size;
+
+  // Background gradient - deep emerald green
+  const bgGrad = ctx.createLinearGradient(0, 0, s, s);
+  bgGrad.addColorStop(0, '#0A6B4E');
+  bgGrad.addColorStop(1, '#022C22');
+  
+  // Rounded rect background
+  roundRect(ctx, 0, 0, s, s, s * 0.21, bgGrad);
+
+  // Subtle honeycomb pattern
+  ctx.save();
+  ctx.globalAlpha = 0.06;
+  ctx.fillStyle = '#F59E0B';
+  const hexSize = s * 0.1;
+  drawHoneycombs(ctx, s, hexSize);
+  ctx.restore();
+
+  // Radial glow center
+  const centerGlow = ctx.createRadialGradient(s/2, s*0.42, 0, s/2, s*0.42, s*0.38);
+  centerGlow.addColorStop(0, 'rgba(245,158,11,0.12)');
+  centerGlow.addColorStop(1, 'rgba(245,158,11,0)');
+  ctx.fillStyle = centerGlow;
+  ctx.fillRect(0, 0, s, s);
+
+  if (!noLogo && img.complete) {
+    // Draw logo (the bee + text) centered, cropped to focus on the bee part (right side)
+    // Logo is wide: ~1560x500 px, bee is in the top-right area
+    // We'll draw just the bee portion from the logo
+    const logoW = img.naturalWidth;
+    const logoH = img.naturalHeight;
+    
+    // Crop: just the bee from top-right corner of logo
+    const beeX = logoW * 0.72;  // start from 72% width
+    const beeY = 0;
+    const beeCropW = logoW * 0.3;
+    const beeCropH = logoH * 0.55;
+    
+    // Draw big bee in center-top
+    const drawBeeSize = s * 0.52;
+    const beeDrawX = (s - drawBeeSize) / 2;
+    const beeDrawY = s * 0.06;
+    ctx.save();
+    ctx.shadowColor = 'rgba(245,158,11,0.4)';
+    ctx.shadowBlur = s * 0.06;
+    ctx.drawImage(img, beeX, beeY, beeCropW, beeCropH, beeDrawX, beeDrawY, drawBeeSize, drawBeeSize);
+    ctx.restore();
+
+    // Draw "Baitina" text from logo style
+    drawText(ctx, s);
+  } else {
+    // Fallback: draw bee manually
+    drawBeeFallback(ctx, s);
+    drawText(ctx, s);
+  }
+
+  // Border ring subtle
+  ctx.save();
+  ctx.strokeStyle = 'rgba(245,158,11,0.2)';
+  ctx.lineWidth = s * 0.018;
+  roundRectStroke(ctx, s*0.014, s*0.014, s*0.972, s*0.972, s*0.20);
+  ctx.restore();
+}
+
+function drawText(ctx, s) {
+  // "Madu ruQyah" small text
+  ctx.save();
+  ctx.font = `${s*0.072}px 'Arial Rounded MT Bold', Arial, sans-serif`;
+  ctx.fillStyle = '#FBBF24';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(0,0,0,0.4)';
+  ctx.shadowBlur = s*0.02;
+  ctx.fillText('Madu ruQyah', s/2, s * 0.74);
+  ctx.restore();
+
+  // "Baitina" big text
+  ctx.save();
+  // Gradient text
+  const textGrad = ctx.createLinearGradient(s*0.2, s*0.78, s*0.8, s*0.92);
+  textGrad.addColorStop(0, '#FDE68A');
+  textGrad.addColorStop(0.5, '#F59E0B');
+  textGrad.addColorStop(1, '#D97706');
+  
+  ctx.font = `900 ${s*0.175}px 'Arial Rounded MT Bold', 'Trebuchet MS', Arial, sans-serif`;
+  ctx.fillStyle = textGrad;
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur = s*0.025;
+  ctx.fillText('Baitina', s/2, s * 0.895);
+  ctx.restore();
+
+  // Gold underline
+  ctx.save();
+  ctx.fillStyle = '#F59E0B';
+  ctx.globalAlpha = 0.7;
+  roundRect(ctx, s*0.28, s*0.91, s*0.44, s*0.008, s*0.004, '#F59E0B');
+  ctx.restore();
+}
+
+function drawBeeFallback(ctx, s) {
+  const cx = s/2, cy = s*0.38;
+
+  // Wings
+  ctx.save();
+  ctx.globalAlpha = 0.8;
+  // Left wing
+  ctx.beginPath();
+  ctx.ellipse(cx - s*0.18, cy - s*0.08, s*0.18, s*0.09, -0.55, 0, Math.PI*2);
+  const wg1 = ctx.createLinearGradient(cx-s*0.36, cy-s*0.17, cx, cy);
+  wg1.addColorStop(0, 'rgba(236,253,245,0.95)');
+  wg1.addColorStop(1, 'rgba(110,231,183,0.7)');
+  ctx.fillStyle = wg1;
+  ctx.fill();
+  // Right wing
+  ctx.beginPath();
+  ctx.ellipse(cx + s*0.18, cy - s*0.08, s*0.18, s*0.09, 0.55, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // Body gradient
+  const bodyGrad = ctx.createLinearGradient(cx, cy-s*0.17, cx, cy+s*0.17);
+  bodyGrad.addColorStop(0, '#FDE68A');
+  bodyGrad.addColorStop(0.5, '#F59E0B');
+  bodyGrad.addColorStop(1, '#D97706');
+
+  // Abdomen
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.25)';
+  ctx.shadowBlur = s*0.04;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy + s*0.05, s*0.115, s*0.155, 0, 0, Math.PI*2);
+  ctx.fillStyle = bodyGrad;
+  ctx.fill();
+  ctx.restore();
+
+  // Stripes on body
+  for (let i = 0; i < 3; i++) {
+    ctx.save();
+    ctx.globalAlpha = 0.55;
+    ctx.fillStyle = '#1C1917';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy - s*0.01 + i * s*0.055, s*0.108, s*0.018, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Thorax
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.2)';
+  ctx.shadowBlur = s*0.03;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy - s*0.1, s*0.09, s*0.07, 0, 0, Math.PI*2);
+  ctx.fillStyle = bodyGrad;
+  ctx.fill();
+  ctx.restore();
+
+  // Head
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(cx, cy - s*0.19, s*0.085, s*0.08, 0, 0, Math.PI*2);
+  ctx.fillStyle = bodyGrad;
+  ctx.fill();
+  ctx.restore();
+
+  // Eyes
+  [[cx-s*0.035, cy-s*0.20], [cx+s*0.035, cy-s*0.20]].forEach(([ex, ey]) => {
+    ctx.beginPath();
+    ctx.ellipse(ex, ey, s*0.022, s*0.026, 0, 0, Math.PI*2);
+    ctx.fillStyle = '#1C1917';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(ex + s*0.006, ey - s*0.006, s*0.008, 0, Math.PI*2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+  });
+
+  // Antennae
+  ctx.save();
+  ctx.strokeStyle = '#1C1917';
+  ctx.lineWidth = s*0.011;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(cx - s*0.03, cy - s*0.265);
+  ctx.quadraticCurveTo(cx - s*0.06, cy - s*0.32, cx - s*0.09, cy - s*0.35);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(cx + s*0.03, cy - s*0.265);
+  ctx.quadraticCurveTo(cx + s*0.06, cy - s*0.32, cx + s*0.09, cy - s*0.35);
+  ctx.stroke();
+  ctx.restore();
+
+  // Antenna tips
+  [[cx-s*0.09, cy-s*0.35], [cx+s*0.09, cy-s*0.35]].forEach(([ax, ay]) => {
+    ctx.beginPath();
+    ctx.arc(ax, ay, s*0.018, 0, Math.PI*2);
+    ctx.fillStyle = '#F59E0B';
+    ctx.fill();
+    ctx.strokeStyle = '#1C1917';
+    ctx.lineWidth = s*0.008;
+    ctx.stroke();
+  });
+}
+
+function drawHoneycombs(ctx, s, hex) {
+  const positions = [
+    [0.1, 0.08], [0.2, 0.16], [0.7, 0.08], [0.8, 0.16],
+    [0.1, 0.6], [0.8, 0.6], [0.2, 0.68], [0.7, 0.68]
+  ];
+  positions.forEach(([px, py]) => {
+    drawHex(ctx, px*s, py*s, hex);
+  });
+}
+
+function drawHex(ctx, cx, cy, r) {
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const angle = (Math.PI / 3) * i - Math.PI/6;
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function roundRect(ctx, x, y, w, h, r, fill) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+  if (fill) ctx.fillStyle = fill;
+  ctx.fill();
+}
+
+function roundRectStroke(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+  ctx.stroke();
+}
+
+function download(canvasId, filename) {
+  const canvas = document.getElementById(canvasId);
+  const a = document.createElement('a');
+  a.download = filename;
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+</script>
+</body>
+</html>

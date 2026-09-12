@@ -659,23 +659,6 @@
       </div>
     </div>
 
-    <!-- Banner Download / Install Aplikasi Langsung -->
-    <div class="pwa-install-card" id="pwaInstallBanner">
-      <div class="pwa-install-left">
-        <div class="pwa-install-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
-          </svg>
-        </div>
-        <div>
-          <div class="pwa-install-title">Pasang Aplikasi Kopontren</div>
-          <div class="pwa-install-desc">Download dadi aplikasi ing layar HP Gus Lim</div>
-        </div>
-      </div>
-      <button class="btn-install-app" id="btnInstallPwa" onclick="pasangAplikasiPwa()">
-        Pasang Saiki
-      </button>
-    </div>
 
     <!-- Rekap Ringkas -->
     <div class="rekap-card">
@@ -1263,6 +1246,10 @@
         alert('Harga mohon diisi dengan benar');
         return;
       }
+      if (!qty || qty <= 0 || isNaN(qty)) {
+        alert('Qty harus lebih dari 0');
+        return;
+      }
 
       // Tambahkan info rasa jika nasi jagung
       if (currentProductKey === 'nasijagung') {
@@ -1525,42 +1512,6 @@
       render();
     }
 
-    // Logika Download / Pasang PWA
-    let deferredPrompt;
-    const btnInstall = document.getElementById('btnInstallPwa');
-    const bannerInstall = document.getElementById('pwaInstallBanner');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      if (bannerInstall) bannerInstall.style.display = 'flex';
-      if (btnInstall) btnInstall.innerText = 'Pasang Saiki';
-    });
-
-    function pasangAplikasiPwa() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User nampa instalasi aplikasi Kopontren');
-            if (bannerInstall) bannerInstall.style.display = 'none';
-          }
-          deferredPrompt = null;
-        });
-      } else {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        if (isIOS) {
-          alert('Cara Pasang ing iPhone (Safari):\n1. Pencet tombol Share (kothak panah munggah ing ngisor)\n2. Pilih "Add to Home Screen" (Tambah menyang Layar Utama)');
-        } else {
-          alert('Cara Pasang ing Android (Chrome):\n1. Pencet titik 3 (⋮) ing pojok tengen ndhuwur browser\n2. Pilih menu "Install app" utawa "Tambahkan ke Layar Utama" (Add to Home screen)');
-        }
-      }
-    }
-
-    window.addEventListener('appinstalled', () => {
-      if (bannerInstall) bannerInstall.style.display = 'none';
-      alert('Alhamdulillah! Aplikasi Kopontren wis kasil dipasang ing layar HP.');
-    });
 
     // Registrasi Service Worker PWA
     if ('serviceWorker' in navigator) {

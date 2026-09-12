@@ -4,7 +4,9 @@ const ASSETS = [
   './',
   './index.html',
   './catatan_kopontren_guslim.html',
-  './manifest.json'
+  './manifest.json',
+  './icon-192.svg',
+  './icon-512.svg'
 ];
 
 self.addEventListener('install', (e) => {
