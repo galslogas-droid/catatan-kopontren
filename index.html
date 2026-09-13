@@ -61,8 +61,10 @@
     }
     .header-top { display: flex; justify-content: space-between; align-items: center; }
     header { padding-top: calc(0.95rem + env(safe-area-inset-top, 0px)); padding-left: calc(1.05rem + env(safe-area-inset-left, 0px)); padding-right: calc(1.05rem + env(safe-area-inset-right, 0px)); }
+    .brand { display: flex; align-items: center; gap: 0.55rem; }
+    .brand-logo { width: 34px; height: 34px; flex-shrink: 0; }
     .brand h1 {
-      font-size: 0.98rem; font-weight: 800; letter-spacing: -0.3px; line-height: 1.25;
+      font-size: 0.92rem; font-weight: 800; letter-spacing: -0.3px; line-height: 1.25;
     }
     .brand .tagline {
       font-size: 0.68rem; color: rgba(255,255,255,0.72); font-weight: 600;
@@ -212,7 +214,7 @@
     .badge-pending { background: #FEF3C7; color: #92400E; }
     .badge-settled { background: #D1FAE5; color: #065F46; }
     .tx-menu-btn {
-      position: absolute; top: 0.55rem; right: 0.55rem;
+      position: absolute; top: 0.55rem; right: 2.8rem;
       background: var(--surface-alt); border: 1px solid var(--border);
       color: var(--text-muted);
       width: 28px; height: 28px; border-radius: 8px;
@@ -221,6 +223,17 @@
       transition: transform 0.12s var(--ease);
     }
     .tx-menu-btn:active { transform: scale(0.9); }
+    .tx-edit-btn {
+      position: absolute; top: 0.55rem; right: 0.55rem;
+      background: var(--primary-light); border: none;
+      color: var(--primary);
+      width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; padding: 0;
+      transition: transform 0.12s var(--ease), background 0.12s var(--ease);
+    }
+    .tx-edit-btn:active { transform: scale(0.9); background: #a7f3d0; }
+    .tx-edit-btn svg { width: 14px; height: 14px; }
     .tx-id { font-size: 0.6rem; color: var(--text-muted); font-family: monospace; margin-top: 0.2rem; }
     /* FAB */
     .fab {
@@ -527,6 +540,42 @@
     .filter-btn.active {
       background: var(--primary); color: white; border-color: var(--primary);
     }
+    /* DATE FILTER */
+    .date-filter-area {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0.4rem 0 0.5rem;
+      padding: 0.6rem 0.75rem;
+      background: var(--surface-alt);
+      border-radius: 10px;
+      flex-wrap: wrap;
+    }
+    .date-filter-area.show { display: flex; }
+    .date-filter-area label {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted); white-space: nowrap;
+    }
+    .date-filter-area input[type="date"] {
+      flex: 1; min-width: 120px; padding: 0.4rem 0.5rem;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 0.8rem; font-family: inherit; background: var(--input-bg); color: var(--text);
+    }
+    .date-filter-area input[type="date"]:focus {
+      outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5,150,105,0.12);
+    }
+    .btn-apply-date {
+      padding: 0.4rem 0.7rem; border-radius: 8px; border: none;
+      font-size: 0.72rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+      background: var(--primary); color: white; transition: transform 0.12s var(--ease);
+    }
+    .btn-apply-date:active { transform: scale(0.95); }
+    .btn-clear-date {
+      padding: 0.4rem 0.7rem; border-radius: 8px; border: 1.5px solid var(--border);
+      font-size: 0.72rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+      background: var(--input-bg); color: var(--text-muted); transition: transform 0.12s var(--ease);
+    }
+    .btn-clear-date:active { transform: scale(0.95); }
     .search-bar { margin: 0.5rem 0; }
     .search-bar input {
       width: 100%; padding: 0.6rem 0.75rem; padding-left: 2.3rem;
@@ -666,8 +715,31 @@
   <header>
     <div class="header-top">
       <div class="brand">
-        <h1>KOPONTREN AL ITTIHAD</h1>
-        <div class="tagline">Catatan Penjualan · Gus Lim</div>
+        <svg class="brand-logo" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="bl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#064E3B"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
+          <rect width="192" height="192" rx="42" fill="url(#bl)"/>
+          <polygon points="96,18 162,56 162,128 96,166 30,128 30,56" fill="none" stroke="#F59E0B" stroke-width="6" stroke-linejoin="round"/>
+          <polygon points="96,38 142,65 142,115 96,142 50,115 50,65" fill="none" stroke="#F59E0B" stroke-width="3.5" stroke-linejoin="round" opacity="0.6"/>
+          <polygon points="96,55 125,73 125,107 96,125 67,107 67,73" fill="#F59E0B" opacity="0.85"/>
+          <ellipse cx="96" cy="90" rx="24" ry="32" fill="#1F2937"/>
+          <rect x="76" y="74" width="40" height="7" rx="3.5" fill="#F59E0B"/>
+          <rect x="76" y="88" width="40" height="7" rx="3.5" fill="#F59E0B"/>
+          <rect x="76" y="102" width="40" height="7" rx="3.5" fill="#F59E0B"/>
+          <circle cx="96" cy="54" r="16" fill="#1F2937"/>
+          <circle cx="90" cy="50" r="3" fill="white"/>
+          <circle cx="102" cy="50" r="3" fill="white"/>
+          <circle cx="91" cy="51" r="1.5" fill="#1F2937"/>
+          <circle cx="103" cy="51" r="1.5" fill="#1F2937"/>
+          <path d="M86 40 Q80 28 74 24" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M106 40 Q112 28 118 24" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <ellipse cx="64" cy="80" rx="18" ry="26" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.45)" stroke-width="2" transform="rotate(-18 64 80)"/>
+          <ellipse cx="128" cy="80" rx="18" ry="26" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.45)" stroke-width="2" transform="rotate(18 128 80)"/>
+          <path d="M96 122 L96 136" stroke="#1F2937" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <h1>KOPONTREN AL ITTIHAD</h1>
+          <div class="tagline">Catatan Penjualan · Gus Lim</div>
+        </div>
       </div>
       <div class="header-actions">
         <button class="icon-btn wa" onclick="kirimRekapWA()" title="Kirim Rekap WhatsApp" aria-label="Kirim rekap via WhatsApp">
@@ -847,10 +919,15 @@
   </div>
   <!-- ===== LAPORAN MODAL ===== -->
   <div class="modal" id="laporanModal">
-    <div class="modal-sheet">
+    <div class="modal-sheet" style="padding-bottom:1.5rem;">
       <div class="modal-handle"></div>
-      <div class="modal-title">Laporan ke Pak Kholiq</div>
-      <div class="modal-subtitle" id="laporanSub">Transaksi yang belum dilaporkan</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+        <div class="modal-title" style="margin:0;">Laporan ke Pak Kholiq</div>
+        <button class="btn-back" style="flex:0;" onclick="tutupLaporan()">Tutup</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="laporanSearchInput" placeholder="Cari nama / barang..." oninput="currentLaporanSearch=this.value;bukaLaporan()">
+      </div>
       <div id="laporanContent"></div>
       <div class="nav-btns">
         <button class="btn-back" onclick="tutupLaporan()">Tutup</button>
@@ -874,7 +951,16 @@
         <button class="filter-btn" data-filter="yesterday" onclick="setFilter('yesterday')">Kemarin</button>
         <button class="filter-btn" data-filter="week" onclick="setFilter('week')">7 Hari</button>
         <button class="filter-btn" data-filter="month" onclick="setFilter('month')">Bulan Ini</button>
+        <button class="filter-btn" data-filter="date" onclick="toggleDateFilter()">📅 Tanggal</button>
         <button class="filter-btn" data-filter="all" onclick="setFilter('all')">Semua</button>
+      </div>
+      <div class="date-filter-area" id="dateFilterArea">
+        <label>Dari:</label>
+        <input type="date" id="dateFrom">
+        <label>Sampai:</label>
+        <input type="date" id="dateTo">
+        <button class="btn-apply-date" onclick="applyDateFilter()">Terapkan</button>
+        <button class="btn-clear-date" onclick="clearDateFilter()">Reset</button>
       </div>
       <div class="tx-list" id="riwayatList"></div>
     </div>
@@ -1045,6 +1131,9 @@
     let currentView = 'home';
     let currentFilter = 'today';
     let currentSearch = '';
+    let currentDateFrom = '';
+    let currentDateTo = '';
+    let currentLaporanSearch = '';
     let wizardStep = 1;
     let cart = [];
     let wizardMetode = 'CASH';
@@ -1271,6 +1360,9 @@
       const names = t.items ? t.items.map(i => i.name).join(', ') : (t.barang || 'Transaksi');
       const qtyInfo = t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||''));
       return `<div class="tx-card ${t.status}" data-id="${t.id}">
+        <button class="tx-edit-btn" aria-label="Edit transaksi" onclick="event.stopPropagation(); editTxCard('${t.id}')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </button>
         <button class="tx-menu-btn" aria-label="Menu transaksi">•••</button>
         <div class="tx-top">
           <div>
@@ -1685,6 +1777,10 @@
       ctxId = null;
     }
     function ctxEdit() { tutupCtxMenu(); if (ctxId) bukaDetail(ctxId); }
+    function editTxCard(id) {
+      detailId = id;
+      editTransaksi();
+    }
     function ctxSetor() {
       tutupCtxMenu();
       if (!ctxId) return;
@@ -1728,7 +1824,15 @@
     // =============================================
     function bukaLaporan() {
       const data = loadData();
-      const pending = data.filter(t => t.status === 'pending');
+      let pending = data.filter(t => t.status === 'pending');
+      // Apply search filter
+      if (currentLaporanSearch.trim()) {
+        const q = currentLaporanSearch.toLowerCase();
+        pending = pending.filter(t => {
+          const names = t.items ? t.items.map(i=>i.name.toLowerCase()).join(' ') : (t.barang||'').toLowerCase();
+          return names.includes(q) || (t.pembeli||'').toLowerCase().includes(q);
+        });
+      }
       const content = document.getElementById('laporanContent');
       if (pending.length === 0) {
         content.innerHTML = `<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div><p>Alhamdulillah, semua sudah dilaporkan!</p><div class="empty-sub">Tidak ada transaksi yang perlu dilaporan</div></div>`;
@@ -1747,30 +1851,20 @@
           </button>
           <div class="tx-list">`;
         pending.slice().reverse().forEach(t => {
-          const names = t.items ? t.items.map(i=>i.name).join(', ') : (t.barang||'Transaksi');
-          const qtyInfo = t.items ? t.items.map(i=>i.qty+(i.unit||'')).join(', ') : ((t.qty||'')+(t.unit||''));
-          html += `<div class="tx-card pending" data-id="${t.id}" style="margin-bottom:0.4rem;">
-            <div class="tx-top">
-              <div><div class="tx-name">${escHtml(names)}</div>
-              <div class="tx-buyer">${escHtml(t.pembeli||'-')} · ${qtyInfo}</div></div>
-              <div class="tx-total">${formatRupiah(t.totalHarga||0)}</div>
-            </div>
-            <div class="tx-meta"><span><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg> ${escHtml(t.waktuFormat||t.tanggal)}</span>
-            <span class="badge badge-${t.metode==='CASH'?'cash':t.metode==='TRANSFER'?'tf':'utang'}">${t.metode}</span></div>
-            <div class="tx-id">${escHtml(t.id)}</div>
-          </div>`;
+          html += renderTxCard(t);
         });
         html += '</div>';
         content.innerHTML = html;
         document.getElementById('laporanBtn').style.display = 'block';
       }
-      document.getElementById('laporanSub').textContent = `Transaksi yang belum dilaporkan`;
       document.getElementById('laporanModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
     function tutupLaporan() {
       document.getElementById('laporanModal').classList.remove('show');
       document.body.style.overflow = '';
+      document.getElementById('laporanSearchInput').value = '';
+      currentLaporanSearch = '';
     }
     function tandaiSemuaLapor() {
       const data = loadData();
@@ -1788,7 +1882,12 @@
     function bukaRiwayat() {
       currentFilter = 'today';
       currentSearch = '';
+      currentDateFrom = '';
+      currentDateTo = '';
       document.getElementById('searchInput').value = '';
+      document.getElementById('dateFrom').value = '';
+      document.getElementById('dateTo').value = '';
+      document.getElementById('dateFilterArea').classList.remove('show');
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'today'));
       renderRiwayat(true);
       document.getElementById('riwayatModal').classList.add('show');
@@ -1801,6 +1900,17 @@
       _riwayatLimit = _riwayatStep;
     }
     function setFilter(f) {
+      if (f === 'date') {
+        const area = document.getElementById('dateFilterArea');
+        if (!area.classList.contains('show')) {
+          toggleDateFilter();
+        } else {
+          document.getElementById('dateFrom').focus();
+        }
+        return;
+      }
+      // Hide date area when switching to preset filter
+      document.getElementById('dateFilterArea').classList.remove('show');
       currentFilter = f;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
       renderRiwayat(true);
@@ -1835,6 +1945,12 @@
         case 'month':
           data = data.filter(t => t.tanggal?.startsWith(today.slice(0,7)));
           break;
+        case 'date': {
+          const from = currentDateFrom || '0001-01-01';
+          const to = currentDateTo || '9999-12-31';
+          data = data.filter(t => t.tanggal >= from && t.tanggal <= to);
+          break;
+        }
         default: break;
       }
       if (currentSearch.trim()) {
@@ -1865,6 +1981,39 @@
     function loadMoreRiwayat() {
       _riwayatLimit += _riwayatStep;
       renderRiwayat();
+    }
+    // =============================================
+    // DATE FILTER HELPERS
+    // =============================================
+    function toggleDateFilter() {
+      const area = document.getElementById('dateFilterArea');
+      area.classList.toggle('show');
+      // Set default dates if empty
+      if (!document.getElementById('dateFrom').value) {
+        document.getElementById('dateFrom').value = getTodayStr();
+      }
+      if (!document.getElementById('dateTo').value) {
+        document.getElementById('dateTo').value = getTodayStr();
+      }
+    }
+    function applyDateFilter() {
+      currentDateFrom = document.getElementById('dateFrom').value;
+      currentDateTo = document.getElementById('dateTo').value;
+      if (currentDateFrom || currentDateTo) {
+        currentFilter = 'date';
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'date'));
+      }
+      renderRiwayat(true);
+    }
+    function clearDateFilter() {
+      currentDateFrom = '';
+      currentDateTo = '';
+      document.getElementById('dateFrom').value = '';
+      document.getElementById('dateTo').value = '';
+      document.getElementById('dateFilterArea').classList.remove('show');
+      currentFilter = 'today';
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'today'));
+      renderRiwayat(true);
     }
     // =============================================
     // LIYANE (OTHERS)
