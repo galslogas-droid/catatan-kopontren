@@ -272,10 +272,10 @@
     /* WIZARD */
     .wizard-steps { display: flex; gap: 0.35rem; margin: 0 0 0.85rem; align-items: center; }
     .w-dot {
-      width: 10px; height: 10px; border-radius: 50%; background: var(--border);
-      transition: background 0.2s, transform 0.2s;
+      width: 12px; height: 12px; border-radius: 50%; background: var(--border);
+      transition: background 0.2s, width 0.2s, border-radius 0.2s;
     }
-    .w-dot.active { background: var(--primary); transform: scale(1.3); }
+    .w-dot.active { background: var(--primary); width: 24px; border-radius: 6px; }
     .w-dot.done { background: var(--amber-gold); }
     .wizard-step { display: none; }
     .wizard-step.active { display: block; }
@@ -299,7 +299,7 @@
       border-color: var(--amber-gold);
       background: var(--amber-light);
     }
-    .prod-btn .p-icon { width: 30px; height: 30px; margin: 0 auto 0.25rem; color: var(--primary); }
+    .prod-btn .p-icon { width: 36px; height: 36px; margin: 0 auto 0.25rem; color: var(--primary); }
     [data-theme="dark"] .prod-btn .p-icon { color: #34D399; }
     .prod-btn .p-icon svg { width: 100%; height: 100%; display: block; }
     .prod-btn .p-name { font-size: 0.64rem; font-weight: 700; color: var(--text); line-height: 1.25; }
@@ -314,6 +314,30 @@
       border: 2px solid var(--card-bg);
       box-shadow: 0 2px 4px rgba(217,119,6,0.3);
     }
+    [data-theme="dark"] .p-badge { border-color: var(--surface-alt); }
+    /* REPORT MODAL */
+    .report-total {
+      background: var(--amber-light); border: 2px solid #FDE68A;
+      border-radius: 12px; padding: 0.9rem; text-align: center; margin-bottom: 0.85rem;
+    }
+    .report-total-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
+    .report-total-amount { font-size: 1.4rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); margin: 0.15rem 0; }
+    .report-total-count { font-size: 0.72rem; color: var(--text-muted); }
+    .btn-report-wa {
+      width: 100%; background: #25D366; color: white; border: none;
+      border-radius: 12px; padding: 0.8rem; font-weight: 800; font-size: 0.85rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      transition: transform 0.12s var(--ease), background 0.12s var(--ease);
+      box-shadow: 0 3px 8px rgba(37,211,102,0.25);
+    }
+    .btn-report-wa:active { transform: scale(0.97); background: #1fb855; }
+    [data-theme="dark"] .report-total { border-color: #78500F; }
+    /* EMPTY STATE */
+    .empty-state { text-align: center; padding: 2rem 1rem; color: var(--text-muted); }
+    .empty-state .empty-icon { width: 44px; height: 44px; margin: 0 auto 0.5rem; color: var(--text-muted); opacity: 0.7; }
+    .empty-state .empty-icon svg { width: 100%; height: 100%; }
+    .empty-state p { font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
+    .empty-state .empty-sub { font-size: 0.72rem; color: var(--text-muted); }
     /* CART SUMMARY */
     .cart-summary { background: var(--amber-light); border: 1.5px solid #FDE68A; border-radius: 12px; padding: 0.65rem; margin-top: 0.5rem; }
     [data-theme="dark"] .cart-summary { border-color: #78500F; }
@@ -843,7 +867,7 @@
         <button class="btn-back" style="flex:0;" onclick="tutupRiwayat()">Tutup</button>
       </div>
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Cari nama / barang..." oninput="currentSearch=this.value;renderRiwayat()">
+        <input type="text" id="searchInput" placeholder="Cari nama / barang..." oninput="currentSearch=this.value;renderRiwayat(true)">
       </div>
       <div class="filter-bar" id="filterBar">
         <button class="filter-btn active" data-filter="today" onclick="setFilter('today')">Hari Ini</button>
@@ -986,27 +1010,27 @@
     // DATA PRODUK › SATU SUMBER KEBENARAN
     // =============================================
     const PRODUCTS_DATA = [
-      { id:'madu_sachet',name:'Madu Sachet Baitina',cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C9 2 7 4 7 7v2H5a1 1 0 0 0-1 1v4a5 5 0 0 0 5 5h6a5 5 0 0 0 5-5V10a1 1 0 0 0-1-1h-2V7c0-3-2-5-5-5z"/><path d="M9 19v2"/><path d="M15 19v2"/><path d="M12 2v3"/><path d="M8 14.5c.5.8 1.5 1.2 4 1.2s3.5-.4 4-1.2"/></svg>`, unit:'sachet',
+      { id:'madu_sachet',name:'Madu Sachet Baitina',cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18H6z"/><path d="M6 7h12"/><path d="M10 3V1"/><path d="M14 3V1"/></svg>`, unit:'sachet',
         tiers:[{min:1,max:99999,price:6000}]},
-      { id:'madu',    name:'Madu Box Baitina',     cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><path d="M4 12h16"/><circle cx="12" cy="17" r="1.5"/></svg>`, unit:'box',
+      { id:'madu',    name:'Madu Box Baitina',     cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/><path d="M4 11h16"/><circle cx="12" cy="16" r="1.5"/></svg>`, unit:'box',
         tiers:[{min:1,max:4, price:58000},{min:5,max:9, price:55000},{min:10,max:19,price:52500},{min:20,max:99999,price:51000}]},
-      { id:'nasijagung',name:'Nasi Jagung',        cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h16c0-4-2.5-8-8-8S4 10 4 14z"/><path d="M7 14v3"/><path d="M12 14v4"/><path d="M17 14v3"/><path d="M9 6c1-2 2-3 3-3s2 1 3 3"/></svg>`, unit:'porsi',
+      { id:'nasijagung',name:'Nasi Jagung',        cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l8-11 8 11"/><path d="M6 16h12"/><path d="M12 5v-2"/></svg>`, unit:'porsi',
         tiers:[{min:1,max:4, price:10000},{min:5,max:9, price:9500},{min:10,max:19,price:9250},{min:20,max:99999,price:9100}]},
-      { id:'garam',   name:'Garam Ruqyah',         cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="7" width="8" height="13" rx="1.5"/><path d="M8 10h8"/><circle cx="10" cy="4" r="1"/><circle cx="12" cy="3" r="1"/><circle cx="14" cy="4" r="1"/><line x1="10" y1="14" x2="10" y2="17"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="14" y1="14" x2="14" y2="17"/></svg>`, unit:'pcs',
+      { id:'garam',   name:'Garam Ruqyah',         cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="13" rx="2"/><path d="M7 11h10"/><circle cx="10" cy="5" r="1"/><circle cx="12" cy="4" r="1"/><circle cx="14" cy="5" r="1"/></svg>`, unit:'pcs',
         tiers:[{min:1,max:4, price:6000},{min:5,max:9, price:5500},{min:10,max:19,price:5250},{min:20,max:99999,price:5100}]},
-      { id:'sabun',   name:'Sabun Ruqyah',         cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="9" rx="4.5"/><ellipse cx="7" cy="14" rx="2" ry="1.5" opacity=".5"/></svg>`, unit:'pcs',
+      { id:'sabun',   name:'Sabun Ruqyah',         cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="10" rx="5"/><path d="M8 14h8"/></svg>`, unit:'pcs',
         tiers:[{min:1,max:4, price:5000},{min:5,max:9, price:4500},{min:10,max:19,price:4250},{min:20,max:99999,price:4100}]},
-      { id:'eskrim',  name:'Es Krim Baitina',      cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10"/><path d="M12 3L6 14h12L12 3z"/><circle cx="12" cy="10" r="3"/></svg>`, unit:'pcs',
+      { id:'eskrim',  name:'Es Krim Baitina',      cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10"/><path d="M12 3L6 14h12L12 3z"/><circle cx="12" cy="9" r="3.5"/></svg>`, unit:'pcs',
         tiers:[{min:1,max:99999,price:5000}]},
-      { id:'sarung',  name:'Sarung Santri',        cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16"/><path d="M4 13h16"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M12 21v2"/><path d="M9 21v2"/><path d="M15 21v2"/></svg>`, unit:'pcs',
+      { id:'sarung',  name:'Sarung Santri',        cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16"/><path d="M4 13h16"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>`, unit:'pcs',
         tiers:[], manualPrice:true},
       { id:'mbako',   name:'Mbako Linthingan',     cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10c0-3 2-6 6-6s6 3 6 6v10"/><path d="M6 14c2-1 4-1 6 0"/><path d="M6 17c2-1 4-1 6 0"/><path d="M12 4V2"/><path d="M9 5l-1-1"/><path d="M15 5l1-1"/></svg>`, unit:'bungkus',
         tiers:[], manualPrice:true},
-      { id:'gula',    name:'Gula Baitina',         cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="6" height="6" rx="1"/><rect x="12" y="12" width="6" height="6" rx="1"/><rect x="9" y="6" width="6" height="6" rx="1"/><path d="M9 3v3"/><path d="M15 3v3"/></svg>`, unit:'kg',
+      { id:'gula',    name:'Gula Baitina',         cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l2 14H4z"/><path d="M6 8l2-3h8l2 3"/><path d="M10 14l2 2 2-2 2 2 2-2"/></svg>`, unit:'kg',
         tiers:[], manualPrice:true},
-      { id:'beras',   name:'Beras Baitina',        cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V9"/><path d="M12 9c-3-2-6-1-7 3 1 2 4 3 7 1"/><path d="M12 9c3-2 6-1 7 3-1 2-4 3-7 1"/><path d="M12 14c-2-1-4 0-5 2 1 1 3 2 5 1"/><path d="M12 14c2-1 4 0 5 2-1 1-3 2-5 1"/></svg>`, unit:'kg',
+      { id:'beras',   name:'Beras Baitina',        cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l2 14H4z"/><path d="M6 8l2-3h8l2 3"/><ellipse cx="10" cy="15" rx="1.5" ry="1" transform="rotate(20 10 15)"/><ellipse cx="14" cy="13" rx="1.5" ry="1" transform="rotate(-20 14 13)"/></svg>`, unit:'kg',
         tiers:[], manualPrice:true},
-      { id:'atkkop',  name:'ATK / Alat Tulis',     cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3L21 7l-9 9-2 5 5-2 9-9-4-4z"/><path d="M14 6l4-1"/><path d="M4 20h5"/></svg>`, unit:'pcs',
+      { id:'atkkop',  name:'ATK / Alat Tulis',     cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="12" height="16" rx="2"/><path d="M4 9h12"/><path d="M4 14h10"/><path d="M20 18l4-4-2-2-4 4"/><path d="M18 20l-2 2"/></svg>`, unit:'pcs',
         tiers:[], manualPrice:true},
       { id:'custom',  name:'Barang Lain',          cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5v8l-9 5-9-5V8z"/><path d="M3 8l9 5"/><path d="M21 8l-9 5"/><path d="M12 13v8"/></svg>`, unit:'pcs',
         tiers:[], manualPrice:true},
@@ -1025,6 +1049,7 @@
     let cart = [];
     let wizardMetode = 'CASH';
     let detailId = null;
+    let isEditMode = false;
     let ctxId = null;
     let undoItem = null;
     let undoTimer = null;
@@ -1137,23 +1162,36 @@
       // FAB once + long-press preset
       const fab = document.querySelector('.fab');
       if (fab) {
-        fab.addEventListener('click', once(bukaWizardManual));
+        let _fabLongPressed = false;
         let _fabTimer = null;
+
+        fab.addEventListener('click', (e) => {
+          if (_fabLongPressed) { _fabLongPressed = false; return; }
+          bukaWizardManual();
+        });
+
         fab.addEventListener('touchstart', () => {
           _fabTimer = setTimeout(() => {
             haptic([10, 30, 10]);
             try {
               const preset = JSON.parse(localStorage.getItem('kopontren_last_cart') || 'null');
               if (preset && preset.length > 0) {
+                _fabLongPressed = true;
+                detailId = null; isEditMode = false;
+                Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
                 cart = preset.map(i => ({productId: i.productId, qty: i.qty}));
+                document.getElementById('wNext').onclick = wizardNext;
                 showWizardStep(1);
                 document.getElementById('wizardModal').classList.add('show');
                 document.body.style.overflow = 'hidden';
                 showToast('Preset terakhir dimuat', 'success');
+              } else {
+                showToast('Belum ada preset. Catat dulu baru bisa repeat!', 'info');
               }
             } catch(e) {}
           }, 700);
         }, { passive: true });
+
         ['touchend','touchmove','touchcancel'].forEach(ev =>
           fab.addEventListener(ev, () => clearTimeout(_fabTimer), { passive: true })
         );
@@ -1254,7 +1292,7 @@
     // =============================================
     function bukaWizardManual() {
       cart = []; wizardStep = 1; wizardMetode = 'CASH';
-      detailId = null;
+      detailId = null; isEditMode = false;
       Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
       document.getElementById('wNext').onclick = wizardNext;
       showWizardStep(1);
@@ -1264,7 +1302,7 @@
     function bukaWizard(productId) {
       cart = [{productId, qty:1}];
       wizardStep = 1; wizardMetode = 'CASH';
-      detailId = null;
+      detailId = null; isEditMode = false;
       Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
       document.getElementById('wNext').onclick = wizardNext;
       showWizardStep(1);
@@ -1279,7 +1317,7 @@
       document.getElementById('wdot2').className = 'w-dot ' + (step>=2?(step>2?'done':'active'): '');
       document.getElementById('stepLabel').textContent = step;
       document.getElementById('wBack').style.display = step > 1 ? 'block' : 'none';
-      document.getElementById('wNext').textContent = step === 2 ? 'Simpan' : 'Lanjut ›';
+      document.getElementById('wNext').textContent = isEditMode ? 'Update Transaksi' : (step === 2 ? 'Simpan' : 'Lanjut ›');
       if (step === 1) {
         renderWizardProducts();
         renderWizardCart();
@@ -1366,7 +1404,7 @@
             <span style="font-weight:800;font-size:0.8rem;min-width:16px;text-align:center;">${item.qty}</span>
             <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.8rem;padding:0 0.2rem;" onclick="changeQty('${item.productId}',1)">+</button>
             <span class="cart-item-total">${sub>0?formatRupiah(sub):'Manual'}</span>
-            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:0.75rem;padding:0 0.1rem;" onclick="removeFromCart('${item.productId}')">✕</button>
+            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:0.75rem;padding:0 0.3rem;margin-left:0.3rem;" onclick="removeFromCart('${item.productId}')">✕</button>
           </div>
         </div>`;
       });
@@ -1494,8 +1532,7 @@
           <div class="detail-item-row">
             <span class="detail-item-left">${i.name} · ${i.qty}${i.unit||''}</span>
             <span class="detail-item-right">${formatRupiah(i.subtotal||i.harga||0)}</span>
-          </div>`).join('') +
-          `<div class="detail-total"><span class="detail-total-label">Total</span><span class="detail-total-val">${formatRupiah(t.totalHarga||0)}</span></div>`;
+          </div>`).join('');
       }
       document.getElementById('dBuyer').textContent = t.pembeli || '-';
       document.getElementById('dKategori').textContent = t.kategoriPembeli || '-';
@@ -1507,6 +1544,10 @@
       document.getElementById('dSetorText').textContent = t.status === 'pending' ? 'Tandai Dilaporkan' : '✓ Sudah Dilaporkan';
       document.getElementById('detailModal').classList.add('show');
       document.body.style.overflow = 'hidden';
+    }
+    function refreshOpenModals() {
+      if (document.getElementById('riwayatModal')?.classList.contains('show')) renderRiwayat();
+      if (document.getElementById('laporanModal')?.classList.contains('show')) bukaLaporan();
     }
     function toggleStatus() {
       if (!detailId) return;
@@ -1525,6 +1566,7 @@
       saveData(data);
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
+      refreshOpenModals();
       showToast(data[idx].status === 'settled' ? 'Sudah ditandai dilaporkan' : 'Dibatalkan › kembali belum dilaporkan', 'success');
     }
     function editTransaksi() {
@@ -1533,6 +1575,7 @@
       const t = data.find(r => r.id === detailId);
       if (!t) return;
       tutupModal('detailModal');
+      isEditMode = true;
       cart = t.items ? t.items.map(i => ({productId: i.productId, qty: i.qty})) : [];
       wizardStep = 2; wizardMetode = t.metode || 'CASH';
       // Populate manualPrices from saved transaction
@@ -1595,6 +1638,7 @@
       tutupModal('wizardModal');
       renderHome();
       updateTodayBar();
+      refreshOpenModals();
       showToast('Transaksi berhasil diupdate', 'success');
     }
     function hapusTransaksi() {
@@ -1609,6 +1653,7 @@
       detailId = null;
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
+      refreshOpenModals();
       showToast(`${newName} dihapus`, 'info', () => {
         data.push(t);
         saveData(data);
@@ -1625,7 +1670,13 @@
       const menu = document.getElementById('ctxMenu');
       menu.classList.add('show');
       const rect = e.target.getBoundingClientRect();
-      menu.style.top = (rect.bottom + 5) + 'px';
+      const menuH = menu.offsetHeight || 150;
+      const spaceBelow = window.innerHeight - rect.bottom;
+      if (spaceBelow < menuH + 10) {
+        menu.style.top = (rect.top - menuH - 5) + 'px';
+      } else {
+        menu.style.top = (rect.bottom + 5) + 'px';
+      }
       menu.style.right = '1rem';
       menu.style.left = 'auto';
     }
@@ -1747,6 +1798,7 @@
       document.getElementById('riwayatModal').classList.remove('show');
       document.body.style.overflow = '';
       currentSearch = '';
+      _riwayatLimit = _riwayatStep;
     }
     function setFilter(f) {
       currentFilter = f;
@@ -2064,8 +2116,8 @@
     // =============================================
     // UTILS
     // =============================================
-    function formatRupiah(angka) { return 'Rp ' + Math.round(angka).toLocaleString('id'); }
-    function escHtml(str) { if (!str) return ''; return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function formatRupiah(angka) { return 'Rp ' + Math.round(angka).toLocaleString('id-ID'); }
+    function escHtml(str) { if (str === null || str === undefined || str === '') return ''; return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
     function formatWaktu(tgl, jam) {
       if (!tgl) return '';
       const d = new Date(tgl + 'T' + (jam || '00:00'));
@@ -2073,10 +2125,6 @@
     }
     function haptic(pattern) {
       if (navigator.vibrate) navigator.vibrate(Array.isArray(pattern) ? pattern : [pattern]);
-    }
-    function once(fn) {
-      let called = false;
-      return function(...args) { if (!called) { called = true; return fn.apply(this, args); } };
     }
     function handleTxListClick(e) {
       const ctxBtn = e.target.closest('.tx-menu-btn');
@@ -2096,7 +2144,8 @@
       document.body.style.overflow = '';
       // Clean up wizard state on any modal close
       if (id === 'wizardModal') {
-        detailId = null;
+        detailId = null; isEditMode = false;
+        cart = [];
         Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
         document.getElementById('wNext').onclick = wizardNext;
         document.getElementById('wNext').textContent = 'Simpan';
@@ -2105,6 +2154,8 @@
     // Toast notification
     function showToast(msg, type = 'info', onUndo = null) {
       const container = document.getElementById('toastContainer');
+      // Limit max 3 toasts to prevent stacking
+      while (container.children.length >= 3) container.removeChild(container.firstChild);
       const toast = document.createElement('div');
       toast.className = 'toast ' + type;
       let html = msg;
@@ -2133,6 +2184,15 @@
         if (e.target === this) {
           this.classList.remove('show');
           document.body.style.overflow = '';
+          // Reset wizard state when backdrop closes wizardModal
+          if (this.id === 'wizardModal') {
+            cart = [];
+            detailId = null;
+            Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+            isEditMode = false;
+            document.getElementById('wNext').onclick = wizardNext;
+            document.getElementById('wNext').textContent = 'Simpan';
+          }
         }
       });
     });

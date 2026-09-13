@@ -1,0 +1,27 @@
+# Python scripts (development tools)
+*.py
+*.pyc
+__pycache__/
+
+# Video & image assets
+*.mp4
+*.mov
+*.jpeg
+*.jpg
+*.png
+*.docx
+*.doc
+
+# Backup / old files
+catatan_kopontren_guslim.html
+generate-icon.html
+snippet-pwa-icon.html
+icon-produk-*.svg
+logo-*.png
+logo-*.svg
+KOPONTREN_Product_Icons_Modern.svg
+"Madu Anak Sekolah"*.jpeg
+*.jpeg
+
+# VS Code
+.vscode/
