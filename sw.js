@@ -1,5 +1,5 @@
 // Service Worker Cache Offline untuk Kopontren Gus Lim
-const CACHE_NAME = 'kopontren-v14';
+const CACHE_NAME = 'kopontren-v17';
 const ASSETS = [
   './',
   './index.html',
