@@ -1,0 +1,457 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 400 900"
+     width="100%"
+     height="100%"
+     font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+
+  <!-- =========================================================
+       KOPONTREN PRODUCT ICON SET
+       Style: Modern Premium / Minimal Outline
+       ========================================================= -->
+
+  <rect width="400" height="900" fill="#F7F8FA"/>
+
+  <!-- ===================== DEFINITIONS ====================== -->
+  <defs>
+    <!-- subtle card shadow -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5"
+                    flood-color="#0F172A" flood-opacity=".06"/>
+    </filter>
+
+    <!-- shared icon style -->
+    <style>
+      .card {
+        fill:#FFFFFF;
+        stroke:#E7EAF0;
+        stroke-width:1.5;
+      }
+
+      .icon {
+        fill:none;
+        stroke:#172033;
+        stroke-width:2.8;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .accent {
+        fill:#D99A24;
+      }
+
+      .accentStroke {
+        fill:none;
+        stroke:#D99A24;
+        stroke-width:2.4;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .label {
+        fill:#172033;
+        font-size:10.5px;
+        font-weight:600;
+        letter-spacing:.05px;
+      }
+    </style>
+  </defs>
+
+
+  <!-- =========================================================
+       ROW 1
+       ========================================================= -->
+
+  <!-- 1. MADU SACHET -->
+  <g transform="translate(20,20)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,48)">
+      <!-- sachet -->
+      <path class="icon"
+            d="M-15-13
+               H15
+               V20
+               Q15 23 12 23
+               H-12
+               Q-15 23-15 20
+               Z"/>
+
+      <!-- tear top -->
+      <path class="icon" d="M-11-13V-19H11V-13"/>
+
+      <!-- honey drop -->
+      <path class="accent"
+            d="M0-28
+               C-5-20-7-16 0-11
+               C7-16 5-20 0-28Z"/>
+
+      <!-- minimal label -->
+      <rect x="-10" y="0" width="20" height="12"
+            rx="2" fill="none" stroke="#D99A24" stroke-width="2"/>
+      <line x1="-6" y1="4" x2="6" y2="4"
+            class="accentStroke"/>
+      <line x1="-5" y1="8" x2="5" y2="8"
+            class="accentStroke"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Madu Sachet
+    </text>
+  </g>
+
+
+  <!-- 2. MADU BOX -->
+  <g transform="translate(140,20)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,49)">
+      <!-- box -->
+      <rect class="icon" x="-22" y="-13" width="44" height="34" rx="4"/>
+
+      <!-- lid -->
+      <rect class="icon" x="-25" y="-20" width="50" height="8" rx="3"/>
+
+      <!-- honey drop -->
+      <path class="accent"
+            d="M0-10
+               C-5-4-6 0 0 5
+               C6 0 5-4 0-10Z"/>
+
+      <!-- label -->
+      <rect x="-12" y="7" width="24" height="8"
+            rx="2" fill="none"
+            stroke="#D99A24" stroke-width="2"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Madu Box
+    </text>
+  </g>
+
+
+  <!-- 3. NASI JAGUNG -->
+  <g transform="translate(260,20)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,50)">
+      <!-- bowl -->
+      <path class="icon"
+            d="M-25 0
+               Q-22 23 0 24
+               Q22 23 25 0
+               Z"/>
+
+      <!-- rice -->
+      <path class="icon"
+            d="M-18 1
+               Q-12-8 0-7
+               Q12-8 18 1"/>
+
+      <!-- steam -->
+      <path class="accentStroke" d="M-10-10Q-15-17-10-22"/>
+      <path class="accentStroke" d="M0-11Q-5-18 0-24"/>
+      <path class="accentStroke" d="M10-10Q15-17 10-22"/>
+
+      <!-- corn -->
+      <circle class="accent" cx="-10" cy="8" r="2.2"/>
+      <circle class="accent" cx="0" cy="13" r="2.2"/>
+      <circle class="accent" cx="10" cy="7" r="2.2"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Nasi Jagung
+    </text>
+  </g>
+
+
+  <!-- =========================================================
+       ROW 2
+       ========================================================= -->
+
+  <!-- 4. GARAM RUQYAH -->
+  <g transform="translate(20,140)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,50)">
+      <!-- bottle -->
+      <rect class="icon" x="-14" y="-11" width="28" height="34" rx="6"/>
+
+      <!-- cap -->
+      <rect class="icon" x="-9" y="-21" width="18" height="10" rx="3"/>
+
+      <!-- label -->
+      <rect x="-9" y="-2" width="18" height="11"
+            rx="2" fill="none"
+            stroke="#D99A24" stroke-width="2"/>
+
+      <!-- crystal -->
+      <path class="accent"
+            d="M0 12L6 18L0 24L-6 18Z"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Garam Ruqyah
+    </text>
+  </g>
+
+
+  <!-- 5. SABUN RUQYAH -->
+  <g transform="translate(140,140)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,51)">
+      <!-- soap -->
+      <rect class="icon"
+            x="-26" y="-9"
+            width="52" height="25"
+            rx="12.5"/>
+
+      <!-- soap highlight -->
+      <path class="accentStroke"
+            d="M-10 2H10"/>
+
+      <!-- bubbles -->
+      <circle class="accent" cx="-18" cy="-15" r="4"/>
+      <circle class="accent" cx="-8" cy="-21" r="3"/>
+      <circle class="accent" cx="-27" cy="-10" r="2.5"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Sabun Ruqyah
+    </text>
+  </g>
+
+
+  <!-- 6. ES KRIM -->
+  <g transform="translate(260,140)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,49)">
+      <!-- cone -->
+      <path class="icon"
+            d="M-13 5H13L0 29Z"/>
+
+      <!-- cone lines -->
+      <path class="accentStroke" d="M-7 11L7 23"/>
+      <path class="accentStroke" d="M7 11L-7 23"/>
+
+      <!-- scoop -->
+      <path class="icon"
+            d="M-17-3
+               A17 17 0 0 1 17-3"/>
+
+      <!-- small top accent -->
+      <path class="accentStroke" d="M-8-9Q0-16 8-9"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Es Krim
+    </text>
+  </g>
+
+
+  <!-- =========================================================
+       ROW 3
+       ========================================================= -->
+
+  <!-- 7. SARUNG -->
+  <g transform="translate(20,260)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,50)">
+      <!-- rolled sarong -->
+      <rect class="icon"
+            x="-18" y="-22"
+            width="36" height="44"
+            rx="5"/>
+
+      <!-- folds -->
+      <line class="icon" x1="-18" y1="-10" x2="18" y2="-10"/>
+      <line class="icon" x1="-18" y1="2" x2="18" y2="2"/>
+      <line class="icon" x1="-18" y1="14" x2="18" y2="14"/>
+
+      <!-- motif -->
+      <rect class="accent" x="-9" y="-6" width="5" height="5" rx="1"/>
+      <rect class="accent" x="4" y="-6" width="5" height="5" rx="1"/>
+      <rect class="accent" x="-9" y="7" width="5" height="5" rx="1"/>
+      <rect class="accent" x="4" y="7" width="5" height="5" rx="1"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Sarung Santri
+    </text>
+  </g>
+
+
+  <!-- 8. MBAKO LINTHINGAN -->
+  <g transform="translate(140,260)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,50)">
+      <!-- leaf -->
+      <path class="icon"
+            d="M0-26
+               C19-21 25 4 0 25
+               C-25 4-19-21 0-26Z"/>
+
+      <!-- central vein -->
+      <path class="accentStroke" d="M0-25V24"/>
+
+      <!-- side veins -->
+      <path class="icon" stroke-width="2"
+            d="M0-9L11-4M0 1L-11 6M0 11L10 15"/>
+
+      <!-- tie -->
+      <circle class="accent" cx="0" cy="0" r="4"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Mbako Linthing
+    </text>
+  </g>
+
+
+  <!-- 9. GULA -->
+  <g transform="translate(260,260)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,50)">
+      <!-- package -->
+      <path class="icon"
+            d="M-15-20H15L20 24H-20Z"/>
+
+      <!-- top fold -->
+      <path class="icon"
+            d="M-15-20L-10-25H10L15-20"/>
+
+      <!-- sugar -->
+      <rect class="accent" x="-9" y="-9" width="6" height="6" rx="1"/>
+      <rect class="accent" x="3" y="-9" width="6" height="6" rx="1"/>
+      <rect class="accent" x="-3" y="1" width="6" height="6" rx="1"/>
+      <rect class="accent" x="-9" y="11" width="6" height="6" rx="1"/>
+      <rect class="accent" x="3" y="11" width="6" height="6" rx="1"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Gula Baitina
+    </text>
+  </g>
+
+
+  <!-- =========================================================
+       ROW 4
+       ========================================================= -->
+
+  <!-- 10. BERAS -->
+  <g transform="translate(20,380)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,50)">
+      <!-- sack -->
+      <path class="icon"
+            d="M-19-15H19L23 24H-23Z"/>
+
+      <!-- fold -->
+      <path class="icon"
+            d="M-19-15L-14-24H14L19-15"/>
+
+      <!-- rice grains -->
+      <ellipse class="accent"
+               cx="-9" cy="-1"
+               rx="3.5" ry="1.7"
+               transform="rotate(25 -9 -1)"/>
+
+      <ellipse class="accent"
+               cx="6" cy="-6"
+               rx="3.5" ry="1.7"
+               transform="rotate(-25 6 -6)"/>
+
+      <ellipse class="accent"
+               cx="10" cy="9"
+               rx="3.5" ry="1.7"
+               transform="rotate(35 10 9)"/>
+
+      <ellipse class="accent"
+               cx="-5" cy="14"
+               rx="3.5" ry="1.7"
+               transform="rotate(-20 -5 14)"/>
+
+      <!-- rice stalk -->
+      <path class="accentStroke" d="M-9 6Q0 1 9 6"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Beras Baitina
+    </text>
+  </g>
+
+
+  <!-- 11. ATK -->
+  <g transform="translate(140,380)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,50)">
+      <!-- notebook -->
+      <rect class="icon"
+            x="-25" y="-22"
+            width="25" height="31"
+            rx="3"/>
+
+      <!-- notebook lines -->
+      <line class="accentStroke" x1="-19" y1="-14" x2="-7" y2="-14"/>
+      <line class="accentStroke" x1="-19" y1="-7" x2="-9" y2="-7"/>
+
+      <!-- pen -->
+      <path class="icon"
+            d="M-7 20L-2 25L22 1L17-4Z"/>
+
+      <!-- pen tip -->
+      <path class="accent"
+            d="M-7 20L-10 26L-2 25Z"/>
+
+      <!-- clip -->
+      <line class="accentStroke" x1="13" y1="0" x2="18" y2="5"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      ATK / Alat Tulis
+    </text>
+  </g>
+
+
+  <!-- 12. BARANG LAIN -->
+  <g transform="translate(260,380)">
+    <rect class="card" width="100" height="100" rx="18" filter="url(#shadow)"/>
+
+    <g transform="translate(50,50)">
+      <!-- package -->
+      <rect class="icon"
+            x="-22" y="-18"
+            width="44" height="40"
+            rx="5"/>
+
+      <!-- package seam -->
+      <path class="accentStroke"
+            d="M-22-6H22"/>
+
+      <!-- plus -->
+      <circle cx="0" cy="-12" r="5"
+              fill="#FFFFFF"
+              stroke="#D99A24"
+              stroke-width="2"/>
+
+      <line class="accentStroke" x1="-3" y1="-12" x2="3" y2="-12"/>
+      <line class="accentStroke" x1="0" y1="-15" x2="0" y2="-9"/>
+
+      <!-- dots -->
+      <circle class="accent" cx="-10" cy="9" r="2.5"/>
+      <circle class="accent" cx="0" cy="9" r="2.5"/>
+      <circle class="accent" cx="10" cy="9" r="2.5"/>
+    </g>
+
+    <text class="label" x="50" y="87" text-anchor="middle">
+      Barang Lain
+    </text>
+  </g>
+
+</svg>

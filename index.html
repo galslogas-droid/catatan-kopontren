@@ -15,220 +15,409 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #064E3B; --primary-dark: #022C22; --primary-light: #D1FAE5;
+      --primary: #059669; --primary-dark: #047857; --primary-light: #D1FAE5;
       --amber: #D97706; --amber-light: #FEF3C7; --amber-gold: #F59E0B;
-      --surface: #FFFFFF; --bg: #F0F2F5; --surface-alt: #F8F9FA;
-      --border: #E2E5EA; --text: #111827; --text-muted: #6B7280;
-      --danger: #DC2626; --success: #059669; --blue: #2563EB;
-      --radius: 14px; --shadow: 0 2px 10px rgba(0,0,0,0.07);
-      --card-bg: #FFFFFF; --input-bg: #FFFFFF; --header-bg: linear-gradient(135deg, #022C22 0%, #064E3B 100%);
+      --surface: #FFFFFF; --bg: #F5F7FA; --surface-alt: #F1F4F8;
+      --border: #E5E7EB; --border-strong: #D1D5DB;
+      --text: #0F172A; --text-muted: #64748B;
+      --danger: #EF4444; --success: #10B981;
+      --shadow-xs: 0 1px 2px rgba(15,23,42,0.05);
+      --shadow-sm: 0 2px 6px rgba(15,23,42,0.07);
+      --shadow: 0 4px 12px rgba(15,23,42,0.08);
+      --radius: 12px; --radius-md: 14px; --radius-lg: 18px;
+      --card-bg: #FFFFFF; --input-bg: #FFFFFF;
+      --header-bg: linear-gradient(135deg, #064E3B 0%, #059669 100%);
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
     [data-theme="dark"] {
-      --surface: #1A1D23; --bg: #121418; --surface-alt: #1E2128;
-      --border: #2D3139; --text: #E8ECEF; --text-muted: #8B92A0;
-      --primary-light: #0D3D2E; --amber-light: #2A2210;
-      --card-bg: #1E2128; --input-bg: #252830;
-      --shadow: 0 2px 10px rgba(0,0,0,0.3);
+      --surface: #0F1419; --bg: #0A0E14; --surface-alt: #1A1F28;
+      --border: #252B36; --border-strong: #333A47;
+      --text: #F1F5F9; --text-muted: #94A3B8;
+      --primary-light: #064E3B; --amber-light: #2A2210;
+      --card-bg: #161B23; --input-bg: #1A1F28;
+      --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-sm: 0 2px 6px rgba(0,0,0,0.35);
+      --shadow: 0 4px 12px rgba(0,0,0,0.4);
+      --header-bg: linear-gradient(135deg, #022C22 0%, #047857 100%);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--bg); color: var(--text);
-      padding-bottom: 100px; -webkit-tap-highlight-color: transparent;
+      padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); -webkit-tap-highlight-color: transparent;
       transition: background 0.2s, color 0.2s;
+      overscroll-behavior-y: contain;
     }
     button { font-family: inherit; }
-
     /* HEADER */
     header {
       background: var(--header-bg); color: white;
-      padding: 0.9rem 1rem 0.8rem; border-radius: 0 0 16px 16px;
-      box-shadow: 0 4px 16px rgba(2,44,34,0.25); position: sticky; top: 0; z-index: 50;
+      padding: 0.95rem 1.05rem 0.9rem;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      box-shadow: 0 6px 16px rgba(5,150,105,0.22);
+      position: sticky; top: 0; z-index: 50;
+      transform: translateZ(0);
+      will-change: transform;
     }
     .header-top { display: flex; justify-content: space-between; align-items: center; }
-    .brand h1 { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.2px; line-height: 1.3; }
-    .brand .tagline { font-size: 0.7rem; color: #A7F3D0; font-weight: 600; }
+    header { padding-top: calc(0.95rem + env(safe-area-inset-top, 0px)); padding-left: calc(1.05rem + env(safe-area-inset-left, 0px)); padding-right: calc(1.05rem + env(safe-area-inset-right, 0px)); }
+    .brand h1 {
+      font-size: 0.98rem; font-weight: 800; letter-spacing: -0.3px; line-height: 1.25;
+    }
+    .brand .tagline {
+      font-size: 0.68rem; color: rgba(255,255,255,0.72); font-weight: 600;
+      margin-top: 1px;
+    }
     .header-actions { display: flex; gap: 0.4rem; align-items: center; }
     .icon-btn {
-      width: 34px; height: 34px; border-radius: 10px; border: none;
-      background: rgba(255,255,255,0.12); color: white; cursor: pointer;
+      width: 36px; height: 36px; border-radius: 11px; border: none;
+      background: rgba(255,255,255,0.16); color: white; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s;
+      transition: transform 0.12s var(--ease), background 0.12s var(--ease);
     }
-    .icon-btn:active { background: rgba(255,255,255,0.22); }
+    .icon-btn:active { transform: scale(0.9); background: rgba(255,255,255,0.28); }
     .icon-btn.wa { background: #25D366; }
     .icon-btn.wa:active { background: #1fb855; }
-
     /* CONTAINER */
-    .container { padding: 0 0.85rem; max-width: 600px; margin: 0 auto; }
-
+    .container {
+      padding: 0 0.85rem; max-width: 600px; margin: 0 auto;
+      contain: layout style paint;
+    }
     /* TODAY BAR */
     .today-bar {
-      margin-top: 0.75rem; background: var(--card-bg); border-radius: 12px;
-      padding: 0.7rem 0.85rem; border: 1px solid var(--border);
+      margin-top: 0.9rem; background: var(--card-bg);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem; border: 1px solid var(--border);
       display: flex; justify-content: space-between; align-items: center;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-xs);
+      position: relative; overflow: hidden;
+      contain: layout style;
+    }
+    .today-bar::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--primary);
     }
     .today-bar-left { display: flex; align-items: center; gap: 0.5rem; }
-    .today-bar-icon { width: 20px; height: 20px; color: var(--primary); }
-    .today-bar-text { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
-    .today-bar-text strong { color: var(--text); font-size: 0.88rem; display: block; }
+    .today-bar-icon {
+      width: 36px; height: 36px; padding: 8px;
+      background: var(--primary-light); color: var(--primary);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .today-bar-text strong { color: var(--text); font-size: 0.9rem; display: block; font-weight: 700; }
+    .today-bar-text span { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
     .today-bar-right { text-align: right; }
-    .today-bar-right .today-count { font-size: 0.7rem; color: var(--text-muted); }
-    .today-bar-right .today-amount { font-size: 1rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); }
-
+    .today-bar-right .today-count { font-size: 0.68rem; color: var(--text-muted); font-weight: 600; }
+    .today-bar-right .today-amount {
+      font-size: 1.12rem; font-weight: 800; font-family: 'Outfit', sans-serif;
+      color: var(--primary); letter-spacing: -0.3px;
+    }
     /* STATUS CARDS */
     .status-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.7rem; }
     .status-card {
-      background: var(--card-bg); border-radius: 14px; padding: 0.85rem 0.9rem;
-      border: 1px solid var(--border); box-shadow: var(--shadow); position: relative; overflow: hidden;
+      background: var(--card-bg); border-radius: var(--radius-md);
+      padding: 0.95rem 1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-xs);
+      position: relative; overflow: hidden;
+      transition: transform 0.12s var(--ease);
+      contain: layout style paint;
     }
-    .status-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .status-card:active { transform: scale(0.98); }
+    .status-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
     .status-card.red::before { background: var(--danger); }
     .status-card.green::before { background: var(--success); }
-    .status-card-label { font-size: 0.62rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
-    .status-card-amount { font-size: 1.1rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--text); margin: 0.2rem 0; }
-    .status-card-count { font-size: 0.66rem; font-weight: 600; color: var(--text-muted); }
-    .status-card.red .status-card-count { color: var(--danger); }
-    .status-card.green .status-card-count { color: var(--success); }
-
-    /* ACTION BUTTONS */
+    .status-card-label {
+      font-size: 0.6rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .status-card-amount {
+      font-size: 1.15rem; font-weight: 800; font-family: 'Outfit', sans-serif;
+      margin: 0.3rem 0 0.1rem; letter-spacing: -0.3px;
+    }
+    .status-card.red .status-card-amount { color: var(--danger); }
+    .status-card.green .status-card-amount { color: var(--success); }
+    .status-card-count { font-size: 0.62rem; color: var(--text-muted); font-weight: 600; }
+    .status-card-count .status-count {
+      display: inline-block; background: var(--surface-alt); border-radius: 6px;
+      padding: 0.05rem 0.3rem; font-size: 0.62rem; font-weight: 700;
+    }
+    /* ACTION ROW */
     .action-row { display: flex; gap: 0.5rem; margin-top: 0.7rem; }
     .btn-action {
-      flex: 1; padding: 0.7rem; border-radius: 12px; font-weight: 700; font-size: 0.82rem;
+      flex: 1; padding: 0.85rem 0.6rem; border-radius: var(--radius);
+      font-weight: 700; font-size: 0.82rem;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-      border: none; transition: transform 0.15s;
+      border: none;
+      transition: transform 0.12s var(--ease), background 0.12s var(--ease);
     }
     .btn-action:active { transform: scale(0.96); }
-    .btn-report { background: var(--primary); color: white; }
-    .btn-history { background: var(--card-bg); color: var(--text); border: 1.5px solid var(--border); }
-
+    .btn-report {
+      background: var(--primary); color: white;
+      box-shadow: 0 3px 8px rgba(5,150,105,0.25);
+    }
+    .btn-history {
+      background: var(--card-bg); color: var(--text);
+      border: 1.5px solid var(--border);
+    }
     /* SECTION TITLE */
     .section-title {
-      font-size: 0.8rem; font-weight: 800; color: var(--text);
-      margin: 1rem 0 0.6rem; display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.82rem; font-weight: 800; color: var(--text);
+      margin: 1.15rem 0 0.65rem;
+      display: flex; align-items: center;
     }
-    .section-title .see-all { font-size: 0.72rem; color: var(--primary); font-weight: 700; cursor: pointer; }
-
-    /* TRANSACTIONS LIST */
-    .tx-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .section-title::before {
+      content: ''; width: 4px; height: 15px;
+      background: var(--primary);
+      border-radius: 2px; margin-right: 0.5rem;
+    }
+    .section-title .see-all {
+      font-size: 0.72rem; color: var(--primary); font-weight: 700;
+      cursor: pointer; margin-left: auto;
+      padding: 0.2rem 0.4rem; border-radius: 6px;
+    }
+    /* TX CARDS */
+    .tx-list { display: flex; flex-direction: column; gap: 0.55rem; }
     .tx-card {
-      background: var(--card-bg); border-radius: 12px; padding: 0.75rem 0.85rem;
-      border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-      cursor: pointer; transition: transform 0.15s; position: relative;
+      background: var(--card-bg); border-radius: var(--radius);
+      padding: 0.85rem 1rem 0.85rem 1.05rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-xs);
+      cursor: pointer; position: relative;
+      transition: transform 0.12s var(--ease), box-shadow 0.12s var(--ease);
+      contain: layout style;
     }
-    .tx-card:active { transform: scale(0.985); }
-    .tx-card.pending { border-left: 3px solid var(--danger); }
-    .tx-card.settled { border-left: 3px solid var(--success); }
+    .tx-card:active { transform: scale(0.985); box-shadow: var(--shadow-sm); background: var(--surface-alt); }
+    .tx-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+    .tx-card.pending::before { background: var(--danger); }
+    .tx-card.settled::before { background: var(--success); }
     .tx-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .tx-name { font-weight: 700; font-size: 0.88rem; color: var(--text); }
-    .tx-buyer { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.15rem; }
-    .tx-total { font-size: 0.95rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); }
-    .tx-meta { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; font-size: 0.68rem; color: var(--text-muted); flex-wrap: wrap; }
+    .tx-name { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-top: 0.35rem; }
+    .tx-buyer { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .tx-total {
+      font-size: 1rem; font-weight: 800; font-family: 'Outfit', sans-serif;
+      color: var(--primary); letter-spacing: -0.3px;
+    }
+    .tx-meta { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.45rem; font-size: 0.65rem; color: var(--text-muted); flex-wrap: wrap; }
     .tx-meta span { display: inline-flex; align-items: center; gap: 0.2rem; }
-    .badge { font-size: 0.6rem; font-weight: 700; padding: 0.12rem 0.4rem; border-radius: 5px; }
+    .badge { font-size: 0.58rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 6px; }
     .badge-cash { background: #D1FAE5; color: #065F46; }
     .badge-tf { background: #DBEAFE; color: #1E40AF; }
     .badge-utang { background: #FEE2E2; color: #991B1B; }
     .badge-pending { background: #FEF3C7; color: #92400E; }
     .badge-settled { background: #D1FAE5; color: #065F46; }
     .tx-menu-btn {
-      position: absolute; top: 0.6rem; right: 0.6rem;
-      background: none; border: none; cursor: pointer; color: var(--text-muted);
-      font-size: 1.1rem; padding: 0.2rem; line-height: 1;
+      position: absolute; top: 0.55rem; right: 0.55rem;
+      background: var(--surface-alt); border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; cursor: pointer; padding: 0;
+      transition: transform 0.12s var(--ease);
     }
+    .tx-menu-btn:active { transform: scale(0.9); }
     .tx-id { font-size: 0.6rem; color: var(--text-muted); font-family: monospace; margin-top: 0.2rem; }
-
     /* FAB */
     .fab {
-      position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--amber-gold) 0%, var(--amber) 100%);
-      color: white; border: none; border-radius: 999px; padding: 0.7rem 1.4rem;
-      font-weight: 800; font-size: 0.88rem; box-shadow: 0 6px 20px rgba(217,119,6,0.35);
-      display: flex; align-items: center; gap: 0.45rem; cursor: pointer; z-index: 100;
+      position: fixed; bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); left: 50%;
+      transform: translateX(-50%) translateZ(0);
+      background: var(--amber-gold); color: white;
+      border: none; border-radius: 999px;
+      padding: 0.85rem 1.5rem;
+      font-weight: 800; font-size: 0.88rem;
+      box-shadow: 0 6px 16px rgba(217,119,6,0.35);
+      display: flex; align-items: center; gap: 0.45rem;
+      cursor: pointer; z-index: 100;
+      transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+      will-change: transform;
     }
-    .fab:active { transform: translateX(-50%) scale(0.95); }
-
-    /* MODALS */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; backdrop-filter: blur(2px); align-items: flex-end; justify-content: center; }
+    .fab:active {
+      transform: translateX(-50%) scale(0.94);
+      box-shadow: 0 3px 8px rgba(217,119,6,0.4);
+    }
+    /* MODAL */
+    .modal {
+      display: none; position: fixed; inset: 0;
+      background: rgba(2,6,23,0.6);
+      z-index: 200;
+      align-items: flex-end; justify-content: center;
+    }
     .modal.show { display: flex; }
-    .modal-sheet { background: var(--card-bg); width: 100%; max-width: 500px; border-radius: 24px 24px 0 0; padding: 1rem 1.1rem 1.4rem; max-height: 90vh; overflow-y: auto; animation: slideUp 0.2s ease; }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 99px; margin: 0 auto 0.9rem; }
-    .modal-title { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 0.15rem; }
-    .modal-subtitle { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem; }
-
-    /* WIZARD STEPS */
-    .wizard-steps { display: flex; justify-content: center; gap: 0.3rem; margin-bottom: 1rem; }
-    .w-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.2s; }
-    .w-dot.active { background: var(--amber-gold); width: 20px; border-radius: 4px; }
-    .w-dot.done { background: var(--success); }
+    .modal-sheet {
+      background: var(--card-bg); width: 100%; max-width: 520px;
+      border-radius: 22px 22px 0 0;
+      padding: 0.9rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom, 0px));
+      max-height: 92vh; overflow-y: auto;
+      animation: slideUp 0.22s var(--ease);
+      box-shadow: 0 -8px 24px rgba(0,0,0,0.15);
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scroll-padding-bottom: 300px;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .modal-handle {
+      width: 36px; height: 4px; background: var(--border);
+      border-radius: 2px; margin: 0 auto 0.7rem;
+    }
+    .modal-title { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+    .modal-subtitle { font-size: 0.75rem; color: var(--text-muted); margin: 0.15rem 0 0.85rem; }
+    /* WIZARD */
+    .wizard-steps { display: flex; gap: 0.35rem; margin: 0 0 0.85rem; align-items: center; }
+    .w-dot {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--border);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .w-dot.active { background: var(--primary); transform: scale(1.3); }
+    .w-dot.done { background: var(--amber-gold); }
     .wizard-step { display: none; }
     .wizard-step.active { display: block; }
-
-    /* PRODUCT GRID */
-    .cat-label { font-size: 0.7rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 0.75rem 0 0.4rem; }
+    .cat-label {
+      font-size: 0.68rem; font-weight: 800; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin: 0.6rem 0 0.4rem;
+    }
     .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
     .prod-btn {
-      background: var(--surface-alt); border: 2px solid var(--border); border-radius: 12px;
-      padding: 0.55rem 0.3rem; text-align: center; cursor: pointer; transition: all 0.15s; position: relative;
+      background: var(--surface-alt); border: 2px solid var(--border);
+      border-radius: 12px; padding: 0.65rem 0.3rem 0.55rem;
+      text-align: center; cursor: pointer;
+      transition: transform 0.12s var(--ease), border-color 0.12s var(--ease), background 0.12s var(--ease);
+      position: relative;
+      contain: layout style;
     }
-    .prod-btn:active { transform: scale(0.95); }
-    .prod-btn.in-cart { border-color: var(--amber-gold); background: var(--amber-light); }
-    .prod-btn .p-icon { width: 24px; height: 24px; margin: 0 auto 0.1rem; }
-    .prod-btn .p-icon svg { width: 100%; height: 100%; }
-    .prod-btn .p-name { font-size: 0.62rem; font-weight: 700; color: var(--text); line-height: 1.2; }
-    .prod-btn .p-price { font-size: 0.58rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); margin-top: 0.08rem; }
-    .p-badge { position: absolute; top: -5px; right: -5px; background: var(--amber-gold); color: white; font-size: 0.55rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--card-bg); }
-
+    .prod-btn:active { transform: scale(0.94); }
+    .prod-btn:active { background: var(--border); }
+    .prod-btn.in-cart {
+      border-color: var(--amber-gold);
+      background: var(--amber-light);
+    }
+    .prod-btn .p-icon { width: 30px; height: 30px; margin: 0 auto 0.25rem; color: var(--primary); }
+    [data-theme="dark"] .prod-btn .p-icon { color: #34D399; }
+    .prod-btn .p-icon svg { width: 100%; height: 100%; display: block; }
+    .prod-btn .p-name { font-size: 0.64rem; font-weight: 700; color: var(--text); line-height: 1.25; }
+    .prod-btn .p-price { font-size: 0.62rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); margin-top: 0.1rem; }
+    .p-badge {
+      position: absolute; top: -6px; right: -6px;
+      background: var(--amber-gold); color: white;
+      font-size: 0.6rem; font-weight: 800;
+      min-width: 20px; height: 20px; padding: 0 5px;
+      border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--card-bg);
+      box-shadow: 0 2px 4px rgba(217,119,6,0.3);
+    }
     /* CART SUMMARY */
     .cart-summary { background: var(--amber-light); border: 1.5px solid #FDE68A; border-radius: 12px; padding: 0.65rem; margin-top: 0.5rem; }
+    [data-theme="dark"] .cart-summary { border-color: #78500F; }
     .cart-title { font-size: 0.7rem; font-weight: 800; color: var(--amber); margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.3rem; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0; font-size: 0.72rem; border-bottom: 1px solid rgba(217,119,6,0.15); }
     .cart-item:last-of-type { border-bottom: none; }
     .cart-item-name { font-weight: 700; }
+    .cart-item-name svg { width: 16px; height: 16px; vertical-align: middle; margin-right: 0.2rem; flex-shrink: 0; }
     .cart-item-total { font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); }
     .cart-total-row { display: flex; justify-content: space-between; padding-top: 0.4rem; margin-top: 0.3rem; border-top: 2px solid #FDE68A; font-size: 0.85rem; }
     .cart-total-label { font-weight: 800; }
     .cart-total-amount { font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); font-size: 1rem; }
     .cart-empty { font-size: 0.72rem; color: var(--text-muted); text-align: center; padding: 0.4rem 0; }
-
     /* FORM */
     .form-group { margin-bottom: 0.75rem; }
     .form-group label { display: flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem; }
-    .form-group input, .form-group select { width: 100%; padding: 0.65rem 0.75rem; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.88rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
-    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--amber-gold); }
+    .form-group input, .form-group select { scroll-margin-bottom: 300px; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 0.7rem 0.85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 0.88rem; font-family: inherit;
+      background: var(--input-bg); color: var(--text);
+      transition: border-color 0.12s var(--ease), box-shadow 0.12s var(--ease);
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(5,150,105,0.12);
+    }
+    .form-group select {
+      -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      padding-right: 2.2rem;
+    }
     .pay-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-top: 0.4rem; }
-    .pay-btn { border: 2px solid var(--border); border-radius: 10px; padding: 0.6rem 0.4rem; text-align: center; cursor: pointer; background: var(--input-bg); transition: all 0.15s; }
-    .pay-btn:active { transform: scale(0.96); }
-    .pay-btn.selected { border-color: var(--primary); background: var(--primary-light); }
-    .pay-btn .pay-icon { width: 20px; height: 20px; margin: 0 auto 0.1rem; }
-    .pay-btn .pay-label { font-size: 0.7rem; font-weight: 700; color: var(--text); }
-    .pay-btn.utang.selected { border-color: var(--danger); background: #FEF2F2; }
-    .pay-btn.utang .pay-label { color: var(--danger); }
+    .pay-btn {
+      border: 2px solid var(--border); border-radius: 12px;
+      padding: 0.7rem 0.4rem; text-align: center; cursor: pointer;
+      background: var(--input-bg);
+      transition: border-color 0.12s var(--ease), background 0.12s var(--ease);
+      position: relative;
+    }
+    .pay-btn:active { transform: scale(0.95); }
+    .pay-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .pay-btn.selected::after {
+      content: ''; position: absolute; top: 6px; right: 6px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--primary) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/9px no-repeat;
+    }
+    .pay-btn.utang.selected {
+      border-color: var(--danger);
+      background: #FEF2F2;
+    }
+    .pay-btn.utang.selected::after { background-color: var(--danger); }
     [data-theme="dark"] .pay-btn.utang.selected { background: #2D1515; }
+    .pay-btn .pay-icon { width: 20px; height: 20px; margin: 0 auto 0.1rem; }
+    .pay-btn .pay-label { font-size: 0.72rem; font-weight: 700; color: var(--text); margin-top: 0.15rem; }
+    .pay-btn.utang .pay-label { color: var(--danger); }
     .manual-price-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; }
     .manual-price-row label { margin: 0; font-size: 0.7rem; white-space: nowrap; }
     .qty-control { display: flex; align-items: center; gap: 0.4rem; }
-    .qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1.5px solid var(--border); background: var(--input-bg); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .qty-btn {
+      width: 28px; height: 28px; border-radius: 6px;
+      border: 1.5px solid var(--border); background: var(--input-bg); color: var(--text);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: transform 0.12s var(--ease);
+    }
     .qty-btn:active { transform: scale(0.93); }
     .prod-total { font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); font-size: 0.9rem; margin-left: auto; }
     .manual-price-row-inline { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; flex-wrap: wrap; }
     .manual-price-row-inline label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin: 0; white-space: nowrap; }
+    .manual-price-row-inline label svg { width: 14px; height: 14px; vertical-align: middle; margin-right: 0.2rem; }
     .manual-price-row-inline input { flex: 1; min-width: 80px; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
     .manual-price-row input { flex: 1; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
-    .manual-price-row input:focus { outline: none; border-color: var(--amber-gold); }
-
+    .manual-price-row input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5,150,105,0.12); }
     /* NAV BUTTONS */
     .nav-btns { display: flex; gap: 0.5rem; margin-top: 1rem; }
-    .btn-back { flex: 0 0 75px; background: transparent; border: 1.5px solid var(--border); border-radius: 10px; padding: 0.6rem; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); cursor: pointer; }
-    .btn-next { flex: 1; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border: none; border-radius: 10px; padding: 0.7rem; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
+    .btn-back {
+      flex: 0 0 75px; background: transparent; border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 0.6rem; font-weight: 700; font-size: 0.8rem;
+      color: var(--text-muted); cursor: pointer;
+      transition: transform 0.12s var(--ease);
+    }
+    .btn-back:active { transform: scale(0.96); }
+    .btn-next {
+      flex: 1; background: var(--primary); color: white;
+      border: none; border-radius: var(--radius); padding: 0.7rem;
+      font-weight: 800; font-size: 0.85rem; cursor: pointer;
+      box-shadow: 0 3px 8px rgba(5,150,105,0.25);
+      transition: transform 0.12s var(--ease);
+    }
     .btn-next:active { transform: scale(0.97); }
     .btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
-
     /* DETAIL */
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 0.75rem 0; }
-    .detail-item { background: var(--surface-alt); border-radius: 10px; padding: 0.55rem 0.65rem; }
+    .detail-item {
+      background: var(--surface-alt); border-radius: 10px; padding: 0.55rem 0.65rem;
+      contain: layout style;
+    }
     .detail-item-label { font-size: 0.6rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
     .detail-item-val { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-top: 0.1rem; }
     .detail-items { margin: 0.6rem 0; }
@@ -236,107 +425,150 @@
     .detail-item-row:last-child { border-bottom: none; }
     .detail-item-left { font-weight: 700; }
     .detail-item-right { font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); }
-    .detail-total { display: flex; justify-content: space-between; background: var(--amber-light); border: 1.5px solid #FDE68A; border-radius: 10px; padding: 0.55rem 0.7rem; margin: 0.6rem 0; }
+    .detail-total {
+      display: flex; justify-content: space-between;
+      background: var(--amber-light); border: 1.5px solid #FDE68A;
+      border-radius: 10px; padding: 0.55rem 0.7rem; margin: 0.6rem 0;
+    }
     .detail-total-label { font-weight: 800; font-size: 0.85rem; }
     .detail-total-val { font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); font-size: 1rem; }
-    .detail-note { background: var(--amber-light); border: 1px solid #FDE68A; border-radius: 10px; padding: 0.55rem 0.7rem; font-size: 0.78rem; color: #92400E; margin: 0.6rem 0; line-height: 1.5; }
+    .detail-note {
+      background: var(--amber-light); border: 1px solid #FDE68A; border-radius: 10px;
+      padding: 0.55rem 0.7rem; font-size: 0.78rem; color: #92400E; margin: 0.6rem 0; line-height: 1.5;
+    }
     .detail-actions { display: flex; gap: 0.45rem; margin-top: 0.8rem; }
-    .detail-btn { flex: 1; padding: 0.65rem; border-radius: 10px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.3rem; border: none; }
-    .detail-btn.setor { background: var(--primary); color: white; }
+    .detail-btn {
+      flex: 1; padding: 0.65rem; border-radius: var(--radius);
+      font-weight: 700; font-size: 0.8rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 0.3rem; border: none;
+      transition: transform 0.12s var(--ease);
+    }
+    .detail-btn:active { transform: scale(0.96); }
+    .detail-btn.setor { background: var(--primary); color: white; box-shadow: 0 3px 8px rgba(5,150,105,0.25); }
+    .detail-btn.hapus { background: #FEE2E2; color: var(--danger); }
+    [data-theme="dark"] .detail-btn.hapus { background: #2D1515; }
     .detail-btn.edit { background: var(--surface-alt); color: var(--text); border: 1.5px solid var(--border); }
     .detail-btn.delete { background: transparent; color: var(--danger); border: 1.5px solid #FECACA; }
     .detail-btn svg { width: 15px; height: 15px; }
-
-    /* REPORT SCREEN */
-    .report-header {
-      background: var(--primary); color: white; border-radius: 16px; padding: 1rem;
-      margin-bottom: 0.8rem; text-align: center;
+    /* LAPORAN */
+    .laporan-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem 0.7rem; background: var(--surface-alt);
+      border-radius: 8px; font-size: 0.7rem; font-weight: 700;
+      color: var(--text-muted); margin-bottom: 0.5rem;
     }
-    .report-header h2 { font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; }
-    .report-header p { font-size: 0.75rem; opacity: 0.85; }
-    .report-total {
-      background: var(--amber-light); border: 2px solid #FDE68A; border-radius: 12px;
-      padding: 0.8rem; text-align: center; margin-bottom: 0.8rem;
+    .laporan-subtotal {
+      display: flex; justify-content: space-between; padding: 0.5rem 0.7rem;
+      background: var(--surface-alt); border-radius: 8px;
+      font-size: 0.78rem; font-weight: 700;
     }
-    .report-total-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
-    .report-total-amount { font-size: 1.4rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); }
-    .report-total-count { font-size: 0.72rem; color: var(--text-muted); }
-    .btn-report-all {
-      width: 100%; background: var(--primary); color: white; border: none; border-radius: 12px;
-      padding: 0.8rem; font-weight: 800; font-size: 0.9rem; cursor: pointer; margin-bottom: 0.6rem;
+    .laporan-subtotal .lap-amount { font-family: 'Outfit', sans-serif; color: var(--primary); }
+    /* LOAD MORE BUTTON */
+    .btn-load-more {
+      width: 100%; padding: 0.75rem; margin-top: 0.5rem;
+      border: 1.5px dashed var(--border);
+      background: var(--surface-alt); color: var(--text-muted);
+      font-weight: 700; font-size: 0.78rem; border-radius: 12px;
+      cursor: pointer;
     }
-    .btn-report-all:active { transform: scale(0.97); }
-    .btn-report-wa {
-      width: 100%; background: #25D366; color: white; border: none; border-radius: 12px;
-      padding: 0.75rem; font-weight: 800; font-size: 0.85rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    .btn-load-more:active { transform: scale(0.98); }
+    /* LOADING BUTTON */
+    .btn-next.loading::after {
+      content: '';
+      display: inline-block;
+      width: 12px; height: 12px;
+      margin-left: 0.5rem;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
     }
-
-    /* FILTER BAR */
-    .filter-bar { display: flex; gap: 0.35rem; margin-bottom: 0.75rem; overflow-x: auto; padding-bottom: 0.2rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* RIWAYAT FILTER */
+    .filter-bar {
+      display: flex; gap: 0.4rem; margin: 0.6rem 0 0.5rem;
+      overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
     .filter-btn {
-      flex-shrink: 0; padding: 0.4rem 0.7rem; border-radius: 8px; border: 1.5px solid var(--border);
-      background: var(--card-bg); font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
-      cursor: pointer; transition: all 0.15s;
+      padding: 0.5rem 0.85rem; border-radius: 10px;
+      font-size: 0.74rem; font-weight: 700;
+      border: 1.5px solid var(--border); background: var(--input-bg);
+      color: var(--text-muted); cursor: pointer; white-space: nowrap;
+      transition: background 0.12s var(--ease), color 0.12s var(--ease);
+      contain: layout style;
     }
-    .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-    .search-bar {
-      display: flex; gap: 0.4rem; margin-bottom: 0.75rem;
+    button, .tx-card, .prod-btn, .other-item, .pay-btn, .filter-btn { touch-action: manipulation; }
+    .filter-btn.active {
+      background: var(--primary); color: white; border-color: var(--primary);
     }
+    .search-bar { margin: 0.5rem 0; }
     .search-bar input {
-      flex: 1; padding: 0.6rem 0.75rem; border: 1.5px solid var(--border); border-radius: 10px;
-      font-size: 0.85rem; font-family: inherit; background: var(--input-bg); color: var(--text);
+      width: 100%; padding: 0.6rem 0.75rem; padding-left: 2.3rem;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text);
+      transition: border-color 0.12s var(--ease), box-shadow 0.12s var(--ease);
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 0.8rem center;
     }
-    .search-bar input:focus { outline: none; border-color: var(--amber-gold); }
-
-    /* OTHERS MENU */
-    .other-menu { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem; }
+    .search-bar input:focus {
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(5,150,105,0.12);
+    }
+    /* LIYANE */
+    .other-menu { display: flex; flex-direction: column; gap: 0.2rem; }
     .other-item {
-      display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 0.5rem;
-      border-radius: 12px; cursor: pointer; transition: background 0.15s;
+      display: flex; align-items: center; gap: 0.65rem;
+      padding: 0.65rem 0.5rem; cursor: pointer;
+      transition: transform 0.12s var(--ease);
     }
-    .other-item:active { background: var(--surface-alt); }
+    .other-item:active { transform: scale(0.98); }
     .other-icon {
-      width: 36px; height: 36px; border-radius: 10px; display: flex;
-      align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem;
+      width: 40px; height: 40px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
     }
-    .other-icon.green { background: var(--primary-light); }
-    .other-icon.amber { background: var(--amber-light); }
-    .other-icon.blue { background: #DBEAFE; }
-    .other-icon.red { background: #FEE2E2; }
+    .other-icon.green { background: var(--primary-light); color: var(--primary); }
+    .other-icon.amber { background: var(--amber-light); color: var(--amber); }
+    .other-icon.blue { background: #DBEAFE; color: #2563EB; }
+    .other-icon.red { background: #FEE2E2; color: var(--danger); }
+    [data-theme="dark"] .other-icon.blue { background: #1E3A8A; color: #93C5FD; }
+    [data-theme="dark"] .other-icon.red { background: #7F1D1D; color: #FCA5A5; }
     .other-text { flex: 1; }
-    .other-text strong { font-size: 0.85rem; color: var(--text); display: block; }
-    .other-text small { font-size: 0.7rem; color: var(--text-muted); }
-    .other-arrow { color: var(--text-muted); font-size: 0.85rem; }
-
-    /* EMPTY STATE */
-    .empty-state { text-align: center; padding: 2rem 1rem; color: var(--text-muted); }
-    .empty-state .empty-icon { width: 44px; height: 44px; margin: 0 auto 0.4rem; color: var(--text-muted); }
-    .empty-state .empty-icon svg { width: 100%; height: 100%; }
-    .empty-state p { font-size: 0.82rem; margin-bottom: 0.75rem; }
-    .empty-state .empty-sub { font-size: 0.75rem; color: var(--text-muted); }
-
+    .other-text strong { font-size: 0.85rem; font-weight: 700; color: var(--text); display: block; }
+    .other-text small { font-size: 0.72rem; color: var(--text-muted); }
+    .other-arrow { font-size: 1rem; color: var(--text-muted); font-weight: 700; }
     /* TOAST */
-    .toast-container { position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%); z-index: 999; display: flex; flex-direction: column; gap: 0.4rem; align-items: center; pointer-events: none; }
+    .toast-container {
+      position: fixed; bottom: 4.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 300; display: flex; flex-direction: column; gap: 0.4rem; align-items: center; pointer-events: none;
+    }
     .toast {
-      background: #1F2937; color: white; padding: 0.6rem 1rem; border-radius: 10px;
-      font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3); animation: toastIn 0.2s ease; pointer-events: auto;
-      max-width: 90vw;
+      background: #1F2937; color: white;
+      padding: 0.7rem 1rem; border-radius: 12px;
+      font-size: 0.8rem; font-weight: 600;
+      display: flex; align-items: center; gap: 0.5rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+      animation: toastIn 0.2s var(--ease);
+      pointer-events: auto; max-width: 92vw;
     }
     .toast.success { background: #065F46; }
     .toast.error { background: #991B1B; }
     .toast.info { background: #1E40AF; }
     .toast-action {
-      background: none; border: none; color: #A7F3D0; font-weight: 700; cursor: pointer;
-      font-size: 0.78rem; padding: 0; margin-left: 0.3rem;
+      background: none; border: none; color: #A7F3D0; font-weight: 700;
+      cursor: pointer; font-size: 0.78rem; padding: 0; margin-left: 0.3rem;
     }
-    @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     /* CONTEXT MENU */
     .ctx-menu {
       display: none; position: fixed; z-index: 300; background: var(--card-bg);
-      border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); padding: 0.4rem;
+      border-radius: 12px; box-shadow: var(--shadow); padding: 0.4rem;
       min-width: 160px; border: 1px solid var(--border);
     }
     .ctx-menu.show { display: block; }
@@ -350,7 +582,6 @@
     .ctx-item.danger:active { background: #FEF2F2; }
     [data-theme="dark"] .ctx-item.danger:active { background: #2D1515; }
     .ctx-item svg { width: 16px; height: 16px; flex-shrink: 0; }
-
     /* PRICE SETTINGS */
     .price-product-header {
       display: flex; justify-content: space-between; align-items: center;
@@ -363,21 +594,50 @@
     .price-tiers.open { display: block; }
     .price-tier-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; align-items: center; margin-bottom: 0.35rem; }
     .price-tier-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); }
-    .price-tier-input { width: 100%; padding: 0.45rem 0.55rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; font-weight: 700; background: var(--input-bg); color: var(--text); }
-    .price-tier-input:focus { outline: none; border-color: var(--amber-gold); }
+    .price-tier-input {
+      width: 100%; padding: 0.45rem 0.55rem;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 0.82rem; font-family: inherit; font-weight: 700;
+      background: var(--input-bg); color: var(--text);
+      transition: border-color 0.12s var(--ease);
+    }
+    .price-tier-input:focus { outline: none; border-color: var(--primary); }
     .manual-price-label { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 600; }
-
     /* DARK MODE TOGGLE */
     .theme-toggle { display: flex; align-items: center; gap: 0.5rem; }
-    .theme-switch { position: relative; width: 44px; height: 24px; background: var(--border); border-radius: 99px; cursor: pointer; transition: background 0.2s; }
-    .theme-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.2s; }
+    .theme-switch {
+      position: relative; width: 44px; height: 24px;
+      background: var(--border); border-radius: 99px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .theme-switch::after {
+      content: ''; position: absolute; top: 2px; left: 2px;
+      width: 20px; height: 20px; background: white; border-radius: 50%;
+      transition: transform 0.2s;
+    }
     .theme-switch.on { background: var(--amber-gold); }
     .theme-switch.on::after { transform: translateX(20px); }
-    .lyr-close { width: 100%; background: transparent; border: none; padding: 0.7rem; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); cursor: pointer; border-top: 1px solid var(--border); margin-top: 0.5rem; }
+    .lyr-close {
+      width: 100%; background: transparent; border: none;
+      padding: 0.7rem; font-size: 0.85rem; font-weight: 700;
+      color: var(--text-muted); cursor: pointer;
+      border-top: 1px solid var(--border); margin-top: 0.5rem;
+    }
+    /* MICRO-INTERACTIONS */
+    .tx-card, .fab, .btn-action, .prod-btn {
+      will-change: transform;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .tx-list > * { animation: fadeIn 0.18s var(--ease); }
+    .modal-sheet::-webkit-scrollbar { width: 3px; }
+    .modal-sheet::-webkit-scrollbar-thumb { background: var(--border-strong, #D1D5DB); border-radius: 3px; }
+    [data-theme="dark"] .modal-sheet::-webkit-scrollbar-thumb { background: #333A47; }
   </style>
 </head>
 <body>
-
   <!-- HEADER -->
   <header>
     <div class="header-top">
@@ -395,9 +655,7 @@
       </div>
     </div>
   </header>
-
   <div class="container" id="mainView">
-
     <!-- TODAY BAR -->
     <div class="today-bar">
       <div class="today-bar-left">
@@ -414,7 +672,6 @@
         <div class="today-amount" id="todayAmount">Rp 0</div>
       </div>
     </div>
-
     <!-- STATUS CARDS -->
     <div class="status-cards">
       <div class="status-card red">
@@ -428,7 +685,6 @@
         <div class="status-card-count" id="sudahCount">0 transaksi</div>
       </div>
     </div>
-
     <!-- ACTION ROW -->
     <div class="action-row">
       <button class="btn-action btn-report" onclick="bukaLaporan()">
@@ -440,7 +696,6 @@
         Riwayat
       </button>
     </div>
-
     <!-- RECENT TRANSACTIONS -->
     <div class="section-title">
       Transaksi Terakhir
@@ -448,13 +703,11 @@
     </div>
     <div class="tx-list" id="recentList"></div>
   </div>
-
   <!-- FAB -->
   <button class="fab" onclick="bukaWizardManual()" aria-label="Catat penjualan baru">
     <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/></svg>
     <span>Catat Pembelian</span>
   </button>
-
   <!-- ===== WIZARD MODAL ===== -->
   <div class="modal" id="wizardModal">
     <div class="modal-sheet">
@@ -531,7 +784,6 @@
       </div>
     </div>
   </div>
-
   <!-- ===== DETAIL MODAL ===== -->
   <div class="modal" id="detailModal">
     <div class="modal-sheet">
@@ -569,7 +821,6 @@
       </div>
     </div>
   </div>
-
   <!-- ===== LAPORAN MODAL ===== -->
   <div class="modal" id="laporanModal">
     <div class="modal-sheet">
@@ -579,11 +830,10 @@
       <div id="laporanContent"></div>
       <div class="nav-btns">
         <button class="btn-back" onclick="tutupLaporan()">Tutup</button>
-        <button class="btn-next" id="laporanBtn" onclick="tandaiSemuaLapor()" style="display:none;">›››œ Tandai Sudah Dilaporkan</button>
+        <button class="btn-next" id="laporanBtn" onclick="tandaiSemuaLapor()" style="display:none;">✓ Tandai Sudah Dilaporkan</button>
       </div>
     </div>
   </div>
-
   <!-- ===== RIWAYAT MODAL ===== -->
   <div class="modal" id="riwayatModal">
     <div class="modal-sheet" style="padding-bottom:1.5rem;">
@@ -593,7 +843,7 @@
         <button class="btn-back" style="flex:0;" onclick="tutupRiwayat()">Tutup</button>
       </div>
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Cari nama / barang..." oninput="renderRiwayat()">
+        <input type="text" id="searchInput" placeholder="Cari nama / barang..." oninput="currentSearch=this.value;renderRiwayat()">
       </div>
       <div class="filter-bar" id="filterBar">
         <button class="filter-btn active" data-filter="today" onclick="setFilter('today')">Hari Ini</button>
@@ -605,7 +855,6 @@
       <div class="tx-list" id="riwayatList"></div>
     </div>
   </div>
-
   <!-- ===== LIYANE MODAL ===== -->
   <div class="modal" id="lyrModal">
     <div class="modal-sheet">
@@ -658,12 +907,12 @@
       </div>
       <div style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:var(--amber-light);border-radius:10px;font-size:0.7rem;color:#92400E;line-height:1.5;">
         Data tersimpan di perangkat ini<br>
-        Backup terakhir: <span id="lastBackup">›</span>
+        Backup terakhir: <span id="lastBackup">›</span><br>
+        <span id="storageInfo" style="display:block;margin-top:0.25rem;"></span>
       </div>
       <button class="lyr-close" onclick="tutupLiyane()" style="width:100%;background:transparent;border:none;padding:0.7rem;font-size:0.85rem;font-weight:700;color:var(--text-muted);cursor:pointer;border-top:1px solid var(--border);margin-top:0.5rem;">Tutup</button>
     </div>
   </div>
-
   <!-- ===== PRICE SETTINGS MODAL ===== -->
   <div class="modal" id="priceModal">
     <div class="modal-sheet">
@@ -677,7 +926,6 @@
       </div>
     </div>
   </div>
-
   <!-- ===== EXPORTE MODAL ===== -->
   <div class="modal" id="exportModal">
     <div class="modal-sheet">
@@ -701,7 +949,6 @@
       <button class="lyr-close" onclick="tutupExport()" style="width:100%;background:transparent;border:none;padding:0.7rem;font-size:0.85rem;font-weight:700;color:var(--text-muted);cursor:pointer;border-top:1px solid var(--border);">Tutup</button>
     </div>
   </div>
-
   <!-- ===== RESTORE MODAL ===== -->
   <div class="modal" id="restoreModal">
     <div class="modal-sheet">
@@ -717,7 +964,6 @@
       </div>
     </div>
   </div>
-
   <!-- ===== CONTEXT MENU ===== -->
   <div class="ctx-menu" id="ctxMenu">
     <button class="ctx-item" onclick="ctxEdit()">
@@ -733,41 +979,38 @@
       Hapus
     </button>
   </div>
-
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
-
   <script>
     // =============================================
     // DATA PRODUK › SATU SUMBER KEBENARAN
     // =============================================
     const PRODUCTS_DATA = [
-      { id:'madu_sachet',name:'Madu Sachet Baitina',cat:'Baitina', icon:'🍯', unit:'sachet',
+      { id:'madu_sachet',name:'Madu Sachet Baitina',cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C9 2 7 4 7 7v2H5a1 1 0 0 0-1 1v4a5 5 0 0 0 5 5h6a5 5 0 0 0 5-5V10a1 1 0 0 0-1-1h-2V7c0-3-2-5-5-5z"/><path d="M9 19v2"/><path d="M15 19v2"/><path d="M12 2v3"/><path d="M8 14.5c.5.8 1.5 1.2 4 1.2s3.5-.4 4-1.2"/></svg>`, unit:'sachet',
         tiers:[{min:1,max:99999,price:6000}]},
-      { id:'madu',    name:'Madu Box Baitina',     cat:'Baitina', icon:'🍯', unit:'box',
+      { id:'madu',    name:'Madu Box Baitina',     cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><path d="M4 12h16"/><circle cx="12" cy="17" r="1.5"/></svg>`, unit:'box',
         tiers:[{min:1,max:4, price:58000},{min:5,max:9, price:55000},{min:10,max:19,price:52500},{min:20,max:99999,price:51000}]},
-      { id:'nasijagung',name:'Nasi Jagung',        cat:'Baitina', icon:'🍚', unit:'porsi',
+      { id:'nasijagung',name:'Nasi Jagung',        cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h16c0-4-2.5-8-8-8S4 10 4 14z"/><path d="M7 14v3"/><path d="M12 14v4"/><path d="M17 14v3"/><path d="M9 6c1-2 2-3 3-3s2 1 3 3"/></svg>`, unit:'porsi',
         tiers:[{min:1,max:4, price:10000},{min:5,max:9, price:9500},{min:10,max:19,price:9250},{min:20,max:99999,price:9100}]},
-      { id:'garam',   name:'Garam Ruqyah',         cat:'Baitina', icon:'🧂', unit:'pcs',
+      { id:'garam',   name:'Garam Ruqyah',         cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="7" width="8" height="13" rx="1.5"/><path d="M8 10h8"/><circle cx="10" cy="4" r="1"/><circle cx="12" cy="3" r="1"/><circle cx="14" cy="4" r="1"/><line x1="10" y1="14" x2="10" y2="17"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="14" y1="14" x2="14" y2="17"/></svg>`, unit:'pcs',
         tiers:[{min:1,max:4, price:6000},{min:5,max:9, price:5500},{min:10,max:19,price:5250},{min:20,max:99999,price:5100}]},
-      { id:'sabun',   name:'Sabun Ruqyah',         cat:'Baitina', icon:'🧼', unit:'pcs',
+      { id:'sabun',   name:'Sabun Ruqyah',         cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="9" rx="4.5"/><ellipse cx="7" cy="14" rx="2" ry="1.5" opacity=".5"/></svg>`, unit:'pcs',
         tiers:[{min:1,max:4, price:5000},{min:5,max:9, price:4500},{min:10,max:19,price:4250},{min:20,max:99999,price:4100}]},
-      { id:'eskrim',  name:'Es Krim Baitina',      cat:'Baitina', icon:'🍦', unit:'pcs',
+      { id:'eskrim',  name:'Es Krim Baitina',      cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10"/><path d="M12 3L6 14h12L12 3z"/><circle cx="12" cy="10" r="3"/></svg>`, unit:'pcs',
         tiers:[{min:1,max:99999,price:5000}]},
-      { id:'sarung',  name:'Sarung Santri',        cat:'Kopontren', icon:'🧕', unit:'pcs',
+      { id:'sarung',  name:'Sarung Santri',        cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16"/><path d="M4 13h16"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M12 21v2"/><path d="M9 21v2"/><path d="M15 21v2"/></svg>`, unit:'pcs',
         tiers:[], manualPrice:true},
-      { id:'mbako',   name:'Mbako Linthingan',     cat:'Kopontren', icon:'🌿', unit:'bungkus',
+      { id:'mbako',   name:'Mbako Linthingan',     cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10c0-3 2-6 6-6s6 3 6 6v10"/><path d="M6 14c2-1 4-1 6 0"/><path d="M6 17c2-1 4-1 6 0"/><path d="M12 4V2"/><path d="M9 5l-1-1"/><path d="M15 5l1-1"/></svg>`, unit:'bungkus',
         tiers:[], manualPrice:true},
-      { id:'gula',    name:'Gula Baitina',         cat:'Kopontren', icon:'🍬', unit:'kg',
+      { id:'gula',    name:'Gula Baitina',         cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="6" height="6" rx="1"/><rect x="12" y="12" width="6" height="6" rx="1"/><rect x="9" y="6" width="6" height="6" rx="1"/><path d="M9 3v3"/><path d="M15 3v3"/></svg>`, unit:'kg',
         tiers:[], manualPrice:true},
-      { id:'beras',   name:'Beras Baitina',        cat:'Kopontren', icon:'🌾', unit:'kg',
+      { id:'beras',   name:'Beras Baitina',        cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V9"/><path d="M12 9c-3-2-6-1-7 3 1 2 4 3 7 1"/><path d="M12 9c3-2 6-1 7 3-1 2-4 3-7 1"/><path d="M12 14c-2-1-4 0-5 2 1 1 3 2 5 1"/><path d="M12 14c2-1 4 0 5 2-1 1-3 2-5 1"/></svg>`, unit:'kg',
         tiers:[], manualPrice:true},
-      { id:'atkkop',  name:'ATK / Alat Tulis',     cat:'Kopontren', icon:'✏️', unit:'pcs',
+      { id:'atkkop',  name:'ATK / Alat Tulis',     cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3L21 7l-9 9-2 5 5-2 9-9-4-4z"/><path d="M14 6l4-1"/><path d="M4 20h5"/></svg>`, unit:'pcs',
         tiers:[], manualPrice:true},
-      { id:'custom',  name:'Barang Lain',          cat:'Kopontren', icon:'📦', unit:'pcs',
+      { id:'custom',  name:'Barang Lain',          cat:'Kopontren', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5v8l-9 5-9-5V8z"/><path d="M3 8l9 5"/><path d="M21 8l-9 5"/><path d="M12 13v8"/></svg>`, unit:'pcs',
         tiers:[], manualPrice:true},
     ];
-
     // =============================================
     // STATE
     // =============================================
@@ -775,7 +1018,6 @@
     const PRICE_KEY = 'kopontren_guslim_prices';
     const BACKUP_KEY = 'kopontren_last_backup';
     const THEME_KEY = 'kopontren_theme';
-
     let currentView = 'home';
     let currentFilter = 'today';
     let currentSearch = '';
@@ -786,12 +1028,26 @@
     let ctxId = null;
     let undoItem = null;
     let undoTimer = null;
-
+    let pendingRestoreData = null;
     let products = {};
+    let _dataCache = null, _dataCacheDirty = true;
     function loadProducts() {
       try {
         const saved = localStorage.getItem(PRICE_KEY);
-        if (saved) { products = JSON.parse(saved); return; }
+        if (saved) {
+          const savedProducts = JSON.parse(saved);
+          // Merge: start from defaults, overlay saved data so new products appear
+          products = {};
+          PRODUCTS_DATA.forEach(p => {
+            const existing = savedProducts[p.id];
+            products[p.id] = existing ? {...p, ...existing} : JSON.parse(JSON.stringify(p));
+          });
+          // Keep any products not in defaults (backward compat)
+          Object.keys(savedProducts).forEach(k => {
+            if (!products[k]) products[k] = savedProducts[k];
+          });
+          return;
+        }
       } catch(e) {}
       products = {};
       PRODUCTS_DATA.forEach(p => { products[p.id] = JSON.parse(JSON.stringify(p)); });
@@ -817,56 +1073,117 @@
       if (p.manualPrice && manualPrices[p.id]) return manualPrices[p.id];
       return getProductPrice(p, qty);
     }
-
     // =============================================
     // DATA HELPERS
     // =============================================
     function loadData() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-      catch(e) { return []; }
+      if (!_dataCacheDirty && _dataCache) return _dataCache;
+      try { _dataCache = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { _dataCache = []; }
+      _dataCacheDirty = false;
+      return _dataCache;
     }
+    let _saveTimer = null, _pendingData = null;
     function saveData(data) {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
-      catch(e) { showToast('Penyimpanan penuh! Ekspor data dulu.', 'error'); }
+      _dataCache = data; _dataCacheDirty = false;
+      _pendingData = data;
+      if (_saveTimer) clearTimeout(_saveTimer);
+      _saveTimer = setTimeout(() => {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_pendingData)); _pendingData = null; _saveTimer = null; }
+        catch(e) { if (e.name === 'QuotaExceededError') { showToast('Penyimpanan penuh! Backup & hapus data lama.', 'error'); } else { showToast('Gagal menyimpan data', 'error'); } }
+      }, 120);
     }
+    function invalidateDataCache() { _dataCacheDirty = true; }
     function genId() {
       const now = new Date();
       const yy = String(now.getFullYear()).slice(-2);
       const mm = String(now.getMonth()+1).padStart(2,'0');
       const dd = String(now.getDate()).padStart(2,'0');
-      const seq = String(getDataSeq(yy+mm+dd) + 1).padStart(3,'0');
-      return `TRX-${yy}${mm}${dd}-${seq}`;
+      const ds = yy+mm+dd;
+      const todayRecords = loadData().filter(t => t.id.startsWith('TRX-' + ds + '-'));
+      const maxSeq = todayRecords.length > 0 ? Math.max(...todayRecords.map(t => parseInt(t.id.slice(-3)) || 0)) : 0;
+      const seq = String(maxSeq + 1).padStart(3,'0');
+      return `TRX-${ds}-${seq}`;
     }
-    function getDataSeq(dateStr) {
-      return loadData().filter(t => t.id.startsWith('TRX-' + dateStr + '-')).length;
+    function getTodayStr() {
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
     }
-    function getTodayStr() { return new Date().toISOString().slice(0,10); }
-
     // =============================================
     // INIT
     // =============================================
     function init() {
+      // Version migration DULU, sebelum render
+      try {
+        const savedVer = localStorage.getItem('kopontren_ver');
+        const curVer = 6.0;
+        if (!savedVer || parseFloat(savedVer) < curVer) {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.setItem('kopontren_ver', String(curVer));
+        }
+      } catch(e) {}
       loadProducts();
       applyTheme();
       updateTodayBar();
       renderHome();
       setDefaultDateTime();
       updateLastBackup();
-      try {
-        const savedVer = localStorage.getItem('kopontren_ver');
-        if (!savedVer || savedVer < '6.0') {
-          localStorage.removeItem(STORAGE_KEY);
-          localStorage.setItem('kopontren_ver', '6.0');
+      // Event delegation for tx cards
+      const rl = document.getElementById('riwayatList');
+      const rcl = document.getElementById('recentList');
+      if (rl) rl.addEventListener('click', handleTxListClick);
+      if (rcl) rcl.addEventListener('click', handleTxListClick);
+      const lm = document.getElementById('laporanContent');
+      if (lm) lm.addEventListener('click', handleTxListClick);
+      // FAB once + long-press preset
+      const fab = document.querySelector('.fab');
+      if (fab) {
+        fab.addEventListener('click', once(bukaWizardManual));
+        let _fabTimer = null;
+        fab.addEventListener('touchstart', () => {
+          _fabTimer = setTimeout(() => {
+            haptic([10, 30, 10]);
+            try {
+              const preset = JSON.parse(localStorage.getItem('kopontren_last_cart') || 'null');
+              if (preset && preset.length > 0) {
+                cart = preset.map(i => ({productId: i.productId, qty: i.qty}));
+                showWizardStep(1);
+                document.getElementById('wizardModal').classList.add('show');
+                document.body.style.overflow = 'hidden';
+                showToast('Preset terakhir dimuat', 'success');
+              }
+            } catch(e) {}
+          }, 700);
+        }, { passive: true });
+        ['touchend','touchmove','touchcancel'].forEach(ev =>
+          fab.addEventListener(ev, () => clearTimeout(_fabTimer), { passive: true })
+        );
+      }
+      // Visibility change → force save
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && _pendingData) {
+          clearTimeout(_saveTimer);
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_pendingData)); } catch(e) {}
+          _pendingData = null; _saveTimer = null;
         }
+      });
+      // Date sanity check
+      try {
+        const lastOpen = localStorage.getItem('kopontren_last_open');
+        const now = Date.now();
+        if (lastOpen && now < parseInt(lastOpen) - 60000) {
+          showToast('Tanggal HP mundur, cek pengaturan waktu', 'error');
+        }
+        localStorage.setItem('kopontren_last_open', String(now));
       } catch(e) {}
     }
-
     function setDefaultDateTime() {
       const now = new Date();
-      document.getElementById('wTanggal').value = now.toISOString().slice(0,10);
+      const y = now.getFullYear();
+      const m = String(now.getMonth()+1).padStart(2,'0');
+      const d = String(now.getDate()).padStart(2,'0');
+      document.getElementById('wTanggal').value = `${y}-${m}-${d}`;
       document.getElementById('wJam').value = now.toTimeString().slice(0,5);
     }
-
     function updateTodayBar() {
       const today = getTodayStr();
       const d = new Date();
@@ -877,17 +1194,20 @@
       document.getElementById('todayCount').textContent = todayData.length + ' transaksi';
       document.getElementById('todayAmount').textContent = formatRupiah(total);
     }
-
     function updateLastBackup() {
+      const el = document.getElementById('lastBackup');
       try {
         const last = localStorage.getItem(BACKUP_KEY);
         if (last) {
           const d = new Date(last);
-          document.getElementById('lastBackup').textContent = d.toLocaleDateString('id-ID', {day:'numeric',month:'short',year:'numeric'});
+          el.textContent = d.toLocaleDateString('id-ID', {day:'numeric',month:'short',year:'numeric'});
+        } else {
+          el.textContent = 'Belum pernah';
         }
-      } catch(e) {}
+      } catch(e) {
+        el.textContent = 'Belum pernah';
+      }
     }
-
     // =============================================
     // RENDER HOME
     // =============================================
@@ -901,7 +1221,6 @@
       document.getElementById('sudahTotal').textContent = formatRupiah(totalS);
       document.getElementById('belumCount').textContent = pending.length + ' transaksi';
       document.getElementById('sudahCount').textContent = settled.length + ' transaksi';
-
       const recent = [...data].reverse().slice(0, 5);
       const list = document.getElementById('recentList');
       if (recent.length === 0) {
@@ -910,12 +1229,11 @@
         list.innerHTML = recent.map(t => renderTxCard(t)).join('');
       }
     }
-
     function renderTxCard(t) {
       const names = t.items ? t.items.map(i => i.name).join(', ') : (t.barang || 'Transaksi');
       const qtyInfo = t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||''));
-      return `<div class="tx-card ${t.status}" onclick="bukaDetail('${t.id}')">
-        <button class="tx-menu-btn" onclick="event.stopPropagation();bukaCtxMenu(event,'${t.id}')" aria-label="Menu transaksi">››¬¢››¬¢››¬¢</button>
+      return `<div class="tx-card ${t.status}" data-id="${t.id}">
+        <button class="tx-menu-btn" aria-label="Menu transaksi">•••</button>
         <div class="tx-top">
           <div>
             <div class="tx-name">${escHtml(names)}</div>
@@ -931,12 +1249,14 @@
         <div class="tx-id">${escHtml(t.id)}</div>
       </div>`;
     }
-
     // =============================================
     // WIZARD
     // =============================================
     function bukaWizardManual() {
       cart = []; wizardStep = 1; wizardMetode = 'CASH';
+      detailId = null;
+      Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+      document.getElementById('wNext').onclick = wizardNext;
       showWizardStep(1);
       document.getElementById('wizardModal').classList.add('show');
       document.body.style.overflow = 'hidden';
@@ -944,12 +1264,14 @@
     function bukaWizard(productId) {
       cart = [{productId, qty:1}];
       wizardStep = 1; wizardMetode = 'CASH';
+      detailId = null;
+      Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+      document.getElementById('wNext').onclick = wizardNext;
       showWizardStep(1);
       document.getElementById('wizardModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
-
-    function showWizardStep(step) {
+    function showWizardStep(step, skipDefaults = false) {
       wizardStep = step;
       document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
       document.getElementById('wstep' + step).classList.add('active');
@@ -958,11 +1280,16 @@
       document.getElementById('stepLabel').textContent = step;
       document.getElementById('wBack').style.display = step > 1 ? 'block' : 'none';
       document.getElementById('wNext').textContent = step === 2 ? 'Simpan' : 'Lanjut ›';
-      if (step === 1) { renderWizardProducts(); renderWizardCart(); }
-      if (step === 2) { setDefaultDateTime(); renderWizardCart2(); validateWizard(); }
+      if (step === 1) {
+        renderWizardProducts();
+        renderWizardCart();
+      }
+      if (step === 2) {
+        if (!skipDefaults) setDefaultDateTime();
+        renderWizardCart2();
+      }
       validateWizard();
     }
-
     function renderWizardProducts() {
       // Sort: Baitina first (Madu Sachet, Nasi Jagung, Garam, Sabun, Es Krim, Madu Box), then Kopontren
       const order = ['madu_sachet','madu','nasijagung','garam','sabun','eskrim','sarung','mbako','gula','beras','atkkop','custom'];
@@ -973,7 +1300,6 @@
         if (ib !== -1) return 1;
         return a[0].localeCompare(b[0]);
       });
-
       const cats = {};
       sorted.forEach(([id, p]) => {
         const cat = p.cat || 'Lainnya';
@@ -999,11 +1325,11 @@
       }
       document.getElementById('wizardProductSections').innerHTML = html;
     }
-
     function addToCart(id) {
       const existing = cart.find(c => c.productId === id);
       if (existing) existing.qty += 1;
       else cart.push({productId: id, qty: 1});
+      haptic(10);
       renderWizardProducts(); renderWizardCart();
     }
     function changeQty(id, delta) {
@@ -1017,7 +1343,6 @@
       cart = cart.filter(c => c.productId !== id);
       renderWizardProducts(); renderWizardCart();
     }
-
     function renderWizardCart() {
       const el = document.getElementById('wizardCart');
       if (cart.length === 0) {
@@ -1035,13 +1360,13 @@
         const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Setel ›') : formatRupiah(price);
         html += `<div class="cart-item">
           <div><div class="cart-item-name">${p.icon} ${p.name}</div>
-          <div style="font-size:0.65rem;color:var(--text-muted);">${item.qty} ${p.unit} Ãƒ›” ${priceStr}</div></div>
+          <div style="font-size:0.65rem;color:var(--text-muted);">${item.qty} ${p.unit} × ${priceStr}</div></div>
           <div style="display:flex;align-items:center;gap:0.3rem;">
-            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.8rem;padding:0 0.2rem;" onclick="changeQty('${item.productId}',-1)">›››¢</button>
+            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.8rem;padding:0 0.2rem;" onclick="changeQty('${item.productId}',-1)">−</button>
             <span style="font-weight:800;font-size:0.8rem;min-width:16px;text-align:center;">${item.qty}</span>
             <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.8rem;padding:0 0.2rem;" onclick="changeQty('${item.productId}',1)">+</button>
             <span class="cart-item-total">${sub>0?formatRupiah(sub):'Manual'}</span>
-            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:0.75rem;padding:0 0.1rem;" onclick="removeFromCart('${item.productId}')">››¢</button>
+            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:0.75rem;padding:0 0.1rem;" onclick="removeFromCart('${item.productId}')">✕</button>
           </div>
         </div>`;
       });
@@ -1049,7 +1374,6 @@
       el.innerHTML = html;
       validateWizard();
     }
-
     function renderWizardCart2() {
       const el = document.getElementById('wizardCartStep2');
       const manualRow = document.getElementById('manualPriceStep2');
@@ -1070,7 +1394,7 @@
         const sub = price * item.qty;
         grand += sub;
         const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Belum disetel!') : formatRupiah(price);
-        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">Ãƒ›”${item.qty} ${priceStr}</span></div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
+        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">×${item.qty} ${priceStr}</span></div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
         if (p.manualPrice) {
           hasManual = true;
           const currentVal = manualPrices[p.id] || '';
@@ -1091,19 +1415,17 @@
         manualRow.style.display = 'none';
       }
     }
-
     function onManualPriceChange(productId, value) {
       const val = parseInt(value) || 0;
       setManualPrice(productId, val);
       renderWizardCart2();
     }
-
     function pilihMetode(m) {
       wizardMetode = m;
       document.querySelectorAll('.pay-btn').forEach(btn => btn.classList.toggle('selected', btn.dataset.pay === m));
     }
-
     function wizardNext() {
+      haptic([8, 40, 8]);
       if (wizardStep === 1) {
         if (cart.length === 0) { showToast('Pilih minimal 1 produk!', 'error'); return; }
         showWizardStep(2);
@@ -1121,8 +1443,10 @@
     }
     function wizardBack() { if (wizardStep > 1) showWizardStep(wizardStep - 1); }
     function validateWizard() { document.getElementById('wNext').disabled = cart.length === 0; }
-
     function simpanPenjualan() {
+      const btn = document.getElementById('wNext');
+      btn.classList.add('loading');
+      btn.disabled = true;
       const items = cart.map(item => {
         const p = products[item.productId];
         const unitPrice = getEffectivePrice(p, item.qty);
@@ -1144,12 +1468,14 @@
       const data = loadData();
       data.push(record);
       saveData(data);
+      try { localStorage.setItem('kopontren_last_cart', JSON.stringify(cart)); } catch(e) {}
       tutupModal('wizardModal');
       renderHome();
       updateTodayBar();
-      showToast('Tercatat: ' + items.map(i=>i.name+' Ãƒ›”'+i.qty).join(', '), 'success');
+      showToast('Tercatat: ' + items.map(i=>i.name+' ×'+i.qty).join(', '), 'success');
+      btn.classList.remove('loading');
+      btn.disabled = false;
     }
-
     // =============================================
     // DETAIL
     // =============================================
@@ -1178,11 +1504,10 @@
       const noteEl = document.getElementById('dNote');
       if (t.catatan) { noteEl.style.display = 'block'; document.getElementById('dNoteText').textContent = t.catatan; }
       else noteEl.style.display = 'none';
-      document.getElementById('dSetorText').textContent = t.status === 'pending' ? 'Tandai Dilaporkan' : '›››œ Sudah Dilaporkan';
+      document.getElementById('dSetorText').textContent = t.status === 'pending' ? 'Tandai Dilaporkan' : '✓ Sudah Dilaporkan';
       document.getElementById('detailModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
-
     function toggleStatus() {
       if (!detailId) return;
       const data = loadData();
@@ -1202,7 +1527,6 @@
       renderHome(); updateTodayBar();
       showToast(data[idx].status === 'settled' ? 'Sudah ditandai dilaporkan' : 'Dibatalkan › kembali belum dilaporkan', 'success');
     }
-
     function editTransaksi() {
       if (!detailId) return;
       const data = loadData();
@@ -1211,32 +1535,42 @@
       tutupModal('detailModal');
       cart = t.items ? t.items.map(i => ({productId: i.productId, qty: i.qty})) : [];
       wizardStep = 2; wizardMetode = t.metode || 'CASH';
+      // Populate manualPrices from saved transaction
+      Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+      if (t.items) {
+        t.items.forEach(i => {
+          const p = products[i.productId];
+          if (p?.manualPrice && i.hargaSatuan) setManualPrice(i.productId, i.hargaSatuan);
+        });
+      }
       document.getElementById('wNama').value = t.pembeli || '';
       document.getElementById('wKategori').value = t.kategoriPembeli || 'Santri Putra';
-      document.getElementById('wTanggal').value = t.tanggal || getTodayStr();
-      document.getElementById('wJam').value = t.jam || '';
       document.getElementById('wCatatan').value = t.catatan || '';
       pilihMetode(wizardMetode);
-      showWizardStep(2);
+      // Show step first WITHOUT overwriting date/time, then set values
+      showWizardStep(2, /* skipDefaults */ true);
+      document.getElementById('wTanggal').value = t.tanggal || getTodayStr();
+      document.getElementById('wJam').value = t.jam || '';
+      renderWizardCart2();
+      // Set button to "Update Transaksi" with update handler
+      const btn = document.getElementById('wNext');
+      btn.textContent = 'Update Transaksi';
+      btn.onclick = () => updateTransaksi();
       document.getElementById('wizardModal').classList.add('show');
-      document.getElementById('wNext').textContent = 'Update Transaksi';
-      document.getElementById('wNext').onclick = () => updateTransaksi();
       document.body.style.overflow = 'hidden';
     }
-
     function updateTransaksi() {
       if (!detailId || cart.length === 0) { showToast('Keranjang kosong!', 'error'); return; }
       const data = loadData();
       const idx = data.findIndex(r => r.id === detailId);
       if (idx === -1) return;
-      // Re-populate manual prices from inputs
-      cart.forEach(item => {
+      const nama = document.getElementById('wNama').value.trim();
+      if (!nama) { showToast('Isi nama pembeli dulu ya', 'error'); return; }
+      const missingManual = cart.some(item => {
         const p = products[item.productId];
-        if (p?.manualPrice) {
-          const input = document.querySelector(`#manualPriceInputs input`);
-          // We'll read from the inputs after rendering
-        }
+        return p?.manualPrice && !manualPrices[p.id];
       });
+      if (missingManual) { showToast('Isi harga manual untuk semua produk Kopontren!', 'error'); return; }
       // Read manual prices from inputs
       document.querySelectorAll('#manualPriceInputs input[data-product-id]').forEach(input => {
         const val = parseInt(input.value) || 0;
@@ -1249,16 +1583,20 @@
         return {productId: item.productId, name: p.name, qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty};
       });
       const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
-      data[idx] = {...data[idx], items, totalHarga, pembeli: document.getElementById('wNama').value.trim(), kategoriPembeli: document.getElementById('wKategori').value, tanggal: document.getElementById('wTanggal').value, jam: document.getElementById('wJam').value, waktuFormat: formatWaktu(document.getElementById('wTanggal').value, document.getElementById('wJam').value), metode: wizardMetode, catatan: document.getElementById('wCatatan').value.trim()};
+      data[idx] = {...data[idx], items, totalHarga,
+        pembeli: nama,
+        kategoriPembeli: document.getElementById('wKategori').value,
+        tanggal: document.getElementById('wTanggal').value,
+        jam: document.getElementById('wJam').value,
+        waktuFormat: formatWaktu(document.getElementById('wTanggal').value, document.getElementById('wJam').value),
+        metode: wizardMetode,
+        catatan: document.getElementById('wCatatan').value.trim()};
       saveData(data);
       tutupModal('wizardModal');
-      document.getElementById('wNext').textContent = 'Simpan';
-      document.getElementById('wNext').onclick = wizardNext;
-      tutupModal('detailModal');
-      renderHome(); updateTodayBar();
+      renderHome();
+      updateTodayBar();
       showToast('Transaksi berhasil diupdate', 'success');
     }
-
     function hapusTransaksi() {
       if (!detailId) return;
       const data = loadData();
@@ -1267,6 +1605,7 @@
       const newName = t.items ? t.items.map(i=>i.name).join(', ') : (t.barang||'Transaksi');
       data.splice(data.indexOf(t), 1);
       saveData(data);
+      haptic([50, 20, 50]);
       detailId = null;
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
@@ -1277,7 +1616,6 @@
         showToast('Dibatalkan › transaksi dikembalikan', 'success');
       });
     }
-
     // =============================================
     // CONTEXT MENU
     // =============================================
@@ -1334,7 +1672,6 @@
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.tx-menu-btn') && !e.target.closest('.ctx-menu')) tutupCtxMenu();
     });
-
     // =============================================
     // LAPORAN (REPORT)
     // =============================================
@@ -1361,7 +1698,7 @@
         pending.slice().reverse().forEach(t => {
           const names = t.items ? t.items.map(i=>i.name).join(', ') : (t.barang||'Transaksi');
           const qtyInfo = t.items ? t.items.map(i=>i.qty+(i.unit||'')).join(', ') : ((t.qty||'')+(t.unit||''));
-          html += `<div class="tx-card pending" onclick="bukaDetail('${t.id}')" style="margin-bottom:0.4rem;">
+          html += `<div class="tx-card pending" data-id="${t.id}" style="margin-bottom:0.4rem;">
             <div class="tx-top">
               <div><div class="tx-name">${escHtml(names)}</div>
               <div class="tx-buyer">${escHtml(t.pembeli||'-')} · ${qtyInfo}</div></div>
@@ -1394,7 +1731,6 @@
       renderHome(); updateTodayBar();
       showToast(`${pending.length} transaksi ditandai dilaporkan`, 'success');
     }
-
     // =============================================
     // RIWAYAT (HISTORY)
     // =============================================
@@ -1403,28 +1739,50 @@
       currentSearch = '';
       document.getElementById('searchInput').value = '';
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'today'));
-      renderRiwayat();
+      renderRiwayat(true);
       document.getElementById('riwayatModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
     function tutupRiwayat() {
       document.getElementById('riwayatModal').classList.remove('show');
       document.body.style.overflow = '';
+      currentSearch = '';
     }
     function setFilter(f) {
       currentFilter = f;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
-      renderRiwayat();
+      renderRiwayat(true);
+    }
+    function ymdLocal(d) {
+      return d.getFullYear() + '-' +
+        String(d.getMonth()+1).padStart(2,'0') + '-' +
+        String(d.getDate()).padStart(2,'0');
     }
     function getFilteredData() {
       let data = loadData();
       const today = getTodayStr();
-      const todayDate = new Date(today);
+      const todayDate = new Date(today + 'T00:00:00');
       switch(currentFilter) {
-        case 'today': data = data.filter(t => t.tanggal === today); break;
-        case 'yesterday': { const y = new Date(todayDate); y.setDate(y.getDate()-1); const ys = y.toISOString().slice(0,10); data = data.filter(t => t.tanggal === ys); break; }
-        case 'week': { const w = new Date(todayDate); w.setDate(w.getDate()-7); const ws = w.toISOString().slice(0,10); data = data.filter(t => t.tanggal >= ws); break; }
-        case 'month': data = data.filter(t => t.tanggal?.startsWith(today.slice(0,7))); break;
+        case 'today':
+          data = data.filter(t => t.tanggal === today);
+          break;
+        case 'yesterday': {
+          const y = new Date(todayDate);
+          y.setDate(y.getDate() - 1);
+          const ys = ymdLocal(y);
+          data = data.filter(t => t.tanggal === ys);
+          break;
+        }
+        case 'week': {
+          const w = new Date(todayDate);
+          w.setDate(w.getDate() - 7);
+          const ws = ymdLocal(w);
+          data = data.filter(t => t.tanggal >= ws);
+          break;
+        }
+        case 'month':
+          data = data.filter(t => t.tanggal?.startsWith(today.slice(0,7)));
+          break;
         default: break;
       }
       if (currentSearch.trim()) {
@@ -1436,22 +1794,41 @@
       }
       return data;
     }
-    function renderRiwayat() {
+    function renderRiwayat(reset = false) {
+      if (reset) _riwayatLimit = _riwayatStep;
       const data = getFilteredData();
       const list = document.getElementById('riwayatList');
       if (data.length === 0) {
         list.innerHTML = `<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div><p>Tidak ada transaksi</p><div class="empty-sub">Coba ubah filter atau kata kunci</div></div>`;
         return;
       }
-      list.innerHTML = data.slice().reverse().map(t => renderTxCard(t)).join('');
+      const slice = data.slice().reverse().slice(0, _riwayatLimit);
+      let html = slice.map(t => renderTxCard(t)).join('');
+      if (data.length > _riwayatLimit) {
+        html += `<button class="btn-load-more" onclick="loadMoreRiwayat()">Muat ${Math.min(_riwayatStep, data.length - _riwayatLimit)} lagi (${data.length - _riwayatLimit} tersisa)</button>`;
+      }
+      list.innerHTML = html;
     }
-
+    let _riwayatLimit = 30, _riwayatStep = 30;
+    function loadMoreRiwayat() {
+      _riwayatLimit += _riwayatStep;
+      renderRiwayat();
+    }
     // =============================================
     // LIYANE (OTHERS)
     // =============================================
-    function bukaLiyane() { document.getElementById('lyrModal').classList.add('show'); document.body.style.overflow = 'hidden'; }
+    function bukaLiyane() {
+      document.getElementById('lyrModal').classList.add('show');
+      document.body.style.overflow = 'hidden';
+      try {
+        const bytes = new Blob([JSON.stringify(loadData())]).size;
+        const kb = (bytes / 1024).toFixed(1);
+        document.getElementById('storageInfo').textContent = `Penyimpanan: ${kb} KB`;
+      } catch(e) {
+        document.getElementById('storageInfo').textContent = '';
+      }
+    }
     function tutupLiyane() { document.getElementById('lyrModal').classList.remove('show'); document.body.style.overflow = ''; }
-
     // =============================================
     // PRICE SETTINGS
     // =============================================
@@ -1481,7 +1858,7 @@
           const cardIdx = idx++;
           html += `<div class="price-product-header" onclick="togglePriceSection(${cardIdx})">
             <span class="pp-name">${p.icon} ${p.name}</span>
-            <span class="pp-toggle" id="ppToggle${cardIdx}">››“¼</span>
+            <span class="pp-toggle" id="ppToggle${cardIdx}">▶</span>
           </div>
           <div class="price-tiers" id="priceTiers${cardIdx}">`;
           if (p.manualPrice) {
@@ -1504,8 +1881,8 @@
     function togglePriceSection(idx) {
       const el = document.getElementById('priceTiers' + idx);
       const toggle = document.getElementById('ppToggle' + idx);
-      if (el.classList.contains('open')) { el.classList.remove('open'); toggle.textContent = '››“¼'; }
-      else { el.classList.add('open'); toggle.textContent = '››“²'; }
+      if (el.classList.contains('open')) { el.classList.remove('open'); toggle.textContent = '▶'; }
+      else { el.classList.add('open'); toggle.textContent = '▼'; }
     }
     function simpanHarga() {
       document.querySelectorAll('.price-tier-input').forEach(input => {
@@ -1515,9 +1892,9 @@
         products[key].tiers[tierIdx].price = val;
       });
       saveProducts();
+      tutupPengaturanHarga();
       showToast('Harga berhasil disimpan!', 'success');
     }
-
     // =============================================
     // EXPORT / BACKUP / RESTORE
     // =============================================
@@ -1530,7 +1907,7 @@
       data.forEach(t => {
         const names = t.items ? t.items.map(i => i.name).join(', ') : (t.barang||'');
         const qtys = t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||''));
-        csv += `"${t.id}","${t.tanggal}","${t.jam}","${names}",${qtys},'${t.totalHarga||t.harga}","${t.pembeli}","${t.kategoriPembeli}","${t.metode}","${t.catatan||''}",${t.status}\n`;
+        csv += `"${t.id}","${t.tanggal}","${t.jam}","${names}",${qtys},"${t.totalHarga||t.harga||0}","${t.pembeli}","${t.kategoriPembeli}","${t.metode}","${(t.catatan||'').replace(/"/g,'""')}","${t.status}"\n`;
       });
       const blob = new Blob([csv], {type: 'text/csv'});
       const url = URL.createObjectURL(blob);
@@ -1568,6 +1945,7 @@
     }
     function restoreData() {
       tutupLiyane();
+      pendingRestoreData = null;
       document.getElementById('restorePreview').style.display = 'none';
       document.getElementById('restoreBtns').style.display = 'none';
       document.getElementById('restoreInfo').textContent = 'Pilih file backup JSON';
@@ -1583,6 +1961,7 @@
         try {
           const data = JSON.parse(ev.target.result);
           if (!Array.isArray(data)) { showToast('Format file salah!', 'error'); return; }
+          pendingRestoreData = data;
           document.getElementById('restoreInfo').textContent = `Ditemukan ${data.length} transaksi`;
           document.getElementById('restorePreview').style.display = 'block';
           document.getElementById('restorePreview').innerHTML = `
@@ -1598,28 +1977,24 @@
       e.target.value = '';
     }
     function doRestore(mode) {
-      const input = document.getElementById('fileRestore');
-      if (!input.files[0]) { showToast('Pilih file dulu!', 'error'); return; }
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        try {
-          const newData = JSON.parse(ev.target.result);
-          if (mode === 'replace') {
-            saveData(newData);
-            showToast(`${newData.length} transaksi berhasil dipulihkan`, 'success');
-          } else {
-            const existing = loadData();
-            const combined = [...existing, ...newData];
-            saveData(combined);
-            showToast(`${newData.length} transaksi ditambahkan (${combined.length} total)`, 'success');
-          }
-          tutupRestore();
-          renderHome(); updateTodayBar();
-        } catch(err) { showToast('Gagal memproses file!', 'error'); }
-      };
-      reader.readAsText(input.files[0]);
+      if (!pendingRestoreData) { showToast('Pilih file dulu!', 'error'); return; }
+      try {
+        if (mode === 'replace') {
+          saveData(pendingRestoreData);
+          showToast(`${pendingRestoreData.length} transaksi berhasil dipulihkan`, 'success');
+        } else {
+          const existing = loadData();
+          const combined = [...existing, ...pendingRestoreData];
+          saveData(combined);
+          showToast(`${pendingRestoreData.length} transaksi ditambahkan (${combined.length} total)`, 'success');
+        }
+        pendingRestoreData = null;
+        invalidateDataCache();
+        tutupRestore();
+        renderHome();
+        updateTodayBar();
+      } catch(err) { showToast('Gagal memproses file!', 'error'); }
     }
-
     // =============================================
     // RESET
     // =============================================
@@ -1628,10 +2003,10 @@
       if (!confirm('Yakin hapus SEMUA data transaksi?')) return;
       if (!confirm('Benar-benar yakin? Data tidak bisa dikembalikan.')) return;
       localStorage.removeItem(STORAGE_KEY);
+      invalidateDataCache();
       renderHome(); updateTodayBar();
       showToast('Semua data sudah dihapus', 'info');
     }
-
     // =============================================
     // WA
     // =============================================
@@ -1643,14 +2018,14 @@
       const today = new Date().toLocaleDateString('id-ID', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
       const totalBelum = pending.reduce((s,t) => s + (t.totalHarga||0), 0);
       const totalSudah = settled.reduce((s,t) => s + (t.totalHarga||0), 0);
-      let msg = `*°̈›œ›¹ LAPORAN PENJUALAN KOPONTREN*\n`;
+      let msg = `*📊 LAPORAN PENJUALAN KOPONTREN*\n`;
       msg += `Al Ittihad › ${today}\n\n`;
       if (pending.length) {
         msg += `*BELUM DILAPORKAN* (${pending.length} transaksi)\n`;
         msg += `*Total: ${formatRupiah(totalBelum)}*\n\n`;
         pending.forEach(t => {
           const names = t.items ? t.items.map(i => `${i.name} (${i.qty}${i.unit})`).join(', ') : `${t.barang} (${t.qty}${t.unit})`;
-          msg += `››¬¢ ${names} › ${formatRupiah(t.totalHarga||t.harga||0)}\n`;
+          msg += `• ${names} › ${formatRupiah(t.totalHarga||t.harga||0)}\n`;
           msg += `  ${t.pembeli} | ${t.metode}\n`;
         });
         msg += '\n';
@@ -1668,7 +2043,6 @@
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
       });
     }
-
     // =============================================
     // THEME
     // =============================================
@@ -1677,32 +2051,57 @@
       const next = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem(THEME_KEY, next);
-      document.getElementById('themeArrow').textContent = next === 'dark' ? '›Ëœ›¬ˏˈ†' : '°̈››¢';
+      document.getElementById('themeArrow').textContent = next === 'dark' ? '🌙' : '🌞';
       showToast(next === 'dark' ? 'Mode gelap aktif' : 'Mode terang aktif', 'info');
     }
     function applyTheme() {
       const saved = localStorage.getItem(THEME_KEY);
       if (saved === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeArrow').textContent = '›Ëœ›¬ˏˈ†';
+        document.getElementById('themeArrow').textContent = '🌙';
       }
     }
-
     // =============================================
     // UTILS
     // =============================================
     function formatRupiah(angka) { return 'Rp ' + Math.round(angka).toLocaleString('id'); }
-    function escHtml(str) { if (!str) return ''; return String(str).replace(/[&<>"']/g, c => ({'&':'&','<':'<','>':'>','"':'"',"'":'&#39;'}[c])); }
+    function escHtml(str) { if (!str) return ''; return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
     function formatWaktu(tgl, jam) {
       if (!tgl) return '';
       const d = new Date(tgl + 'T' + (jam || '00:00'));
       return d.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) + ', ' + (jam || '') + ' WIB';
     }
+    function haptic(pattern) {
+      if (navigator.vibrate) navigator.vibrate(Array.isArray(pattern) ? pattern : [pattern]);
+    }
+    function once(fn) {
+      let called = false;
+      return function(...args) { if (!called) { called = true; return fn.apply(this, args); } };
+    }
+    function handleTxListClick(e) {
+      const ctxBtn = e.target.closest('.tx-menu-btn');
+      if (ctxBtn && !e.target.closest('.ctx-menu')) {
+        e.stopPropagation();
+        const card = ctxBtn.closest('.tx-card[data-id]');
+        if (card) { ctxId = card.dataset.id; bukaCtxMenu(e, ctxId); return; }
+      }
+      const card = e.target.closest('.tx-card[data-id]');
+      if (card && !e.target.closest('.ctx-menu') && !e.target.closest('.tx-menu-btn')) {
+        const id = card.dataset.id;
+        if (id) bukaDetail(id);
+      }
+    }
     function tutupModal(id) {
       document.getElementById(id).classList.remove('show');
       document.body.style.overflow = '';
+      // Clean up wizard state on any modal close
+      if (id === 'wizardModal') {
+        detailId = null;
+        Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+        document.getElementById('wNext').onclick = wizardNext;
+        document.getElementById('wNext').textContent = 'Simpan';
+      }
     }
-
     // Toast notification
     function showToast(msg, type = 'info', onUndo = null) {
       const container = document.getElementById('toastContainer');
@@ -1710,23 +2109,24 @@
       toast.className = 'toast ' + type;
       let html = msg;
       if (onUndo) {
-        html += ` <button class="toast-action" onclick="this.parentElement.remove();clearTimeout(this._timer);">Batalkan</button>`;
+        html += ` <button class="toast-action toast-undo-btn">Batalkan</button>`;
         toast._undo = onUndo;
       }
       toast.innerHTML = html;
       container.appendChild(toast);
-      if (onUndo) {
-        toast._timer = setTimeout(() => {
-          toast.style.opacity = '0';
-          setTimeout(() => toast.remove(), 200);
-        }, 5000);
-      }
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 200);
-      }, 4000);
+      }, 5000);
+      if (onUndo) {
+        const btn = toast.querySelector('.toast-undo-btn');
+        if (btn) btn.addEventListener('click', () => {
+          clearTimeout(timer);
+          toast.remove();
+          try { onUndo(); } catch(e) {}
+        });
+      }
     }
-
     // Modal click outside to close
     document.querySelectorAll('.modal').forEach(modal => {
       modal.addEventListener('click', function(e) {
@@ -1736,11 +2136,9 @@
         }
       });
     });
-
     // Init
     init();
   </script>
-
   <!-- Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
@@ -1757,5 +2155,3 @@
   </script>
 </body>
 </html>
-
-
