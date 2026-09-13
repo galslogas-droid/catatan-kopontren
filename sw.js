@@ -1,10 +1,11 @@
 // Service Worker Cache Offline untuk Kopontren Gus Lim
-const CACHE_NAME = 'kopontren-v7';
+const CACHE_NAME = 'kopontren-v11';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icon-192.svg'
+  './icon-192.svg',
+  './logo-kopontren.svg'
 ];
 
 self.addEventListener('install', (e) => {
@@ -28,6 +29,19 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+  const url = new URL(e.request.url);
+  // Network-first untuk HTML (selalu fresh dari server)
+  if (e.request.mode === 'navigate' || url.pathname.endsWith('.html')) {
+    e.respondWith(
+      fetch(e.request).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then((c) => c.put(e.request, copy));
+        return res;
+      }).catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+  // Cache-first untuk aset statis (logo, icon, dll)
   e.respondWith(
     caches.match(e.request).then((res) => {
       return res || fetch(e.request).catch(() => caches.match('./index.html'));

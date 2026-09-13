@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 330">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#004936"/>
+      <stop offset="100%" stop-color="#087A5B"/>
+    </linearGradient>
+  </defs>
+  <rect width="210" height="330" fill="url(#bg)"/>
+  <!-- Crescent Moon -->
+  <circle cx="105" cy="62" r="30" fill="#C89B3C"/>
+  <circle cx="115" cy="54" r="26" fill="#004936"/>
+  <!-- Star -->
+  <polygon points="150,44 153,52 162,52 155,57 157,66 150,61 143,66 145,57 138,52 147,52" fill="#C89B3C"/>
+  <!-- Mosque Dome -->
+  <path d="M45,148 Q45,88 105,78 Q165,88 165,148" fill="rgba(200,155,60,0.1)" stroke="#C89B3C" stroke-width="3"/>
+  <ellipse cx="105" cy="148" rx="60" ry="8" fill="rgba(200,155,60,0.15)" stroke="#C89B3C" stroke-width="2.5"/>
+  <!-- Dome ribs -->
+  <path d="M105,78 Q90,110 80,148" fill="none" stroke="rgba(200,155,60,0.25)" stroke-width="1.5"/>
+  <path d="M105,78 Q120,110 130,148" fill="none" stroke="rgba(200,155,60,0.25)" stroke-width="1.5"/>
+  <!-- Dome finial -->
+  <rect x="101" y="38" width="8" height="20" rx="2" fill="#C89B3C"/>
+  <circle cx="105" cy="34" r="6" fill="#C89B3C"/>
+  <circle cx="105" cy="25" r="3" fill="#C89B3C"/>
+  <!-- Minaret Left -->
+  <rect x="36" y="90" width="14" height="80" rx="3" fill="rgba(200,155,60,0.12)" stroke="#C89B3C" stroke-width="2"/>
+  <ellipse cx="43" cy="87" rx="10" ry="11" fill="rgba(200,155,60,0.12)" stroke="#C89B3C" stroke-width="2"/>
+  <rect x="40" y="66" width="6" height="14" rx="2" fill="#C89B3C"/>
+  <circle cx="43" cy="63" r="4" fill="#C89B3C"/>
+  <!-- Minaret Right -->
+  <rect x="160" y="90" width="14" height="80" rx="3" fill="rgba(200,155,60,0.12)" stroke="#C89B3C" stroke-width="2"/>
+  <ellipse cx="167" cy="87" rx="10" ry="11" fill="rgba(200,155,60,0.12)" stroke="#C89B3C" stroke-width="2"/>
+  <rect x="164" y="66" width="6" height="14" rx="2" fill="#C89B3C"/>
+  <circle cx="167" cy="63" r="4" fill="#C89B3C"/>
+  <!-- Main building base -->
+  <rect x="30" y="176" width="150" height="56" rx="4" fill="rgba(200,155,60,0.08)" stroke="#C89B3C" stroke-width="2.5"/>
+  <!-- Arched windows -->
+  <g stroke="#C89B3C" stroke-width="1.5" fill="rgba(200,155,60,0.15)">
+    <path d="M48,224 L48,198 Q56,190 64,198 L64,224 Z"/>
+    <path d="M88,224 L88,194 Q105,182 122,194 L122,224 Z"/>
+    <path d="M146,224 L146,198 Q154,190 162,198 L162,224 Z"/>
+  </g>
+  <!-- Central door -->
+  <path d="M78,232 L78,210 Q105,194 132,210 L132,232 Z" fill="rgba(200,155,60,0.2)" stroke="#C89B3C" stroke-width="2"/>
+  <line x1="105" y1="202" x2="105" y2="232" stroke="#C89B3C" stroke-width="1.5"/>
+  <circle cx="99" cy="218" r="2.5" fill="#C89B3C"/>
+  <circle cx="111" cy="218" r="2.5" fill="#C89B3C"/>
+  <!-- Decorative dot row -->
+  <g fill="#C89B3C" opacity="0.5">
+    <circle cx="50" cy="244" r="2"/><circle cx="70" cy="244" r="2"/>
+    <circle cx="90" cy="244" r="2"/><circle cx="105" cy="244" r="2"/>
+    <circle cx="120" cy="244" r="2"/><circle cx="140" cy="244" r="2"/>
+    <circle cx="160" cy="244" r="2"/>
+  </g>
+  <!-- Base line -->
+  <rect x="20" y="252" width="170" height="5" rx="2" fill="#C89B3C" opacity="0.5"/>
+  <!-- Open Book -->
+  <g transform="translate(105,278)">
+    <path d="M-38,-10 Q-19,-18 0,-8 L0,10 Q-19,2 -38,10 Z" fill="rgba(255,255,255,0.88)" stroke="#C89B3C" stroke-width="2"/>
+    <path d="M0,-8 Q19,-18 38,-10 L38,10 Q19,2 0,10 Z" fill="rgba(255,255,255,0.88)" stroke="#C89B3C" stroke-width="2"/>
+    <line x1="0" y1="-8" x2="0" y2="10" stroke="#C89B3C" stroke-width="2.5"/>
+    <line x1="-30" y1="-2" x2="-10" y2="-5" stroke="rgba(0,73,54,0.3)" stroke-width="1.2"/>
+    <line x1="-30" y1="4" x2="-10" y2="1" stroke="rgba(0,73,54,0.3)" stroke-width="1.2"/>
+    <line x1="10" y1="-5" x2="30" y2="-2" stroke="rgba(0,73,54,0.3)" stroke-width="1.2"/>
+    <line x1="10" y1="1" x2="30" y2="4" stroke="rgba(0,73,54,0.3)" stroke-width="1.2"/>
+  </g>
+  <!-- Text -->
+  <text x="105" y="308" text-anchor="middle" font-family="Arial Black,Impact,sans-serif" font-size="16" font-weight="900" letter-spacing="2.5" fill="#C89B3C">KOPONTREN</text>
+  <text x="105" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="700" letter-spacing="1.5" fill="rgba(255,255,255,0.8)">AL ITTIHAD</text>
+</svg>

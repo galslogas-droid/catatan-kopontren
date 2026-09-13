@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Catatan Penjualan Kopontren · Gus Lim</title>
-  <meta name="theme-color" content="#064E3B">
+  <meta name="theme-color" content="#006B4F">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Kopontren">
@@ -15,30 +15,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #059669; --primary-dark: #047857; --primary-light: #D1FAE5;
-      --amber: #D97706; --amber-light: #FEF3C7; --amber-gold: #F59E0B;
-      --surface: #FFFFFF; --bg: #F5F7FA; --surface-alt: #F1F4F8;
-      --border: #E5E7EB; --border-strong: #D1D5DB;
+      --primary: #006B4F; --primary-dark: #005640; --primary-light: #E7F3EE;
+      --amber: #A97920; --amber-light: #FBF4E3; --amber-gold: #C89B3C;
+      --surface: #FFFFFF; --bg: #F6F7F5; --surface-alt: #F1F3F1;
+      --border: #E1E5E2; --border-strong: #C9D0CC;
       --text: #0F172A; --text-muted: #64748B;
-      --danger: #EF4444; --success: #10B981;
+      --danger: #EF4444; --success: #15803D;
       --shadow-xs: 0 1px 2px rgba(15,23,42,0.05);
       --shadow-sm: 0 2px 6px rgba(15,23,42,0.07);
       --shadow: 0 4px 12px rgba(15,23,42,0.08);
       --radius: 12px; --radius-md: 14px; --radius-lg: 18px;
       --card-bg: #FFFFFF; --input-bg: #FFFFFF;
-      --header-bg: linear-gradient(135deg, #064E3B 0%, #059669 100%);
+      --header-bg: linear-gradient(135deg, #004936 0%, #006B4F 58%, #087A5B 100%);
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
     [data-theme="dark"] {
-      --surface: #0F1419; --bg: #0A0E14; --surface-alt: #1A1F28;
-      --border: #252B36; --border-strong: #333A47;
+      --surface: #0F1419; --bg: #0B110F; --surface-alt: #151D19;
+      --border: #26332E; --border-strong: #37453F;
       --text: #F1F5F9; --text-muted: #94A3B8;
-      --primary-light: #064E3B; --amber-light: #2A2210;
+      --primary-light: #0D3D31; --amber-light: #302814;
       --card-bg: #161B23; --input-bg: #1A1F28;
       --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
       --shadow-sm: 0 2px 6px rgba(0,0,0,0.35);
       --shadow: 0 4px 12px rgba(0,0,0,0.4);
-      --header-bg: linear-gradient(135deg, #022C22 0%, #047857 100%);
+      --header-bg: linear-gradient(135deg, #021F18 0%, #043F30 58%, #075A43 100%);
+      --success: #4ADE80;
+      --primary-dark: #2D9C75;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -62,7 +64,13 @@
     .header-top { display: flex; justify-content: space-between; align-items: center; }
     header { padding-top: calc(0.95rem + env(safe-area-inset-top, 0px)); padding-left: calc(1.05rem + env(safe-area-inset-left, 0px)); padding-right: calc(1.05rem + env(safe-area-inset-right, 0px)); }
     .brand { display: flex; align-items: center; gap: 0.55rem; }
-    .brand-logo { width: 34px; height: 34px; flex-shrink: 0; }
+    .brand-logo-wrap {
+      width: 34px; height: 34px; flex-shrink: 0;
+      border-radius: 50%; overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: var(--primary);
+    }
+    .brand-logo { width: 100%; height: 100%; object-fit: cover; display: block; }
     .brand h1 {
       font-size: 0.92rem; font-weight: 800; letter-spacing: -0.3px; line-height: 1.25;
     }
@@ -708,6 +716,154 @@
     .modal-sheet::-webkit-scrollbar { width: 3px; }
     .modal-sheet::-webkit-scrollbar-thumb { background: var(--border-strong, #D1D5DB); border-radius: 3px; }
     [data-theme="dark"] .modal-sheet::-webkit-scrollbar-thumb { background: #333A47; }
+
+    /* =========================================================
+       UI POLISH — responsive, accessible, brand-consistent
+       ========================================================= */
+    html { background: var(--bg); }
+    body { min-width: 0; }
+    button, input, select { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, input:focus-visible, select:focus-visible,
+    .other-item:focus-visible, .tx-card:focus-visible {
+      outline: 3px solid rgba(200,155,60,.35);
+      outline-offset: 2px;
+    }
+
+    header {
+      box-shadow: 0 5px 18px rgba(0,67,49,.18);
+      backdrop-filter: saturate(1.15);
+    }
+    .brand-logo { border-radius: 9px; }
+    .brand h1 { font-family: 'Outfit', sans-serif; letter-spacing: -.45px; }
+    .brand .tagline { opacity: .82; }
+
+    .today-bar, .status-card, .tx-card {
+      box-shadow: 0 1px 3px rgba(15,23,42,.045);
+    }
+    .today-bar {
+      border-color: rgba(0,107,79,.14);
+    }
+    .today-bar-right .today-amount,
+    .tx-total, .prod-total, .detail-item-right {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status-card {
+      min-width: 0;
+    }
+    .status-card-amount,
+    .today-bar-right .today-amount,
+    .tx-total,
+    .detail-total-val,
+    .report-total-amount {
+      font-family: 'Outfit', sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .btn-report, .btn-next, .detail-btn.setor {
+      background: var(--primary);
+      box-shadow: 0 4px 10px rgba(0,107,79,.18);
+    }
+    .btn-report:hover, .btn-next:hover, .detail-btn.setor:hover {
+      background: var(--primary-dark);
+    }
+    .btn-history:hover, .btn-back:hover,
+    .filter-btn:hover, .btn-load-more:hover {
+      background: var(--surface-alt);
+    }
+    .fab {
+      background: var(--amber-gold);
+      box-shadow: 0 7px 18px rgba(140,100,20,.25);
+    }
+    .fab:hover { filter: brightness(.97); }
+
+    .tx-card:hover {
+      border-color: rgba(0,107,79,.22);
+      box-shadow: 0 4px 14px rgba(15,23,42,.07);
+    }
+    .tx-edit-btn {
+      background: var(--primary-light);
+    }
+
+    .modal {
+      padding: 0;
+      backdrop-filter: blur(2px);
+    }
+    .modal-sheet {
+      max-width: 560px;
+      border-radius: 20px 20px 0 0;
+      border: 1px solid var(--border);
+      border-bottom: 0;
+    }
+    .modal-handle { background: var(--border-strong); }
+
+    .product-grid {
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: .55rem;
+    }
+    .prod-btn {
+      min-width: 0;
+      min-height: 94px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .prod-btn .p-name {
+      overflow-wrap: anywhere;
+    }
+
+    .pay-options { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .pay-btn { min-width: 0; min-height: 76px; }
+    .nav-btns > button { min-height: 44px; }
+    .detail-actions > button { min-height: 44px; }
+
+    .other-item {
+      border-radius: 12px;
+      padding: .68rem .55rem;
+    }
+    .other-item:hover { background: var(--surface-alt); }
+
+    .filter-bar {
+      padding-bottom: 2px;
+    }
+    .filter-btn { min-height: 40px; }
+    .search-bar input, .date-filter-area input[type="date"] {
+      min-height: 42px;
+    }
+
+    /* Keep long transactional content readable on narrow phones. */
+    @media (max-width: 370px) {
+      .container { padding: 0 .65rem; }
+      header { padding-left: calc(.8rem + env(safe-area-inset-left,0px)); padding-right: calc(.8rem + env(safe-area-inset-right,0px)); }
+      .brand h1 { font-size: .82rem; }
+      .brand .tagline { font-size: .61rem; }
+      .brand-logo { width: 31px; height: 31px; }
+      .icon-btn { width: 34px; height: 34px; }
+      .status-cards { gap: .45rem; }
+      .status-card { padding: .8rem .75rem; }
+      .status-card-amount { font-size: 1rem; }
+      .btn-action { font-size: .74rem; padding-left: .35rem; padding-right: .35rem; }
+      .btn-action svg { width: 14px; height: 14px; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .detail-actions { flex-wrap: wrap; }
+      .detail-actions .setor { flex-basis: 100%; }
+      .nav-btns { flex-wrap: wrap; }
+    }
+
+    @media (min-width: 601px) {
+      body { padding-bottom: 110px; }
+      .modal-sheet { margin-bottom: 0; }
+      .fab { bottom: 1.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -715,27 +871,9 @@
   <header>
     <div class="header-top">
       <div class="brand">
-        <svg class="brand-logo" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="bl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#064E3B"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
-          <rect width="192" height="192" rx="42" fill="url(#bl)"/>
-          <polygon points="96,18 162,56 162,128 96,166 30,128 30,56" fill="none" stroke="#F59E0B" stroke-width="6" stroke-linejoin="round"/>
-          <polygon points="96,38 142,65 142,115 96,142 50,115 50,65" fill="none" stroke="#F59E0B" stroke-width="3.5" stroke-linejoin="round" opacity="0.6"/>
-          <polygon points="96,55 125,73 125,107 96,125 67,107 67,73" fill="#F59E0B" opacity="0.85"/>
-          <ellipse cx="96" cy="90" rx="24" ry="32" fill="#1F2937"/>
-          <rect x="76" y="74" width="40" height="7" rx="3.5" fill="#F59E0B"/>
-          <rect x="76" y="88" width="40" height="7" rx="3.5" fill="#F59E0B"/>
-          <rect x="76" y="102" width="40" height="7" rx="3.5" fill="#F59E0B"/>
-          <circle cx="96" cy="54" r="16" fill="#1F2937"/>
-          <circle cx="90" cy="50" r="3" fill="white"/>
-          <circle cx="102" cy="50" r="3" fill="white"/>
-          <circle cx="91" cy="51" r="1.5" fill="#1F2937"/>
-          <circle cx="103" cy="51" r="1.5" fill="#1F2937"/>
-          <path d="M86 40 Q80 28 74 24" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          <path d="M106 40 Q112 28 118 24" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          <ellipse cx="64" cy="80" rx="18" ry="26" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.45)" stroke-width="2" transform="rotate(-18 64 80)"/>
-          <ellipse cx="128" cy="80" rx="18" ry="26" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.45)" stroke-width="2" transform="rotate(18 128 80)"/>
-          <path d="M96 122 L96 136" stroke="#1F2937" stroke-width="4" stroke-linecap="round"/>
-        </svg>
+        <div class="brand-logo-wrap">
+          <img class="brand-logo" src="./logo-kopontren.svg" alt="Logo Al Ittihad" />
+        </div>
         <div>
           <h1>KOPONTREN AL ITTIHAD</h1>
           <div class="tagline">Catatan Penjualan · Gus Lim</div>
@@ -802,7 +940,7 @@
   <!-- FAB -->
   <button class="fab" onclick="bukaWizardManual()" aria-label="Catat penjualan baru">
     <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/></svg>
-    <span>Catat Pembelian</span>
+    <span>Catat Penjualan</span>
   </button>
   <!-- ===== WIZARD MODAL ===== -->
   <div class="modal" id="wizardModal">
@@ -2104,11 +2242,23 @@
     function downloadCSV() {
       const data = loadData();
       if (!data.length) { showToast('Belum ada data', 'error'); return; }
+      const csvCell = value => `"${String(value ?? '').replace(/"/g, '""')}"`;
       let csv = 'ID,Tanggal,Jam,Nama Barang,Qty,Harga Satuan,Total,Nama Pembeli,Kategori,Pembayaran,Catatan,Status\n';
       data.forEach(t => {
-        const names = t.items ? t.items.map(i => i.name).join(', ') : (t.barang||'');
-        const qtys = t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||''));
-        csv += `"${t.id}","${t.tanggal}","${t.jam}","${names}",${qtys},"${t.totalHarga||t.harga||0}","${t.pembeli}","${t.kategoriPembeli}","${t.metode}","${(t.catatan||'').replace(/"/g,'""')}","${t.status}"\n`;
+        const items = Array.isArray(t.items) ? t.items : [{
+          name: t.barang || '',
+          qty: t.qty || '',
+          unit: t.unit || '',
+          unitPrice: t.harga || t.totalHarga || 0
+        }];
+        const names = items.map(i => i.name || '').join(', ');
+        const qtys = items.map(i => `${i.qty ?? ''}${i.unit || ''}`).join(', ');
+        const prices = items.map(i => i.unitPrice ?? i.price ?? 0).join(', ');
+        csv += [
+          t.id, t.tanggal, t.jam, names, qtys, prices,
+          t.totalHarga || t.harga || 0, t.pembeli, t.kategoriPembeli,
+          t.metode, t.catatan || '', t.status
+        ].map(csvCell).join(',') + '\n';
       });
       const blob = new Blob([csv], {type: 'text/csv'});
       const url = URL.createObjectURL(blob);
@@ -2342,6 +2492,17 @@
             document.getElementById('wNext').onclick = wizardNext;
             document.getElementById('wNext').textContent = 'Simpan';
           }
+          // Reset laporan search saat backdrop close
+          if (this.id === 'laporanModal') {
+            const inp = document.getElementById('laporanSearchInput');
+            if (inp) inp.value = '';
+            currentLaporanSearch = '';
+          }
+          // Reset riwayat search & limit saat backdrop close
+          if (this.id === 'riwayatModal') {
+            currentSearch = '';
+            _riwayatLimit = _riwayatStep;
+          }
         }
       });
     });
@@ -2350,7 +2511,7 @@
   </script>
   <!-- Service Worker -->
   <script>
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
       window.addEventListener('load', async () => {
         try {
           const regs = await navigator.serviceWorker.getRegistrations();
