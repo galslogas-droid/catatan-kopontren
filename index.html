@@ -8,6 +8,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Kopontren">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="Buku catatan penjualan Kopontren khusus Gus Lim — catat, pantau, dan arsipkan transaksi.">
+  <meta name="format-detection" content="telephone=no">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png">
   <link rel="icon" type="image/svg+xml" href="icon-192.svg">
@@ -51,7 +54,7 @@
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--bg); color: var(--text);
-      padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); -webkit-tap-highlight-color: transparent;
+      padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); -webkit-tap-highlight-color: transparent;
       transition: background 0.2s, color 0.2s;
       overscroll-behavior-y: contain;
     }
@@ -76,7 +79,9 @@
       background: #1D4ED8;
       display: flex; align-items: center; justify-content: center;
     }
-    .brand-logo { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .brand-logo { width: 100%; height: 100%; object-fit: contain; transform: scale(1.18); display: block; }
+    /* Item 24/25: wengi → wrap nyetruk menika header gelap supaya kubah tetep katon */
+    [data-theme="dark"] .brand-logo-wrap { background: #1E3A8A; border-color: rgba(255,255,255,0.12); }
     .brand h1 {
       font-size: 0.92rem; font-weight: 800; letter-spacing: -0.3px; line-height: 1.25;
     }
@@ -212,9 +217,52 @@
     }
     .tx-card.pending::before { background: var(--danger); }
     .tx-card.settled::before { background: var(--success); }
-    .tx-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; padding-right: 5.4rem; }
+    .tx-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      padding-right: 5.4rem;
+      min-height: 24px;
+    }
+    .tx-top .tx-name {
+      flex: 1;
+      min-width: 0;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     .tx-name { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-top: 0.35rem; }
-    .tx-buyer { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
+    /* Baris pembeli + jumlah item */
+    .tx-buyer {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      font-weight: 600;
+    }
+
+    /* Preview daftar item (1 baris, dipotong kalau panjang) + ikon mini produk (item 16) */
+    .tx-items-preview {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      opacity: 0.9;
+    }
+    .tx-preview-ico {
+      flex-shrink: 0; width: 18px; height: 18px; border-radius: 5px;
+      background: var(--primary-light); color: var(--primary);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .tx-preview-ico svg { width: 11px; height: 11px; }
+    [data-theme="dark"] .tx-preview-ico { background: #172554; color: #60A5FA; }
+    .tx-preview-txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
     .tx-total {
       font-size: 1rem; font-weight: 800; font-family: 'Outfit', sans-serif;
       color: var(--primary); letter-spacing: -0.3px;
@@ -226,11 +274,11 @@
     .badge-cash { background: #D1FAE5; color: #065F46; }
     .badge-tf { background: #DBEAFE; color: #1E40AF; }
     .badge-utang { background: #FEE2E2; color: #991B1B; }
-    .badge-pending { background: #FEF3C7; color: #92400E; }
+    .badge-pending { background: #FDE68A; color: #78350F; }
     .badge-settled { background: #D1FAE5; color: #065F46; }
     /* Dark mode: badge mung "nyala" terang — versi wengi */
     [data-theme="dark"] .badge-cash, [data-theme="dark"] .badge-settled { background: #064E3B; color: #6EE7B7; }
-    [data-theme="dark"] .badge-tf { background: #1E3A8A; color: #93C5FD; }
+    [data-theme="dark"] .badge-tf { background: #334155; color: #E2E8F0; }
     [data-theme="dark"] .badge-utang { background: #7F1D1D; color: #FCA5A5; }
     [data-theme="dark"] .badge-pending { background: #45320B; color: #FCD34D; }
     .tx-menu-btn {
@@ -276,7 +324,7 @@
     /* MODAL */
     .modal {
       display: none; position: fixed; inset: 0;
-      background: rgba(2,6,23,0.6);
+      background: rgba(10,20,48,0.62);
       z-index: 200;
       align-items: flex-end; justify-content: center;
     }
@@ -703,6 +751,7 @@
       display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.7rem;
       border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600;
       color: var(--text); transition: background 0.1s; border: none; background: none; width: 100%; text-align: left;
+      touch-action: manipulation; pointer-events: auto; -webkit-tap-highlight-color: transparent; user-select: none;
     }
     .ctx-item:active { background: var(--surface-alt); }
     .ctx-item.danger { color: var(--danger); }
@@ -917,6 +966,92 @@
         transition-duration: .001ms !important;
       }
     }
+
+    /* ===== v27: KOMPONEN BARU ===== */
+    /* Indikator online/offline (item 19) */
+    .net-status {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2px;
+      padding: 0.22rem 0.48rem; border-radius: 999px;
+      background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);
+      white-space: nowrap;
+    }
+    .net-status .dot { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 0 3px rgba(74,222,128,0.18); }
+    .net-status.offline { background: rgba(248,113,113,0.22); color: #FEE2E2; }
+    .net-status.offline .dot { background: #F87171; box-shadow: 0 0 0 3px rgba(248,113,113,0.22); }
+    @media (max-width: 370px) { .net-status .net-label { display: none; } .net-status { padding: 0.22rem 0.4rem; } }
+
+    /* Banner pengingat backup / data (item 1) */
+    .data-banner {
+      margin: 0.6rem 0.85rem 0; padding: 0.65rem 0.8rem;
+      border-radius: var(--radius-md); background: var(--amber-light);
+      border: 1px solid #FDE68A; font-size: 0.74rem; color: #78350F; font-weight: 600;
+      display: none; line-height: 1.45;
+    }
+    .data-banner.show { display: block; }
+    .data-banner .bb-title { font-weight: 800; font-size: 0.78rem; margin-bottom: 0.2rem; }
+    .data-banner .bb-body { margin-bottom: 0.1rem; }
+    .data-banner .bb-btns { display: flex; gap: 0.4rem; margin-top: 0.55rem; }
+    .data-banner .bb-btns button {
+      flex: 1; min-height: 40px; border-radius: 9px; cursor: pointer;
+      font-weight: 700; font-size: 0.74rem;
+    }
+    .data-banner .bb-backup { background: var(--primary); color: #fff; border: none; }
+    .data-banner .bb-wa { background: #FFF8E1; color: #78350F; border: 1px solid #FDE68A; }
+    [data-theme="dark"] .data-banner { background: #302814; color: #FCD34D; border-color: #5a4514; }
+    [data-theme="dark"] .data-banner .bb-wa { background: #3a2f14; color: #FCD34D; border-color: #5a4514; }
+
+    /* Banner update SW (item 18) */
+    .sw-banner { position: fixed; left: 0; right: 0; bottom: calc(5.4rem + env(safe-area-inset-bottom,0px)); z-index: 150; display: none; }
+    .sw-banner.show { display: block; }
+    .sw-banner-inner {
+      max-width: 600px; margin: 0 auto; background: #0F172A; color: #fff;
+      border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+      padding: 0.6rem 0.85rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .sw-banner-text { flex: 1; font-size: 0.78rem; font-weight: 600; line-height: 1.35; }
+    .sw-reload-btn { min-height: 40px; padding: 0 1rem; border: none; border-radius: 9px; cursor: pointer; background: var(--primary); color: #fff; font-weight: 700; font-size: 0.78rem; }
+
+    /* Tombol cepat tanggal di step 2 (item 9) */
+    .tanggal-quick { display: flex; gap: 0.35rem; margin-top: 0.45rem; }
+    .tanggal-quick button {
+      flex: 1; min-height: 34px; border: 1px solid var(--border); background: var(--surface-alt);
+      color: var(--text); border-radius: 9px; font-size: 0.72rem; font-weight: 700; cursor: pointer;
+      transition: all 0.12s var(--ease);
+    }
+    .tanggal-quick button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .tanggal-quick button:active { transform: scale(0.97); }
+
+    /* Total sticky di step 2 (item 15) */
+    .wizard-sticky-total {
+      position: sticky; bottom: 0; z-index: 6; margin: 0.5rem -1rem 0; padding: 0.55rem 1rem;
+      background: var(--card-bg); border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; font-weight: 700; box-shadow: 0 -4px 12px rgba(15,23,42,0.06);
+    }
+    .wizard-sticky-total .wst-val { font-size: 0.95rem; font-weight: 800; color: var(--primary); }
+
+    /* CTA empty state (item 17) */
+    .empty-cta {
+      margin: 0.75rem auto 0; min-height: 44px; padding: 0.6rem 1.4rem;
+      background: var(--primary); color: #fff; border: none; border-radius: 12px;
+      font-size: 0.85rem; font-weight: 800; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .empty-cta:active { transform: scale(0.97); }
+
+    /* Log error di "Lainnya" (item 26) */
+    .err-toggle { margin-top: 0.55rem; font-size: 0.68rem; font-weight: 700; color: var(--text-muted); cursor: pointer; background: none; border: none; }
+    .err-log-box { margin-top: 0.4rem; display: none; }
+    .err-log-box.show { display: block; }
+    .err-log-box pre {
+      background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.5rem; font-size: 0.64rem; line-height: 1.5; max-height: 190px; overflow: auto;
+      font-family: monospace; white-space: pre-wrap; word-break: break-word; color: var(--text);
+    }
+
+    /* Animasi hapus kartu (item 23) */
+    .tx-card.removing { opacity: 0; transform: translateX(24px) scale(0.96); transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); }
   </style>
 </head>
 <body>
@@ -933,6 +1068,10 @@
         </div>
       </div>
       <div class="header-actions">
+        <span class="net-status" id="netStatus" title="Status koneksi"><span class="dot"></span><span class="net-label">Online</span></span>
+        <button class="icon-btn" onclick="bukaRiwayatCari()" title="Cari transaksi" aria-label="Cari transaksi">
+          <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
         <button class="icon-btn wa" onclick="kirimRekapWA()" title="Kirim Rekap WhatsApp" aria-label="Kirim rekap via WhatsApp">
           <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
         </button>
@@ -942,6 +1081,15 @@
       </div>
     </div>
   </header>
+  <!-- Banner pengingat backup / pengaman data (item 1) -->
+  <div class="data-banner" id="dataBanner">
+    <div class="bb-title" id="dataBannerTitle">Pengingat Backup</div>
+    <div class="bb-body" id="dataBannerBody"></div>
+    <div class="bb-btns">
+      <button class="bb-backup" onclick="backupData()">Backup Sekarang</button>
+      <button class="bb-wa" onclick="kirimRekapWA()">Arsip ke WA</button>
+    </div>
+  </div>
   <div class="container" id="mainView">
     <!-- TODAY BAR -->
     <div class="today-bar">
@@ -1016,7 +1164,8 @@
       <div class="wizard-step" id="wstep2">
         <div class="form-group">
           <label>Nama Pembeli</label>
-          <input type="text" id="wNama" placeholder="Contoh: Ahmad (Kamar 5)">
+          <input type="text" id="wNama" list="wNamaList" placeholder="Contoh: Ahmad (Kamar 5)" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <datalist id="wNamaList"></datalist>
         </div>
         <div class="form-group">
           <label>Kategori</label>
@@ -1025,7 +1174,7 @@
             <option value="Santri Putri">Santri Putri</option>
             <option value="Wali Santri / Tamu">Wali Santri / Tamu</option>
             <option value="Ustadz / Guru">Ustadz / Guru</option>
-            <option value="Warga Sekitar / Umum">Warga Sekitar / Umum</option>
+            <option value="Warga Sekitar / Umum" selected>Warga Sekitar / Umum</option>
           </select>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
@@ -1037,6 +1186,11 @@
             <label>Jam</label>
             <input type="time" id="wJam">
           </div>
+        </div>
+        <div class="tanggal-quick" id="tanggalQuick">
+          <button type="button" data-tq="today" onclick="tanggalQuick('today')">Hari Ini</button>
+          <button type="button" data-tq="yesterday" onclick="tanggalQuick('yesterday')">Kemarin</button>
+          <button type="button" data-tq="other" onclick="tanggalQuick('other')">Lain</button>
         </div>
         <div class="form-group">
           <label>Metode Pembayaran</label>
@@ -1064,6 +1218,10 @@
           <div id="manualPriceInputs"></div>
         </div>
         <div class="cart-summary" id="wizardCartStep2"></div>
+        <div class="wizard-sticky-total" id="wizardStickyTotal">
+          <span>Total</span>
+          <span class="wst-val" id="wizardStickyVal">Rp 0</span>
+        </div>
       </div>
       <div class="nav-btns">
         <button class="btn-back" id="wBack" onclick="wizardBack()" style="display:none;">Kembali</button>
@@ -1206,12 +1364,53 @@
           <div class="other-arrow">›</div>
         </div>
       </div>
+      <div style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;">
+          <span style="font-weight:800;font-size:0.82rem;color:var(--text);">Google Sheets Sync</span>
+          <span id="syncStatus" style="font-size:0.7rem;font-weight:700;color:var(--text-muted);">Belum aktif</span>
+        </div>
+        <div id="syncDesc" style="margin-top:0.3rem;font-size:0.7rem;color:var(--text-muted);line-height:1.45;">Aktifkan untuk sinkronkan data antar device (HP &amp; laptop) via Google Sheets.</div>
+        <div style="display:flex;gap:0.5rem;margin-top:0.6rem;">
+          <button type="button" id="syncMainBtn" onclick="syncMainAction()" style="flex:1.4;min-height:42px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.8rem;cursor:pointer;">Aktifkan Sync</button>
+          <button type="button" onclick="bukaSettingSync()" style="flex:1;min-height:42px;background:var(--surface-alt);color:var(--text);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:0.8rem;cursor:pointer;">Pengaturan</button>
+        </div>
+      </div>
       <div style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:var(--amber-light);border-radius:10px;font-size:0.7rem;color:#92400E;line-height:1.5;">
         Data tersimpan di perangkat ini<br>
         Backup terakhir: <span id="lastBackup">›</span><br>
         <span id="storageInfo" style="display:block;margin-top:0.25rem;"></span>
       </div>
+      <button class="err-toggle" id="errToggle" onclick="toggleErrLog()" style="width:100%;">Debug › lihat log error terakhir</button>
+      <div class="err-log-box" id="errLogBox"><pre id="errLogDetail"></pre></div>
       <button class="lyr-close" onclick="tutupLiyane()" style="width:100%;background:transparent;border:none;padding:0.7rem;font-size:0.85rem;font-weight:700;color:var(--text-muted);cursor:pointer;border-top:1px solid var(--border);margin-top:0.5rem;">Tutup</button>
+    </div>
+  </div>
+  <!-- ===== SYNC SETTINGS MODAL ===== -->
+  <div class="modal" id="syncModal" role="dialog" aria-modal="true" aria-label="Pengaturan Sync">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">Google Sheets Sync</div>
+      <div class="modal-subtitle">Hubungkan PWA ke Google Sheets (Apps Script)</div>
+      <div class="form-group">
+        <label>Web App URL</label>
+        <input type="url" id="syncUrlInput" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="form-group">
+        <label>Secret Token</label>
+        <input type="text" id="syncTokenInput" placeholder="Token rahasia (32 karakter)" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="form-group">
+        <label>Device ID</label>
+        <input type="text" id="syncDeviceInput" readonly style="background:var(--surface-alt);font-family:monospace;font-size:0.75rem;">
+      </div>
+      <div style="background:var(--amber-light);border-radius:10px;padding:0.7rem;font-size:0.72rem;color:#92400E;line-height:1.5;margin-bottom:0.75rem;">
+        <strong>Cara pakai:</strong> Deploy <em>Kopontren Sync API</em> di Google Apps Script (akses &ldquo;Anyone&rdquo;), set property <em>SYNC_TOKEN</em>. Isi URL + token di semua device, lalu tap <em>Sinkronisasi Sekarang</em>.
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="tutupSyncModal()">Tutup</button>
+        <button class="btn-next" onclick="simpanSyncConfig()">Simpan</button>
+      </div>
+      <button type="button" onclick="testSyncConnection()" style="width:100%;margin-top:0.5rem;min-height:42px;background:var(--success);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.8rem;cursor:pointer;">Test Koneksi</button>
     </div>
   </div>
   <!-- ===== PRICE SETTINGS MODAL ===== -->
@@ -1223,8 +1422,9 @@
       <div id="priceBody"></div>
       <div class="nav-btns">
         <button class="btn-back" onclick="tutupPengaturanHarga()">Tutup</button>
-        <button class="btn-next" onclick="simpanHarga()">Simpan Harga</button>
+        <button class="btn-next" style="flex:1.3;" onclick="simpanHarga()">Simpan Harga</button>
       </div>
+      <button onclick="resetHargaDefault()" style="width:100%;margin-top:0.5rem;min-height:42px;background:var(--surface-alt);color:var(--text);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:0.8rem;cursor:pointer;">↺ Reset ke Harga Default</button>
     </div>
   </div>
   <!-- ===== EXPORTE MODAL ===== -->
@@ -1305,19 +1505,26 @@
     </div>
   </div>
   <!-- ===== CONTEXT MENU ===== -->
-  <div class="ctx-menu" id="ctxMenu">
-    <button class="ctx-item" onclick="ctxEdit()">
+  <div class="ctx-menu" id="ctxMenu" role="menu">
+    <button class="ctx-item" data-action="edit" type="button" role="menuitem">
       <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
       Edit
     </button>
-    <button class="ctx-item" onclick="ctxSetor()">
+    <button class="ctx-item" data-action="setor" type="button" role="menuitem">
       <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
       Tandai Dilaporkan
     </button>
-    <button class="ctx-item danger" onclick="ctxHapus()">
+    <button class="ctx-item danger" data-action="hapus" type="button" role="menuitem">
       <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
       Hapus
     </button>
+  </div>
+  <!-- Banner update SW (item 18) -->
+  <div class="sw-banner" id="swBanner">
+    <div class="sw-banner-inner">
+      <div class="sw-banner-text"><strong>Versi baru tersedia</strong><br>Tap tombol untuk memuat ulang.</div>
+      <button class="sw-reload-btn" onclick="reloadForSW()">Muat Ulang</button>
+    </div>
   </div>
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
@@ -1371,6 +1578,12 @@
     let ctxId = null;
     let pendingRestoreData = null;
     let products = {};
+    let _saving = false;                 // item 10: anti double-save
+    let _editBaselineUpdatedAt = null;   // item 4: deteksi konflik multi-tab
+    const AUTO_BACKUP_KEY = 'kopontren_last_autobackup'; // item 1
+    const DEF_METODE_KEY = 'kopontren_default_metode';   // item 11
+    const ERRLOG_KEY = 'kopontren_errlog';               // item 26
+    let _errLog = [];                            // item 26: log error terakhir
     let _dataCache = null, _dataCacheDirty = true;
     function loadProducts() {
       try {
@@ -1496,15 +1709,143 @@
       const todayRecords = loadData().filter(t => t.id.startsWith('TRX-' + ds + '-'));
       // Parse angka setalah '-' pungkasan (tahan sebarang jumbane digit, ora mung 3)
       const maxSeq = todayRecords.length > 0
-        ? Math.max(...todayRecords.map(t => { const m = String(t.id).match(/-(\d+)$/); return m ? (parseInt(m[1]) || 0) : 0; }))
+        ? Math.max(...todayRecords.map(t => { const m = String(t.id).match(/^TRX-\d{6}-(\d+)/); return m ? (parseInt(m[1]) || 0) : 0; }))
         : 0;
       const seq = String(maxSeq + 1).padStart(3,'0');
-      return `TRX-${ds}-${seq}`;
+      // Item 3: suffix random 4-karakter (base36) anti tabrakan ID antar perangkat/restore
+      const rand = Math.floor(Math.random()*36**4).toString(36).toUpperCase().padStart(4,'0');
+      return `TRX-${ds}-${seq}-${rand}`;
     }
     function getTodayStr() {
       const d = new Date();
       return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
     }
+    // =============================================
+    // UTILITAS BARU (v27)
+    // =============================================
+    // Item 18: handler reload ditangani via window.__swUpdateReady di script SW
+
+    // Item 9: tombol cepat tanggal di wizard step 2
+    function tanggalQuick(kind) {
+      const el = document.getElementById('wTanggal');
+      if (!el) return;
+      if (kind === 'other') { el.focus(); try { el.showPicker ? el.showPicker() : null; } catch(e) {} }
+      else { const d = new Date(); if (kind === 'yesterday') d.setDate(d.getDate() - 1); el.value = ymdLocal(d); }
+      document.querySelectorAll('#tanggalQuick button').forEach(b => b.classList.toggle('on', b.dataset.tq === kind));
+    }
+
+    // Item 8: shortcut cari dari ikon header
+    function bukaRiwayatCari() {
+      bukaRiwayat();
+      setTimeout(() => { const s = document.getElementById('searchInput'); if (s) s.focus(); }, 150);
+    }
+
+    // Item 7: autocomplete nama pembeli dari riwayat
+    function populateNamaAutocomplete() {
+      const dl = document.getElementById('wNamaList');
+      if (!dl) return;
+      const data = loadData();
+      const seen = new Set();
+      const names = [];
+      const start = Math.max(0, data.length - 100);
+      for (let i = data.length - 1; i >= start; i--) {
+        const n = data[i] && data[i].pembeli ? String(data[i].pembeli).trim() : '';
+        if (n && !seen.has(n.toLowerCase())) { seen.add(n.toLowerCase()); names.unshift(n); }
+      }
+      dl.innerHTML = names.slice(0, 20).map(n => `<option value="${escHtml(n)}"></option>`).join('');
+    }
+
+    // Item 1: cek kesehatan backup → banner pengingat
+    function checkBackupHealth() {
+      const banner = document.getElementById('dataBanner');
+      if (!banner) return;
+      if (loadData().length === 0) { banner.classList.remove('show'); return; }
+      let last = null;
+      try { last = localStorage.getItem(BACKUP_KEY); } catch(e) {}
+      let title, body;
+      if (!last) {
+        title = 'Belum Pernah Backup';
+        body = 'Data kamu baru tersimpan di HP ini. Backup sekarang agar aman kalau HP rusak / cache dibersihkan.';
+      } else {
+        const days = Math.floor((Date.now() - new Date(last).getTime()) / (1000*60*60*24));
+        if (days < 7) { banner.classList.remove('show'); return; }
+        title = `Sudah ${days} Hari Belum Backup`;
+        body = 'Penyimpanan HP bisa kehilangan data tanpa peringatan. Sebaiknya backup rutin.';
+      }
+      document.getElementById('dataBannerTitle').textContent = title;
+      document.getElementById('dataBannerBody').textContent = body;
+      banner.classList.add('show');
+    }
+
+    // Item 1: auto-backup harian (unduh JSON) saat app dibuka hari baru
+    function maybeAutoBackup() {
+      const data = loadData();
+      if (!data.length) return;
+      const today = getTodayStr();
+      let lastAuto = null;
+      try { lastAuto = localStorage.getItem(AUTO_BACKUP_KEY); } catch(e) {}
+      if (lastAuto === today) return;
+      try {
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'backup_kopontren_' + today + '.json';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        try { localStorage.setItem(AUTO_BACKUP_KEY, today); localStorage.setItem(BACKUP_KEY, new Date().toISOString()); } catch(e) {}
+        updateLastBackup();
+        checkBackupHealth();
+        showToast('Auto-backup harian tersimpan', 'success');
+      } catch(e) { /* unduh diblokir → user backup manual lewat banner */ }
+    }
+
+    // Item 18: muat ulang saat update SW tersedia
+    function reloadForSW() {
+      const b = document.getElementById('swBanner'); if (b) b.classList.remove('show');
+      if (window.__swUpdateReady) { const h = window.__swUpdateReady; window.__swUpdateReady = null; h(); }
+      location.reload();
+    }
+
+    // Item 19: indikator online/offline
+    function updateNetStatus() {
+      const el = document.getElementById('netStatus');
+      if (!el) return;
+      const online = navigator.onLine;
+      el.classList.toggle('offline', !online);
+      const label = el.querySelector('.net-label');
+      if (label) label.textContent = online ? 'Online' : 'Offline';
+    }
+
+    // Item 26: tangkap + simpan log error terakhir
+    function captureError(msg, src, line, col, err) {
+      try {
+        const entry = {
+          t: new Date().toISOString(),
+          msg: String(msg),
+          src: String(src || '').replace(/^.*[\\/]/, '').slice(-40),
+          line: line, col: col,
+          stack: err && err.stack ? String(err.stack).slice(0, 400) : ''
+        };
+        _errLog.unshift(entry);
+        _errLog = _errLog.slice(0, 8);
+        localStorage.setItem(ERRLOG_KEY, JSON.stringify(_errLog));
+      } catch(e) {}
+    }
+    function toggleErrLog() {
+      const box = document.getElementById('errLogBox');
+      const pre = document.getElementById('errLogDetail');
+      if (!box || !pre) return;
+      if (!box.classList.contains('show')) {
+        try { _errLog = JSON.parse(localStorage.getItem(ERRLOG_KEY) || '[]'); } catch(e) { _errLog = []; }
+        pre.textContent = _errLog.length
+          ? _errLog.map(e => `[${e.t}]\n${e.msg}\n@ ${e.src || 'inline'}:${e.line}:${e.col}${e.stack ? '\n' + e.stack : ''}`).join('\n\n────────\n\n')
+          : 'Belum ada error tercatat di sesi terakhir ✓';
+        box.classList.add('show');
+      } else {
+        box.classList.remove('show');
+      }
+    }
+
     // =============================================
     // INIT
     // =============================================
@@ -1518,6 +1859,10 @@
       renderHome();
       setDefaultDateTime();
       updateLastBackup();
+      // CLOUD SYNC: auto-pull saat buka + timer berkala + muat status
+      autoSyncNow();
+      startPeriodicSync();
+      updateSyncStatusUI();
       // Event delegation for tx cards
       const rl = document.getElementById('riwayatList');
       const rcl = document.getElementById('recentList');
@@ -1579,6 +1924,25 @@
         }
         localStorage.setItem('kopontren_last_open', String(now));
       } catch(e) {}
+      // Item 19: indikator online/offline
+      updateNetStatus();
+      window.addEventListener('online', updateNetStatus);
+      window.addEventListener('offline', updateNetStatus);
+      // Item 26: tangkap error runtime + unhandled rejection
+      window.addEventListener('error', e => captureError(e.message, e.filename, e.lineno, e.colno, e.error));
+      window.addEventListener('unhandledrejection', e => captureError('Unhandled rejection: ' + String(e.reason && e.reason.message || e.reason), '', 0, 0, e.reason));
+      // Item 1: cek kesehatan backup → banner pengingat
+      checkBackupHealth();
+      // (maybeAutoBackup() tersedia sebagai utilitas bila mau auto-download harian, tapi
+      //  sengaja TIDAK dipanggil otomatis di init: unduh file tanpa gestur user di PWA
+      //  biasanya diblokir browser & mengejutkan. Banner saja sudah memadai.)
+      // Item 6: hint satu kali (tahan lama tombol Catat)
+      try {
+        if (!localStorage.getItem('kopontren_hint_fab')) {
+          setTimeout(() => showToast('Tip: tahan lama tombol Catat untuk muat preset terakhir', 'info'), 1500);
+          localStorage.setItem('kopontren_hint_fab', '1');
+        }
+      } catch(e) {}
     }
     function setDefaultDateTime() {
       const now = new Date();
@@ -1587,6 +1951,11 @@
       const d = String(now.getDate()).padStart(2,'0');
       document.getElementById('wTanggal').value = `${y}-${m}-${d}`;
       document.getElementById('wJam').value = now.toTimeString().slice(0,5);
+      // Item 11: muat metode pembayaran terakhir dipakai
+      try {
+        const dm = localStorage.getItem(DEF_METODE_KEY);
+        if (dm && document.querySelector('.pay-btn[data-pay="'+dm+'"]')) pilihMetode(dm);
+      } catch(e) {}
     }
     function updateTodayBar() {
       const today = getTodayStr();
@@ -1636,26 +2005,62 @@
     }
     function renderTxCard(t) {
       const st = t.status === 'settled' ? 'settled' : 'pending';
-      const names = t.items ? t.items.map(i => i.name).join(', ') : (t.barang || 'Transaksi');
-      const qtyInfo = escHtml(t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||'')));
+      const itemCount = Array.isArray(t.items) ? t.items.length : 0;
+
+      // Nama pendek: hapus "Baitina"/"Ruqyah" (konsisten dgn rekap v25)
+      const short = (n) => String(n || '').replace(/\s*Baitina\s*/gi, '').replace(/\s*Ruqyah\s*/gi, '').trim() || n;
+
+      // Nama ringkas: >1 item → "Item1 + N item", 1 item → nama utuh, legacy → t.barang
+      let names;
+      if (itemCount === 0) {
+        names = short(t.barang || 'Transaksi');
+      } else if (itemCount === 1) {
+        names = short(t.items[0].name);
+      } else {
+        names = short(t.items[0].name) + ' + ' + (itemCount - 1) + ' item';
+      }
+
+      // Info qty: >1 item → "N item", 1 item → qty+unit asli, legacy → t.qty+t.unit
+      const itemInfo = itemCount > 1
+        ? itemCount + ' item'
+        : (itemCount === 1
+            ? (t.items[0].qty ? t.items[0].qty + (t.items[0].unit || '') : '1 item')
+            : (t.qty ? t.qty + (t.unit || '') : '-'));
+
+      // Preview daftar item (ringkas, 1 baris, dipotong CSS)
+      const itemListShort = itemCount > 1
+        ? t.items.map(i => short(i.name)).join(' · ')
+        : '';
+
+      // Waktu ringkas ("14 Sep 2026, 07:33 WIB" → "14 Sep 07:33"; "14 Sep 2026" → "14 Sep")
+      const waktuShort = String(t.waktuFormat || t.tanggal || '')
+        .replace(/\s+\d{4}/, '')
+        .replace(/\s*,\s*/g, ' ')
+        .replace(/\s+WIB$/, '');
+
       return `<div class="tx-card ${st}" data-id="${t.id}">
         <button class="tx-edit-btn" aria-label="Edit transaksi" onclick="event.stopPropagation(); editTxCard('${t.id}')">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </button>
         <button class="tx-menu-btn" aria-label="Menu transaksi">•••</button>
+
+        <!-- Baris 1: Nama ringkas + Total -->
         <div class="tx-top">
-          <div>
-            <div class="tx-name">${escHtml(names)}</div>
-            <div class="tx-buyer">${escHtml(t.pembeli || '-')} · ${qtyInfo}</div>
-          </div>
-          <div class="tx-total">${formatRupiah(t.totalHarga||0)}</div>
+          <div class="tx-name">${escHtml(names)}</div>
+          <div class="tx-total">${formatRupiah(t.totalHarga || 0)}</div>
         </div>
+
+        <!-- Baris 2: Pembeli + jumlah item -->
+        <div class="tx-buyer">${escHtml(t.pembeli || '-')} · ${itemInfo}</div>
+
+        ${itemListShort ? `<div class="tx-items-preview">${escHtml(itemListShort)}</div>` : ''}
+
+        <!-- Baris 3: Waktu ringkas + badges -->
         <div class="tx-meta">
-          <span><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg> ${escHtml(t.waktuFormat||t.tanggal)}</span>
-          <span class="badge badge-${t.metode==='CASH'?'cash':t.metode==='TRANSFER'?'tf':'utang'}">${t.metode}</span>
-          <span class="badge badge-${st}">${st==='pending'?'Belum Lapor':'Sudah Lapor'}</span>
+          <span>${escHtml(waktuShort)}</span>
+          <span class="badge badge-${t.metode === 'CASH' ? 'cash' : t.metode === 'TRANSFER' ? 'tf' : 'utang'}">${t.metode}</span>
+          <span class="badge badge-${st}">${st === 'pending' ? 'Belum Lapor' : 'Sudah Lapor'}</span>
         </div>
-        <div class="tx-id">${escHtml(t.id)}</div>
       </div>`;
     }
     // =============================================
@@ -1694,7 +2099,11 @@
         renderWizardCart();
       }
       if (step === 2) {
-        if (!skipDefaults) setDefaultDateTime();
+        if (!skipDefaults) {
+          setDefaultDateTime();
+          document.querySelectorAll('#tanggalQuick button').forEach(b => b.classList.toggle('on', b.dataset.tq === 'today')); // item 9
+        }
+        populateNamaAutocomplete(); // item 7
         renderWizardCart2();
       }
       validateWizard();
@@ -1798,6 +2207,7 @@
       if (cart.length === 0) {
         el.innerHTML = '<div class="cart-empty">Keranjang kosong!</div>';
         manualRow.style.display = 'none';
+        const wsv0 = document.getElementById('wizardStickyVal'); if (wsv0) wsv0.textContent = 'Rp 0'; // item 15
         return;
       }
       let html = '<div class="cart-title">Ringkasan Pesanan</div>';
@@ -1828,6 +2238,8 @@
       });
       html += `<div class="cart-total-row"><span class="cart-total-label">Total</span><span class="cart-total-amount">${grand>0?formatRupiah(grand):'-'}</span></div>`;
       el.innerHTML = html;
+      // Item 15: total sticky di bawah wizard step 2
+      const wsv = document.getElementById('wizardStickyVal'); if (wsv) wsv.textContent = grand > 0 ? formatRupiah(grand) : 'Rp 0';
       if (hasManual) {
         manualRow.style.display = 'block';
         manualInputs.innerHTML = manualHtml;
@@ -1866,6 +2278,8 @@
     function wizardBack() { if (wizardStep > 1) showWizardStep(wizardStep - 1); }
     function validateWizard() { document.getElementById('wNext').disabled = cart.length === 0; }
     function simpanPenjualan() {
+      if (_saving) return; // item 10: cegah double-save (tap cepat)
+      _saving = true;
       const btn = document.getElementById('wNext');
       btn.classList.add('loading');
       btn.disabled = true;
@@ -1878,6 +2292,7 @@
         const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
         const tanggal = document.getElementById('wTanggal').value;
         const jam = document.getElementById('wJam').value;
+        if (tanggal && tanggal > getTodayStr()) showToast('Tanggal di masa depan — data tetap disimpan', 'info'); // item 13
         const record = {
           id: genId(), tanggal, jam,
           waktuFormat: formatWaktu(tanggal, jam),
@@ -1886,17 +2301,23 @@
           kategoriPembeli: document.getElementById('wKategori').value,
           metode: wizardMetode,
           catatan: document.getElementById('wCatatan').value.trim(),
-          status: 'pending'
+          status: 'pending',
+          updatedAt: Date.now() // item 4: untuk deteksi konflik multi-tab
         };
         const data = loadData();
         data.push(record);
         saveData(data);
-        try { localStorage.setItem('kopontren_last_cart', JSON.stringify(cart)); } catch(e) {}
+        if (isSyncEnabled()) syncPush(record);
+        try {
+          localStorage.setItem('kopontren_last_cart', JSON.stringify(cart));
+          localStorage.setItem(DEF_METODE_KEY, wizardMetode); // item 11: ingat metode terakhir
+        } catch(e) {}
         tutupModal('wizardModal');
         renderHome();
         updateTodayBar();
         showToast('Tercatat: ' + items.map(i=>i.name+' ×'+i.qty).join(', '), 'success');
       } finally {
+        _saving = false; // item 10
         btn.classList.remove('loading');
         btn.disabled = false;
       }
@@ -1951,6 +2372,7 @@
         data[idx].jamSetor = null;
       }
       saveData(data);
+      if (isSyncEnabled()) syncPush(data[idx]);
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
       refreshOpenModals();
@@ -1961,6 +2383,7 @@
       const data = loadData();
       const t = data.find(r => r.id === detailId);
       if (!t) return;
+      _editBaselineUpdatedAt = t.updatedAt != null ? t.updatedAt : Date.now(); // item 4
       tutupModal('detailModal');
       isEditMode = true;
       cart = t.items ? t.items.map(i => ({productId: i.productId, qty: i.qty})) : [];
@@ -1989,11 +2412,22 @@
       document.getElementById('wizardModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
-    function updateTransaksi() {
+    function updateTransaksi(force = false) {
+      if (_saving) return; // item 10: cegah double-update
       if (!detailId || cart.length === 0) { showToast('Keranjang kosong!', 'error'); return; }
       const data = loadData();
       const idx = data.findIndex(r => r.id === detailId);
       if (idx === -1) return;
+      // Item 4: multi-tab — kalau record baru berubah di tab/perangkat lain selama edit, konfirmasi dulu
+      if (!force && _editBaselineUpdatedAt != null && data[idx].updatedAt != null && data[idx].updatedAt !== _editBaselineUpdatedAt) {
+        tanyaKonfirmasi({
+          title: 'Transaksi sudah berubah',
+          desc: `Transaksi ${data[idx].id} sudah diubah di tempat lain. Tetap timpa perubahanmu?`,
+          yesLabel: 'TIMPA SAJA', danger: true,
+          cb: () => updateTransaksi(true)
+        });
+        return;
+      }
       const nama = document.getElementById('wNama').value.trim();
       if (!nama) { showToast('Isi nama pembeli dulu ya', 'error'); return; }
       const missingManual = cart.some(item => {
@@ -2020,13 +2454,25 @@
         jam: document.getElementById('wJam').value,
         waktuFormat: formatWaktu(document.getElementById('wTanggal').value, document.getElementById('wJam').value),
         metode: wizardMetode,
-        catatan: document.getElementById('wCatatan').value.trim()};
-      saveData(data);
-      tutupModal('wizardModal');
-      renderHome();
-      updateTodayBar();
-      refreshOpenModals();
-      showToast('Transaksi berhasil diupdate', 'success');
+        catatan: document.getElementById('wCatatan').value.trim(),
+        updatedAt: Date.now() // item 4
+      };
+      _editBaselineUpdatedAt = data[idx].updatedAt; // item 4
+      _saving = true; // item 10: kunci saka double-save
+      const _btnU = document.getElementById('wNext');
+      if (_btnU) { _btnU.disabled = true; _btnU.classList.add('loading'); }
+      try {
+        saveData(data);
+        if (isSyncEnabled()) syncPush(data[idx]);
+        tutupModal('wizardModal');
+        renderHome();
+        updateTodayBar();
+        refreshOpenModals();
+        showToast('Transaksi berhasil diupdate', 'success');
+      } finally {
+        _saving = false;
+        if (_btnU) { _btnU.disabled = false; _btnU.classList.remove('loading'); }
+      }
     }
     function hapusTransaksi() {
       if (!detailId) return;
@@ -2037,6 +2483,7 @@
       const idx = data.indexOf(t);
       data.splice(idx, 1);
       saveData(data);
+      if (isSyncEnabled()) syncDelete(t.id);
       haptic([50, 20, 50]);
       detailId = null;
       tutupModal('detailModal');
@@ -2045,6 +2492,7 @@
       showToast(`${newName} dihapus`, 'info', () => {
         data.splice(Math.min(idx, data.length), 0, t);
         saveData(data);
+        if (isSyncEnabled()) syncPush(t);
         renderHome(); updateTodayBar();
         showToast('Dibatalkan › transaksi dikembalikan', 'success');
       });
@@ -2079,16 +2527,21 @@
       document.getElementById('ctxMenu').classList.remove('show');
       ctxId = null;
     }
-    function ctxEdit() { tutupCtxMenu(); if (ctxId) bukaDetail(ctxId); }
+    function ctxEdit() {
+      const id = ctxId;               // Ambrati DULUAN — tutupCtxMenu() mbusak ctxId
+      tutupCtxMenu();
+      if (id) bukaDetail(id);
+    }
     function editTxCard(id) {
       detailId = id;
       editTransaksi();
     }
     function ctxSetor() {
+      const id = ctxId;               // Ambrati DULUAN — tutupCtxMenu() mbusak ctxId
       tutupCtxMenu();
-      if (!ctxId) return;
+      if (!id) return;
       const data = loadData();
-      const idx = data.findIndex(r => r.id === ctxId);
+      const idx = data.findIndex(r => r.id === id);
       if (idx === -1) return;
       if (data[idx].status !== 'settled') {
         data[idx].status = 'settled';
@@ -2105,10 +2558,11 @@
       showToast(data[idx].status === 'settled' ? 'Sudah dilaporkan' : 'Dibatalkan', 'success');
     }
     function ctxHapus() {
+      const id = ctxId;               // Ambrati DULUAN — tutupCtxMenu() mbusak ctxId
       tutupCtxMenu();
-      if (!ctxId) return;
+      if (!id) return;
       const data = loadData();
-      const t = data.find(r => r.id === ctxId);
+      const t = data.find(r => r.id === id);
       if (!t) return;
       const newName = t.items ? t.items.map(i=>i.name).join(', ') : (t.barang||'Transaksi');
       const idx = data.indexOf(t);
@@ -2122,12 +2576,25 @@
         showToast('Dibatalkan', 'success');
       });
     }
-    document.addEventListener('click', (e) => {
-      // Capture phase: kudu mlaku sadurunge handler liyané, supaya ora ana race condition
-      if (e.target.closest('.ctx-menu')) return;      // tap ing njero menu → ora ditutup
-      if (e.target.closest('.tx-menu-btn')) return;   // tap tombol ••• → wis ditangani handleTxListClick
-      tutupCtxMenu();
-    }, true);
+    // ==== CONTEXT MENU — event delegation (pointerdown, mung mobile-responsif) ====
+    // 1) Tap item menu (edit/setor/hapus) — pointerdown luwih cepet saka click (ora ana delay 300ms)
+    document.getElementById('ctxMenu').addEventListener('pointerdown', (e) => {
+      const item = e.target.closest('.ctx-item[data-action]');
+      if (!item) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const action = item.dataset.action;
+      if (action === 'edit') ctxEdit();
+      else if (action === 'setor') ctxSetor();
+      else if (action === 'hapus') ctxHapus();
+    });
+    // 2) Tutup menu yen tap diluar — bubble phase (ORA capture), mung yen menu wis katon
+    document.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('.ctx-menu')) return;      // tap njero menu → wis ditangani #1
+      if (e.target.closest('.tx-menu-btn')) return;  // tap tombol ••• → handleTxListClick ngatur
+      const menu = document.getElementById('ctxMenu');
+      if (menu && menu.classList.contains('show')) tutupCtxMenu();
+    });
     // =============================================
     // LAPORAN (REPORT)
     // =============================================
@@ -2300,7 +2767,12 @@
       const data = getFilteredData();
       const list = document.getElementById('riwayatList');
       if (data.length === 0) {
-        list.innerHTML = `<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div><p>Tidak ada transaksi</p><div class="empty-sub">Coba ubah filter atau kata kunci</div></div>`;
+        const noDataAtAll = loadData().length === 0;
+        const title = noDataAtAll ? 'Belum ada transaksi' : 'Tidak ada transaksi';
+        const sub = noDataAtAll ? 'Mulai catat penjualanmu pertama' : 'Coba ubah filter atau kata kunci';
+        // Item 17: CTA actionable di empty state
+        const cta = `<button class="empty-cta" onclick="tutupRiwayat();bukaWizardManual()">＋ Buat Transaksi</button>`;
+        list.innerHTML = `<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div><p>${title}</p><div class="empty-sub">${sub}</div>${cta}</div>`;
         return;
       }
       const slice = data.slice().reverse().slice(0, _riwayatLimit);
@@ -2358,6 +2830,10 @@
         const bytes = new Blob([JSON.stringify(loadData())]).size;
         const kb = (bytes / 1024).toFixed(1);
         document.getElementById('storageInfo').textContent = `Penyimpanan: ${kb} KB`;
+        // Item 2: peringatan quota — >4MB dari limit ~5MB
+        if (bytes > 4 * 1024 * 1024) {
+          showToast('Penyimpanan hampir penuh — backup & hapus data lama', 'error');
+        }
       } catch(e) {
         document.getElementById('storageInfo').textContent = '';
       }
@@ -2428,6 +2904,20 @@
       saveProducts();
       tutupPengaturanHarga();
       showToast('Harga berhasil disimpan!', 'success');
+    }
+    // Item 28: reset semua harga ke default pabrikan
+    function resetHargaDefault() {
+      tanyaKonfirmasi({
+        title: 'Reset Harga?',
+        desc: 'Semua harga akan kembali ke default pabrik. Lanjut?',
+        yesLabel: 'RESET', danger: true,
+        cb: () => {
+          PRODUCTS_DATA.forEach(p => { products[p.id] = JSON.parse(JSON.stringify(p)); });
+          saveProducts();
+          renderPriceSettings();
+          showToast('Harga sudah direset ke default', 'success');
+        }
+      });
     }
     // =============================================
     // EXPORT / BACKUP / RESTORE
@@ -2503,11 +2993,27 @@
     function handleRestore(e) {
       const file = e.target.files[0];
       if (!file) return;
+      // Item 5: validasi ukuran — cegah file >10MB bikin app hang
+      if (file.size > 10 * 1024 * 1024) {
+        document.getElementById('restoreInfo').textContent = 'File terlalu besar (maks 10 MB)';
+        showToast('File terlalu besar (maks 10 MB)', 'error');
+        e.target.value = '';
+        return;
+      }
       const reader = new FileReader();
       reader.onload = function(ev) {
         try {
           const data = JSON.parse(ev.target.result);
           if (!Array.isArray(data)) { showToast('Format file salah!', 'error'); return; }
+          // Item 5: validasi struktur — sample record wajib punya field dikenal
+          if (data.length > 0) {
+            const s = data[0];
+            if (!s || typeof s !== 'object' || !(s.id || s.tanggal || s.barang || s.items || s.pembeli || s.totalHarga)) {
+              document.getElementById('restoreInfo').textContent = 'Format file tidak dikenali';
+              showToast('Format file tidak dikenali', 'error');
+              return;
+            }
+          }
           pendingRestoreData = data;
           document.getElementById('restoreInfo').textContent = `Ditemukan ${data.length} transaksi`;
           document.getElementById('restorePreview').style.display = 'block';
@@ -2624,21 +3130,71 @@
       // Defensif: transaksi tanpa field status (matur saka backup lawas) = isih pending
       const pending = data.filter(t => t.status !== 'settled');
       if (!pending.length) return '';
-      const today = new Date().toLocaleDateString('id-ID', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-      const totalBelum = pending.reduce((s,t) => s + (t.totalHarga||0), 0);
-      let msg = `*📊 LAPORAN PENJUALAN KOPONTREN*\n`;
-      msg += `Al Ittihad › ${today}\n\n`;
-      msg += `*BELUM DILAPORKAN* (${pending.length} transaksi)\n`;
-      pending.forEach(t => {
-        // Nominal per item = subtotal (jml × harga sing digunakake); migrasi ing loadData wis ngisi subtotal kanggo data lawas
-        const itemLines = Array.isArray(t.items) && t.items.length
-          ? t.items.map(i => `${i.name} (${i.qty}${i.unit||''} × ${formatRupiah(i.hargaSatuan ?? i.harga ?? 0)}) › ${formatRupiah(i.subtotal != null ? i.subtotal : ((i.harga||0) * (i.qty||1)))}`).join(', ')
-          : `${t.barang||'Transaksi'} (${t.qty||''}${t.unit||''}) › ${formatRupiah(t.totalHarga != null ? t.totalHarga : ((t.harga||0) * (t.qty||1)))}`;
-        msg += `• ${itemLines}\n`;
-        msg += `  ${t.pembeli||'-'} | ${t.metode||'-'}\n`;
+
+      const today = new Date().toLocaleDateString('id-ID', {
+        weekday: 'long', day: 'numeric', month: 'short', year: 'numeric'
       });
-      msg += `\n*TOTAL DILAPORAN: ${formatRupiah(totalBelum)}*\n`;
+      const totalBelum = pending.reduce((s, t) => s + (t.totalHarga || 0), 0);
+
+      // Helper: hapus "Baitina" / "Ruqyah" supaya nama pendek & hemat tempat
+      const shortName = (name) =>
+        String(name || '')
+          .replace(/\s*Baitina\s*/gi, '')
+          .replace(/\s*Ruqyah\s*/gi, '')
+          .trim() || name;
+
+      // Helper: angka style rupiah tanpa "Rp " (pemisah ribuan ".") — biar kolom rapi
+      const rpShort = (n) => Math.round(Number(n) || 0).toLocaleString('id-ID');
+
+      // Header — plain ASCII, 100% aman di semua versi WA
+      let msg = `*LAPORAN PENJUALAN KOPONTREN*\n`;
+      msg += `Al Ittihad - ${today}\n`;
+      msg += `==============================\n\n`;
+      msg += `*BELUM DILAPORKAN* (${pending.length} transaksi)\n`;
+
+      // Loop tiap transaksi
+      pending.forEach((t, idx) => {
+        const pembeli = t.pembeli || '-';
+        const metode = t.metode || '-';
+        const total = t.totalHarga || 0;
+
+        // Nomor urut + nama pembeli (bold)
+        msg += `\n*${idx + 1}. ${pembeli}*\n\n`;
+
+        // Item list — siji item 2 baris (nama + hitungan)
+        if (Array.isArray(t.items) && t.items.length) {
+          t.items.forEach((i) => {
+            const nama = shortName(i.name);
+            const qty = `${i.qty}${i.unit || ''}`;
+            const satuan = rpShort(i.hargaSatuan ?? i.harga ?? 0);
+            const sub = rpShort(i.subtotal != null ? i.subtotal : ((i.harga || 0) * (i.qty || 1)));
+            msg += `  - ${nama}\n`;
+            msg += `    ${qty} x ${satuan} = ${sub}\n`;
+          });
+        } else {
+          // Fallback legacy (tanpa items[])
+          const nama = shortName(t.barang || 'Transaksi');
+          const qty = `${t.qty || ''}${t.unit || ''}`;
+          const sub = rpShort(total);
+          msg += `  - ${nama}\n`;
+          msg += `    ${qty} = ${sub}\n`;
+        }
+
+        // Metode + total
+        msg += `\n  Bayar: ${metode}\n`;
+        msg += `  Total: Rp ${rpShort(total)}\n`;
+
+        // Pemisah antar transaksi (kecuali yang terakhir)
+        if (idx < pending.length - 1) {
+          msg += `\n------------------------------\n`;
+        }
+      });
+
+      // Footer
+      msg += `\n==============================\n`;
+      msg += `*TOTAL: Rp ${rpShort(totalBelum)}*\n`;
       msg += `_Catatan Penjualan Gus Lim_`;
+
       return msg;
     }
     function kirimRekapWA() {
@@ -2809,6 +3365,184 @@
         tutupModal(this.id);
       });
     });
+    // =============================================
+    // CLOUD SYNC — Google Sheets (Apps Script Web App)
+    // Multi-device sync: push/pull transaksi via Google Sheets
+    // =============================================
+    const SYNC_URL_KEY='kopontren_sync_url', SYNC_TOKEN_KEY='kopontren_sync_token', SYNC_DEVICE_KEY='kopontren_sync_device', SYNC_LAST_KEY='kopontren_last_sync';
+    let _syncing = false;
+    function getSyncDevice() {
+      let id = localStorage.getItem(SYNC_DEVICE_KEY);
+      if (!id) { id = 'd-' + Math.random().toString(36).slice(2,10); try { localStorage.setItem(SYNC_DEVICE_KEY, id); } catch(e) {} }
+      return id;
+    }
+    function getSyncConfig() { return { url:(localStorage.getItem(SYNC_URL_KEY)||'').trim(), token:localStorage.getItem(SYNC_TOKEN_KEY)||'', device:getSyncDevice() }; }
+    function setSyncConfig(url, token) { try { localStorage.setItem(SYNC_URL_KEY,(url||'').trim()); localStorage.setItem(SYNC_TOKEN_KEY,(token||'').trim()); } catch(e) {} updateSyncStatusUI(); }
+    function isSyncEnabled() { const c = getSyncConfig(); return !!(c.url && c.token); }
+    function toEpoch(v) {
+      if (v == null) return 0;
+      if (typeof v === 'number') return v;
+      const s = String(v).trim();
+      if (/^\d{12,}$/.test(s)) return Number(s);
+      const t = Date.parse(s);
+      return Number.isNaN(t) ? 0 : t;
+    }
+    async function parseAppScript(res) {
+      let text = await res.text();
+      text = text.replace(/^\uFEFF/, '');
+      const s = text.indexOf('{'), e = text.lastIndexOf('}');
+      if (s >= 0 && e > s) { try { return JSON.parse(text.slice(s, e+1)); } catch(_) {} }
+      try { return JSON.parse(text); } catch(_) { return null; }
+    }
+    function syncPush(record) {
+      if (!isSyncEnabled() || !record) return Promise.resolve({ ok:false });
+      const c = getSyncConfig();
+      const payload = { action:'upsert', token:c.token, device:c.device, record:{
+        id:record.id, tanggal:record.tanggal||'', jam:record.jam||'',
+        items:Array.isArray(record.items)?record.items:[], totalHarga:Number(record.totalHarga)||0,
+        pembeli:record.pembeli||'', kategoriPembeli:record.kategoriPembeli||'',
+        metode:record.metode||'', catatan:record.catatan||'',
+        status:record.status||'pending', updatedAt:new Date().toISOString(), deleted:!!record.deleted
+      }};
+      return fetch(c.url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload) })
+        .then(parseAppScript).catch(e => ({ ok:false, error:String(e) }));
+    }
+    function syncDelete(id) {
+      if (!isSyncEnabled() || !id) return Promise.resolve({ ok:false });
+      const c = getSyncConfig();
+      return fetch(c.url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify({ action:'delete', token:c.token, device:c.device, id }) })
+        .then(parseAppScript).catch(e => ({ ok:false, error:String(e) }));
+    }
+    function updateSyncStatusUI(mode) {
+      const status = document.getElementById('syncStatus');
+      const desc = document.getElementById('syncDesc');
+      const main = document.getElementById('syncMainBtn');
+      if (!status) return;
+      const enabled = isSyncEnabled();
+      if (!enabled) {
+        status.textContent = 'Belum aktif'; status.style.color = 'var(--text-muted)';
+        if (desc) desc.textContent = 'Aktifkan untuk sinkronkan data antar device (HP & laptop) via Google Sheets.';
+        if (main) main.textContent = 'Aktifkan Sync';
+        return;
+      }
+      if (mode === 'error') { status.textContent = '● Gagal'; status.style.color = 'var(--danger)'; }
+      else {
+        const last = localStorage.getItem(SYNC_LAST_KEY);
+        if (last) { status.textContent = '● '+relTime(last); status.style.color = 'var(--success)'; }
+        else { status.textContent = '○ Belum sync'; status.style.color = 'var(--text-muted)'; }
+      }
+      if (desc) desc.textContent = 'Terhubung Google Sheets — data tersinkron otomatis tiap 5 menit.';
+      if (main) main.textContent = 'Sinkronisasi Sekarang';
+    }
+    function syncMainAction() { if (!isSyncEnabled()) bukaSettingSync(); else syncNow(); }
+    function bukaSettingSync() {
+      tutupLiyane();
+      const c = getSyncConfig();
+      document.getElementById('syncUrlInput').value = c.url;
+      document.getElementById('syncTokenInput').value = c.token;
+      document.getElementById('syncDeviceInput').value = c.device;
+      document.getElementById('syncModal').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function tutupSyncModal() { document.getElementById('syncModal').classList.remove('show'); document.body.style.overflow = ''; }
+    function simpanSyncConfig() {
+      const url = document.getElementById('syncUrlInput').value.trim();
+      const token = document.getElementById('syncTokenInput').value.trim();
+      if (!url || !token) { showToast('URL & token wajib diisi','error'); return; }
+      if (!/^https?:\/\//i.test(url)) { showToast('URL harus diawali http:// atau https://','error'); return; }
+      setSyncConfig(url, token);
+      showToast('Konfigurasi sync disimpan','success');
+      tutupSyncModal();
+      syncNow(true);
+    }
+    async function testSyncConnection() {
+      const url = document.getElementById('syncUrlInput').value.trim();
+      const token = document.getElementById('syncTokenInput').value.trim();
+      if (!url || !token) { showToast('Isi URL & token dulu','error'); return; }
+      showToast('Testing koneksi...','info');
+      try {
+        const res = await fetch(url + '?token=' + encodeURIComponent(token));
+        const data = await parseAppScript(res);
+        if (data && data.ok) showToast('Koneksi OK — '+(data.count||0)+' transaksi di cloud','success');
+        else showToast('Gagal: '+((data&&data.error)||'respons tidak valid'),'error');
+      } catch(e) { showToast('Tidak bisa terhubung — cek URL / akses Web App','error'); }
+    }
+
+    function rowToRecord(row) {
+      const str = v => (v != null ? String(v) : '');
+      return {
+        id:row['ID'], tanggal:str(row['Tanggal']), jam:str(row['Jam']),
+        items:Array.isArray(row['Items'])?row['Items']:[], totalHarga:Number(row['Total'])||0,
+        pembeli:str(row['Pembeli']), kategoriPembeli:str(row['Kategori']), metode:str(row['Metode']),
+        catatan:str(row['Catatan']), status:row['Status']||'pending',
+        updatedAt:toEpoch(row['UpdatedAt']), deleted:!!row['Deleted'],
+        waktuFormat:formatWaktu(str(row['Tanggal']), str(row['Jam']))
+      };
+    }
+    async function syncNow(silent=false) {
+      if (_syncing) return { ok:false, error:'busy' };
+      _syncing = true;
+      if (!isSyncEnabled()) { _syncing=false; if (!silent) showToast('Sync belum diaktifkan','info'); return { ok:false, error:'disabled' }; }
+      const c = getSyncConfig();
+      try {
+        if (!silent) showToast('Sinkronisasi...','info');
+        const res = await fetch(c.url + '?token=' + encodeURIComponent(c.token));
+        const data = await parseAppScript(res);
+        if (!data || !data.ok) { _syncing=false; if (!silent) showToast('Sync gagal'+(data&&data.error?': '+data.error:''),'error'); updateSyncStatusUI('error'); return { ok:false, error:(data&&data.error)||'http' }; }
+        const cloud = (data.rows||[]).map(rowToRecord);
+        const local = loadData();
+        const cloudById = new Map();
+        cloud.forEach(r => { if (r.id) cloudById.set(r.id, r); });
+        const map = new Map(local.map(t => [t.id, t]));
+        const toPush = [];
+        let newFromCloud = 0;
+        const ids = new Set([...map.keys(), ...cloudById.keys()]);
+        ids.forEach(id => {
+          const L = map.get(id), C = cloudById.get(id);
+          if (L && C) {
+            const a = toEpoch(L.updatedAt), b = toEpoch(C.updatedAt);
+            if (C.deleted && b >= a) map.delete(id);
+            else if (!C.deleted && b > a) map.set(id, C);
+            else if (!C.deleted && a > b) toPush.push(L);
+          } else if (L && !C) { toPush.push(L); }
+          else if (!L && C && !C.deleted) { map.set(id, C); newFromCloud++; }
+        });
+        const merged = Array.from(map.values());
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        _dataCache = merged; _dataCacheDirty = false;
+        for (const t of toPush) await syncPush(t);
+        localStorage.setItem(SYNC_LAST_KEY, new Date().toISOString());
+        updateSyncStatusUI();
+        renderHome(); updateTodayBar(); refreshOpenModals();
+        if (!silent) showToast('Tersinkron — '+merged.length+' transaksi','success');
+        return { ok:true, total:merged.length, newFromCloud, pushed:toPush.length };
+      } catch(e) {
+        _syncing=false;
+        if (!silent) showToast('Sync error: '+String(e),'error');
+        updateSyncStatusUI('error');
+        return { ok:false, error:String(e) };
+      }
+    }
+    function autoSyncNow() {
+      try { const last = localStorage.getItem(SYNC_LAST_KEY); if (isSyncEnabled() && (!last || Date.now()-Date.parse(last) > 5*60*1000)) syncNow(true); } catch(e) {}
+    }
+    function startPeriodicSync() {
+      if (window.__syncTimer) return;
+      window.__syncTimer = setInterval(() => { if (isSyncEnabled() && document.visibilityState==='visible') syncNow(true); }, 5*60*1000);
+    }
+    function relTime(iso) {
+      if (!iso) return '';
+      const t = Date.parse(iso);
+      if (Number.isNaN(t)) return '';
+      const s = Math.floor((Date.now()-t)/1000);
+      if (s < 5) return 'baru saja';
+      if (s < 60) return s+' dtk lalu';
+      if (s < 3600) return Math.floor(s/60)+' mnt lalu';
+      if (s < 86400) return Math.floor(s/3600)+' jam lalu';
+      return new Date(t).toLocaleDateString('id-ID',{ day:'numeric', month:'short' });
+    }
+
+
     // Init
     init();
   </script>
@@ -2825,7 +3559,19 @@
           }
         } catch(e) {}
         navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('SW:', reg.scope))
+          .then(reg => {
+            // Item 18: detect update SW baru → tampilkan banner "Muat Ulang"
+            reg.addEventListener('updatefound', () => {
+              const newSW = reg.installing;
+              newSW.addEventListener('statechange', () => {
+                if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                  window.__swUpdateReady = () => newSW.postMessage({ type: 'SKIP_WAITING' });
+                  const b = document.getElementById('swBanner');
+                  if (b) b.classList.add('show');
+                }
+              });
+            });
+          })
           .catch(err => console.log('SW error:', err));
       });
     }

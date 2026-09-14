@@ -1,5 +1,5 @@
 // Service Worker Cache Offline untuk Kopontren Gus Lim
-const CACHE_NAME = 'kopontren-v23';
+const CACHE_NAME = 'kopontren-v24';
 // PENTING: mung asèt sing DI-DEPLOY (ora ing .gitignore) sing kena di-cache.
 // logo-kopontren.svg ora direferensi HTML + di-gitignore → ora di-cache.
 const ASSETS = [
@@ -23,6 +23,11 @@ self.addEventListener('install', (e) => {
     })
   );
   self.skipWaiting();
+});
+
+// Item 27/18: terima perintah SKIP_WAITING dari banner update di UI
+self.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {
