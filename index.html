@@ -207,12 +207,13 @@
     }
     .tx-card.pending::before { background: var(--danger); }
     .tx-card.settled::before { background: var(--success); }
-    .tx-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .tx-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; padding-right: 5.4rem; }
     .tx-name { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-top: 0.35rem; }
     .tx-buyer { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
     .tx-total {
       font-size: 1rem; font-weight: 800; font-family: 'Outfit', sans-serif;
       color: var(--primary); letter-spacing: -0.3px;
+      white-space: nowrap; flex-shrink: 0;
     }
     .tx-meta { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.45rem; font-size: 0.65rem; color: var(--text-muted); flex-wrap: wrap; }
     .tx-meta span { display: inline-flex; align-items: center; gap: 0.2rem; }
@@ -353,6 +354,31 @@
       box-shadow: 0 3px 8px rgba(37,211,102,0.25);
     }
     .btn-report-wa:active { transform: scale(0.97); background: #1fb855; }
+    /* WA AKUN PICKER */
+    .wa-acct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin: 0.5rem 0 0.25rem; }
+    .wa-acct-btn {
+      position: relative;
+      background: var(--surface-alt); border: 2px solid var(--border);
+      border-radius: 14px; padding: 0.85rem 0.6rem 0.7rem;
+      text-align: center; cursor: pointer;
+      transition: transform 0.12s var(--ease), border-color 0.12s var(--ease);
+      display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+    }
+    .wa-acct-btn:active { transform: scale(0.96); border-color: var(--amber-gold); }
+    .wa-acct-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .wa-acct-icon.biasa { background: #D1FAE5; color: #065F46; }
+    .wa-acct-icon.bisnes { background: #DBEAFE; color: #1E40AF; }
+    [data-theme="dark"] .wa-acct-icon.biasa { background: #0D3D31; color: #34D399; }
+    [data-theme="dark"] .wa-acct-icon.bisnes { background: #1E3A8A; color: #93C5FD; }
+    .wa-acct-name { font-size: 0.8rem; font-weight: 800; color: var(--text); }
+    .wa-acct-sub { font-size: 0.64rem; color: var(--text-muted); font-weight: 600; }
+    .wa-last-chip {
+      position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+      background: var(--amber-gold); color: white;
+      font-size: 0.55rem; font-weight: 800; letter-spacing: 0.4px;
+      padding: 0.1rem 0.45rem; border-radius: 999px;
+      border: 2px solid var(--card-bg);
+    }
     [data-theme="dark"] .report-total { border-color: #78500F; }
     /* EMPTY STATE */
     .empty-state { text-align: center; padding: 2rem 1rem; color: var(--text-muted); }
@@ -1213,6 +1239,45 @@
       </div>
     </div>
   </div>
+  <!-- ===== WA AKUN PICKER MODAL ===== -->
+  <div class="modal" id="waModal">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">Pilih Akun WhatsApp</div>
+      <div class="modal-subtitle">Rekap wis disiapaké. Kirim liwat akun sapa?</div>
+      <div class="wa-acct-grid">
+        <button class="wa-acct-btn" id="waBtnBiasa" onclick="kirimWAAkun('biasa')">
+          <div class="wa-acct-icon biasa">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+          </div>
+          <div class="wa-acct-name">WhatsApp Biasa</div>
+          <div class="wa-acct-sub">Mebuka langsung WA</div>
+          <div class="wa-last-chip" id="waChipBiasa" style="display:none;">Terakhir</div>
+        </button>
+        <button class="wa-acct-btn" id="waBtnBisnes" onclick="kirimWAAkun('bisnes')">
+          <div class="wa-acct-icon bisnes">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.24L19.76 8 12 11.76 4.24 8 12 4.24zM4 9.6l7.5 3.75v4.9L4 14.4V9.6zm16 0v4.8l-7.5 3.85v-4.9L20 9.6z"/></svg>
+          </div>
+          <div class="wa-acct-name">WhatsApp Bisnes</div>
+          <div class="wa-acct-sub">Pilih akun ing share menu</div>
+          <div class="wa-last-chip" id="waChipBisnes" style="display:none;">Terakhir</div>
+        </button>
+      </div>
+      <button class="lyr-close" onclick="tutupWaPicker()" style="width:100%;background:transparent;border:none;padding:0.7rem;font-size:0.85rem;font-weight:700;color:var(--text-muted);cursor:pointer;border-top:1px solid var(--border);">Batal</button>
+    </div>
+  </div>
+  <!-- ===== KONFIRMASI MODAL (hapus kabeh data) ===== -->
+  <div class="modal" id="confirmModal">
+    <div class="modal-sheet" style="max-width:400px;">
+      <div class="modal-handle"></div>
+      <div class="modal-title" id="cfmTitle">Hapus Kabeh Data?</div>
+      <div class="modal-subtitle" id="cfmDesc">Kabeh transaksi bakal ilang. Amanek?</div>
+      <div class="nav-btns">
+        <button class="btn-back" style="flex:1;" onclick="tutupKonfirmasi()">Batal</button>
+        <button class="btn-next" id="cfmYes" style="background:var(--danger);" onclick="konfirmasiLanjut()">Menerus</button>
+      </div>
+    </div>
+  </div>
   <!-- ===== CONTEXT MENU ===== -->
   <div class="ctx-menu" id="ctxMenu">
     <button class="ctx-item" onclick="ctxEdit()">
@@ -1236,7 +1301,7 @@
     // =============================================
     const PRODUCTS_DATA = [
       { id:'madu_sachet',name:'Madu Sachet Baitina',cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18H6z"/><path d="M6 7h12"/><path d="M10 3V1"/><path d="M14 3V1"/></svg>`, unit:'sachet',
-        tiers:[{min:1,max:99999,price:6000}]},
+        tiers:[{min:1,max:9,price:6000},{min:10,max:40,price:5800},{min:41,max:90,price:5500},{min:91,max:190,price:5250},{min:191,max:99999,price:5100}]},
       { id:'madu',    name:'Madu Box Baitina',     cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/><path d="M4 11h16"/><circle cx="12" cy="16" r="1.5"/></svg>`, unit:'box',
         tiers:[{min:1,max:4, price:58000},{min:5,max:9, price:55000},{min:10,max:19,price:52500},{min:20,max:99999,price:51000}]},
       { id:'nasijagung',name:'Nasi Jagung',        cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l8-11 8 11"/><path d="M6 16h12"/><path d="M12 5v-2"/></svg>`, unit:'porsi',
@@ -1289,6 +1354,11 @@
         const saved = localStorage.getItem(PRICE_KEY);
         if (saved) {
           const savedProducts = JSON.parse(saved);
+          // Migrasi v17: madu_sachet lawas (mung tier tunggal 6000 datar) → replace karo tier sakderengé (retail <10 + tier box ÷10)
+          if (savedProducts['madu_sachet'] && Array.isArray(savedProducts['madu_sachet'].tiers) && savedProducts['madu_sachet'].tiers.length === 1) {
+            const fresh = PRODUCTS_DATA.find(p => p.id === 'madu_sachet');
+            if (fresh) savedProducts['madu_sachet'].tiers = JSON.parse(JSON.stringify(fresh.tiers));
+          }
           // Merge: start from defaults, overlay saved data so new products appear
           products = {};
           PRODUCTS_DATA.forEach(p => {
@@ -1331,7 +1401,31 @@
     // =============================================
     function loadData() {
       if (!_dataCacheDirty && _dataCache) return _dataCache;
-      try { _dataCache = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { _dataCache = []; }
+      try {
+        _dataCache = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        // Migrasi otomatis: transaksi lawas (qty/harga, tanpa totalHarga) → total dianggepai bener
+        let touched = false;
+        _dataCache.forEach(t => {
+          const hasLegacy = t.totalHarga == null && (
+            (t.harga != null) ||
+            ((Array.isArray(t.items) && t.items.length) && t.items.some(i => (i.subtotal == null || i.totalHarga == null) && i.harga != null))
+          );
+          if (hasLegacy || (Array.isArray(t.items) && t.items.length && t.items.every(i => i.subtotal == null))) {
+            // item lawas: subtotal = harga (yèn duwe qty, harga = per item)
+            (Array.isArray(t.items) ? t.items : []).forEach(i => {
+              if (i.subtotal == null) i.subtotal = (i.qty ? (i.harga||0) * i.qty : (i.harga||0));
+            });
+            if (t.totalHarga == null) {
+              t.totalHarga = (Array.isArray(t.items) && t.items.length)
+                ? t.items.reduce((s,i) => s + (i.subtotal||0), 0)
+                : ((t.qty ? (t.harga||0) * t.qty : 0) || (t.harga||0));
+            }
+            if (t.status == null) t.status = 'pending';
+            touched = true;
+          }
+        });
+        if (touched) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_dataCache)); } catch(e) {} }
+      } catch(e) { _dataCache = []; }
       _dataCacheDirty = false;
       return _dataCache;
     }
@@ -1479,7 +1573,8 @@
     // =============================================
     function renderHome() {
       const data = loadData();
-      const pending = data.filter(t => t.status === 'pending');
+      // Defensif: transaksi tanpa field status (backup lawas) = isih pending
+      const pending = data.filter(t => t.status !== 'settled');
       const settled = data.filter(t => t.status === 'settled');
       const totalP = pending.reduce((s,t) => s + (t.totalHarga||0), 0);
       const totalS = settled.reduce((s,t) => s + (t.totalHarga||0), 0);
@@ -1496,9 +1591,10 @@
       }
     }
     function renderTxCard(t) {
+      const st = t.status === 'settled' ? 'settled' : 'pending';
       const names = t.items ? t.items.map(i => i.name).join(', ') : (t.barang || 'Transaksi');
       const qtyInfo = t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||''));
-      return `<div class="tx-card ${t.status}" data-id="${t.id}">
+      return `<div class="tx-card ${st}" data-id="${t.id}">
         <button class="tx-edit-btn" aria-label="Edit transaksi" onclick="event.stopPropagation(); editTxCard('${t.id}')">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </button>
@@ -1513,7 +1609,7 @@
         <div class="tx-meta">
           <span><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg> ${escHtml(t.waktuFormat||t.tanggal)}</span>
           <span class="badge badge-${t.metode==='CASH'?'cash':t.metode==='TRANSFER'?'tf':'utang'}">${t.metode}</span>
-          <span class="badge badge-${t.status}">${t.status==='pending'?'Belum Lapor':'Sudah Lapor'}</span>
+          <span class="badge badge-${st}">${st==='pending'?'Belum Lapor':'Sudah Lapor'}</span>
         </div>
         <div class="tx-id">${escHtml(t.id)}</div>
       </div>`;
@@ -1627,9 +1723,17 @@
         const sub = price * item.qty;
         grand += sub;
         const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Setel ›') : formatRupiah(price);
+        // Hint tier aktif: contone '10–40 sachet' supaya katon jang level harga
+        const activeTier = p.tiers ? p.tiers.find(t => item.qty >= t.min && item.qty <= t.max) : null;
+        let tierHint = '';
+        if (activeTier && p.tiers && p.tiers.length > 1) {
+          const lo = activeTier.min;
+          const hi = activeTier.max >= 99999 ? lo + '+' : lo + '–' + activeTier.max;
+          tierHint = ` <span style="font-size:0.58rem;color:var(--primary);font-weight:700;">[${hi} ${p.unit}]</span>`;
+        }
         html += `<div class="cart-item">
           <div><div class="cart-item-name">${p.icon} ${p.name}</div>
-          <div style="font-size:0.65rem;color:var(--text-muted);">${item.qty} ${p.unit} × ${priceStr}</div></div>
+          <div style="font-size:0.65rem;color:var(--text-muted);">${item.qty} ${p.unit} × ${priceStr}${tierHint}</div></div>
           <div style="display:flex;align-items:center;gap:0.3rem;">
             <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.8rem;padding:0 0.2rem;" onclick="changeQty('${item.productId}',-1)">−</button>
             <span style="font-weight:800;font-size:0.8rem;min-width:16px;text-align:center;">${item.qty}</span>
@@ -1663,7 +1767,10 @@
         const sub = price * item.qty;
         grand += sub;
         const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Belum disetel!') : formatRupiah(price);
-        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">×${item.qty} ${priceStr}</span></div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
+        const activeTier = p.tiers ? p.tiers.find(t => item.qty >= t.min && item.qty <= t.max) : null;
+        const tierHint = (activeTier && p.tiers && p.tiers.length > 1)
+          ? ` <span style="font-size:0.58rem;color:var(--primary);font-weight:700;">[${activeTier.max>=99999 ? activeTier.min+'+' : activeTier.min+'–'+activeTier.max} ${p.unit}]</span>` : '';
+        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">×${item.qty} ${priceStr}</span>${tierHint}</div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
         if (p.manualPrice) {
           hasManual = true;
           const currentVal = manualPrices[p.id] || '';
@@ -1762,7 +1869,7 @@
         itemsEl.innerHTML = t.items.map(i => `
           <div class="detail-item-row">
             <span class="detail-item-left">${i.name} · ${i.qty}${i.unit||''}</span>
-            <span class="detail-item-right">${formatRupiah(i.subtotal||i.harga||0)}</span>
+            <span class="detail-item-right">${formatRupiah(i.subtotal != null ? i.subtotal : ((i.harga||0) * (i.qty||1)))}</span>
           </div>`).join('');
       }
       document.getElementById('dBuyer').textContent = t.pembeli || '-';
@@ -1772,7 +1879,7 @@
       const noteEl = document.getElementById('dNote');
       if (t.catatan) { noteEl.style.display = 'block'; document.getElementById('dNoteText').textContent = t.catatan; }
       else noteEl.style.display = 'none';
-      document.getElementById('dSetorText').textContent = t.status === 'pending' ? 'Tandai Dilaporkan' : '✓ Sudah Dilaporkan';
+      document.getElementById('dSetorText').textContent = t.status === 'settled' ? '✓ Sudah Dilaporkan' : 'Tandai Dilaporkan';
       document.getElementById('detailModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -1785,7 +1892,7 @@
       const data = loadData();
       const idx = data.findIndex(r => r.id === detailId);
       if (idx === -1) return;
-      if (data[idx].status === 'pending') {
+      if (data[idx].status !== 'settled') {
         data[idx].status = 'settled';
         data[idx].tanggalSetor = getTodayStr();
         data[idx].jamSetor = new Date().toTimeString().slice(0,5);
@@ -1926,7 +2033,7 @@
       const data = loadData();
       const idx = data.findIndex(r => r.id === ctxId);
       if (idx === -1) return;
-      if (data[idx].status === 'pending') {
+      if (data[idx].status !== 'settled') {
         data[idx].status = 'settled';
         data[idx].tanggalSetor = getTodayStr();
         data[idx].jamSetor = new Date().toTimeString().slice(0,5);
@@ -1963,7 +2070,7 @@
     // =============================================
     function bukaLaporan() {
       const data = loadData();
-      let pending = data.filter(t => t.status === 'pending');
+      let pending = data.filter(t => t.status !== 'settled');
       // Apply search filter
       if (currentLaporanSearch.trim()) {
         const q = currentLaporanSearch.toLowerCase();
@@ -2007,7 +2114,7 @@
     }
     function tandaiSemuaLapor() {
       const data = loadData();
-      const pending = data.filter(t => t.status === 'pending');
+      const pending = data.filter(t => t.status !== 'settled');
       if (pending.length === 0) { showToast('Tidak ada transaksi untuk dilaporkan', 'info'); return; }
       pending.forEach(t => { t.status = 'settled'; t.tanggalSetor = getTodayStr(); t.jamSetor = new Date().toTimeString().slice(0,5); });
       saveData(data);
@@ -2206,7 +2313,7 @@
           } else {
             html += `<div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:0.3rem;font-weight:600;">Tier harga (per ${p.unit}):</div>`;
             p.tiers.forEach((tier, tidx) => {
-              const label = tier.min >= 20 ? '20+' + p.unit : tier.min + '-' + (tier.max >= 99999 ? '' : tier.max) + ' ' + p.unit;
+              const label = tier.max >= 99999 ? (tier.min + '+' + p.unit) : (tier.min + '–' + tier.max + ' ' + p.unit);
               html += `<div class="price-tier-row">
                 <span class="price-tier-label">${label}</span>
                 <input class="price-tier-input" type="number" min="0" value="${tier.price}" data-key="${p.id}" data-tier="${tidx}">
@@ -2250,11 +2357,12 @@
           name: t.barang || '',
           qty: t.qty || '',
           unit: t.unit || '',
-          unitPrice: t.harga || t.totalHarga || 0
+          hargaSatuan: t.harga ?? (t.totalHarga != null ? (t.qty ? Math.round(t.totalHarga / t.qty) : t.totalHarga) : 0)
         }];
         const names = items.map(i => i.name || '').join(', ');
         const qtys = items.map(i => `${i.qty ?? ''}${i.unit || ''}`).join(', ');
-        const prices = items.map(i => i.unitPrice ?? i.price ?? 0).join(', ');
+        // Harga satuan = harga sing wis digunakake ing transaksi (miturut tier), durung tier standar
+        const prices = items.map(i => i.hargaSatuan ?? i.unitPrice ?? 0).join(', ');
         csv += [
           t.id, t.tanggal, t.jam, names, qtys, prices,
           t.totalHarga || t.harga || 0, t.pembeli, t.kategoriPembeli,
@@ -2330,6 +2438,19 @@
     }
     function doRestore(mode) {
       if (!pendingRestoreData) { showToast('Pilih file dulu!', 'error'); return; }
+      // Normalisasi data lawas (format lama: barang/qty/harga, tanpa totalHarga/status)
+      pendingRestoreData = pendingRestoreData.map(t => {
+        (Array.isArray(t.items) ? t.items : []).forEach(i => {
+          if (i.subtotal == null) i.subtotal = (i.qty ? (i.harga||0) * i.qty : (i.harga||0));
+        });
+        if (t.totalHarga == null) {
+          t.totalHarga = (Array.isArray(t.items) && t.items.length)
+            ? t.items.reduce((s,i) => s + (i.subtotal||0), 0)
+            : ((t.qty ? (t.harga||0) * t.qty : 0) || (t.harga||0));
+        }
+        if (t.status == null) t.status = 'pending';
+        return t;
+      });
       try {
         if (mode === 'replace') {
           saveData(pendingRestoreData);
@@ -2350,50 +2471,113 @@
     // =============================================
     // RESET
     // =============================================
+    // Konfirmasi ing-app (gandeng confirm() native sing ora metu ing PWA standalone)
+    let _cfmCallback = null;
+    function tanyaKonfirmasi(o) {
+      _cfmCallback = o.cb;
+      document.getElementById('cfmTitle').textContent = o.title || 'Yakin?';
+      document.getElementById('cfmDesc').textContent = o.desc || '';
+      const yes = document.getElementById('cfmYes');
+      yes.textContent = o.yesLabel || 'Menerus';
+      yes.style.background = o.danger ? 'var(--danger)' : 'var(--primary)';
+      document.getElementById('confirmModal').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function konfirmasiLanjut() {
+      const cb = _cfmCallback;
+      _cfmCallback = null;
+      tutupModal('confirmModal');
+      if (cb) cb();
+    }
+    function tutupKonfirmasi() {
+      _cfmCallback = null;
+      tutupModal('confirmModal');
+    }
     function resetAllData() {
       tutupLiyane();
-      if (!confirm('Yakin hapus SEMUA data transaksi?')) return;
-      if (!confirm('Benar-benar yakin? Data tidak bisa dikembalikan.')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      invalidateDataCache();
-      renderHome(); updateTodayBar();
-      showToast('Semua data sudah dihapus', 'info');
+      tanyaKonfirmasi({
+        title: 'Hapus Kabeh Data?',
+        desc: 'Kabeh transaksi bakal ilang lan ora bisa dibaliki.',
+        yesLabel: 'HAPUS KABEH',
+        danger: true,
+        cb: () => {
+          localStorage.removeItem(STORAGE_KEY);
+          invalidateDataCache();
+          renderHome(); updateTodayBar();
+          showToast('Semua data sudah dihapus', 'info');
+        }
+      });
     }
     // =============================================
     // WA
     // =============================================
-    function kirimRekapWA() {
+    const WA_ACCT_KEY = 'kopontren_wa_acct';
+    let _waMsg = '';
+    // Nggawe rekap WA: mung transaksi BELUM dilaporake (dadi total duwit acuk bener)
+    function buildRekapMsg() {
       const data = loadData();
-      const pending = data.filter(t => t.status === 'pending');
-      const settled = data.filter(t => t.status === 'settled');
-      if (!pending.length && !settled.length) { showToast('Belum ada transaksi', 'info'); return; }
+      // Defensif: transaksi tanpa field status (matur saka backup lawas) = isih pending
+      const pending = data.filter(t => t.status !== 'settled');
+      if (!pending.length) return '';
       const today = new Date().toLocaleDateString('id-ID', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
       const totalBelum = pending.reduce((s,t) => s + (t.totalHarga||0), 0);
-      const totalSudah = settled.reduce((s,t) => s + (t.totalHarga||0), 0);
       let msg = `*📊 LAPORAN PENJUALAN KOPONTREN*\n`;
       msg += `Al Ittihad › ${today}\n\n`;
-      if (pending.length) {
-        msg += `*BELUM DILAPORKAN* (${pending.length} transaksi)\n`;
-        msg += `*Total: ${formatRupiah(totalBelum)}*\n\n`;
-        pending.forEach(t => {
-          const names = t.items ? t.items.map(i => `${i.name} (${i.qty}${i.unit})`).join(', ') : `${t.barang} (${t.qty}${t.unit})`;
-          msg += `• ${names} › ${formatRupiah(t.totalHarga||t.harga||0)}\n`;
-          msg += `  ${t.pembeli} | ${t.metode}\n`;
-        });
-        msg += '\n';
-      }
-      if (settled.length) {
-        msg += `*SUDAH DILAPORKAN* (${settled.length} transaksi)\n`;
-        msg += `*Total: ${formatRupiah(totalSudah)}*\n`;
-      }
-      msg += `\n*TOTAL KESELURUHAN: ${formatRupiah(totalBelum + totalSudah)}*\n`;
-      msg += `_Catatan Penjualan Gus Lim_`;
-      navigator.clipboard.writeText(msg).then(() => {
-        window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-        showToast('Rekap disalin! Kirim via WA.', 'success');
-      }).catch(() => {
-        window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+      msg += `*BELUM DILAPORKAN* (${pending.length} transaksi)\n`;
+      pending.forEach(t => {
+        // Nominal per item = subtotal (jml × harga sing digunakake); migrasi ing loadData wis ngisi subtotal kanggo data lawas
+        const itemLines = Array.isArray(t.items) && t.items.length
+          ? t.items.map(i => `${i.name} (${i.qty}${i.unit||''} × ${formatRupiah(i.hargaSatuan ?? i.harga ?? 0)}) › ${formatRupiah(i.subtotal != null ? i.subtotal : ((i.harga||0) * (i.qty||1)))}`).join(', ')
+          : `${t.barang||'Transaksi'} (${t.qty||''}${t.unit||''}) › ${formatRupiah(t.totalHarga != null ? t.totalHarga : ((t.harga||0) * (t.qty||1)))}`;
+        msg += `• ${itemLines}\n`;
+        msg += `  ${t.pembeli||'-'} | ${t.metode||'-'}\n`;
       });
+      msg += `\n*TOTAL DILAPORAN: ${formatRupiah(totalBelum)}*\n`;
+      msg += `_Catatan Penjualan Gus Lim_`;
+      return msg;
+    }
+    function kirimRekapWA() {
+      const msg = buildRekapMsg();
+      if (!msg) { showToast('Belum ada transaksi yang perlu dilaporkan', 'info'); return; }
+      _waMsg = msg;
+      // Tampilan chip "Terakhir" miturut pilihan pungkasan
+      const last = localStorage.getItem(WA_ACCT_KEY);
+      document.getElementById('waChipBiasa').style.display = last === 'bisnes' ? 'none' : 'block';
+      document.getElementById('waChipBisnes').style.display = last === 'bisnes' ? 'block' : 'none';
+      document.getElementById('waModal').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function tutupWaPicker() {
+      document.getElementById('waModal').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    function kirimWAAkun(acct) {
+      const msg = _waMsg;
+      if (!msg) return;
+      try { localStorage.setItem(WA_ACCT_KEY, acct); } catch(e) {}
+      tutupWaPicker();
+      if (acct === 'biasa') {
+        // WA Biasa: link wa.me (default handler HP) + salin rekap
+        (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(
+          () => showToast('Rekap disalin! Paste ing WA Biasa.', 'success'),
+          () => {}
+        );
+        window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+      } else {
+        // WA Bisnes: share sheet → milih aplikasi "WhatsApp Bisnes"
+        if (navigator.share) {
+          navigator.share({ text: msg }).then(() => {
+            showToast('Rekap dikirim!', 'success');
+          }).catch(() => {
+            // User batal share utawa ora ana app — fallback WA biasa
+            window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+            showToast('Ora milih WA Bisnes? Rekap dibukak ing WA Biasa.', 'info');
+          });
+        } else {
+          window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+          showToast('Peranti iki durung duwe share menu. Rekap dibukak ing WA Biasa.', 'info');
+        }
+      }
     }
     // =============================================
     // THEME
