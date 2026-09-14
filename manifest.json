@@ -1,12 +1,12 @@
 {
-  "name": "Catatan Kopontren — Gus Lim",
+  "name": "Catatan Kopontren - Gus Lim",
   "short_name": "Kopontren",
   "description": "Buku Catatan Penjualan Kopontren Khusus Gus Lim",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#1E3A8A",
-  "theme_color": "#1D4ED8",
+  "background_color": "#2563EB",
+  "theme_color": "#2563EB",
   "orientation": "portrait",
   "lang": "id",
   "icons": [

@@ -23,6 +23,7 @@
     :root {
       --primary: #2563EB; --primary-dark: #173B7A; --primary-light: #EEF5FF;
       --amber: #A97920; --amber-light: #FBF4E3; --amber-gold: #C89B3C;
+      --status-amber: #B45309;
       --surface: #FFFFFF; --bg: #F6F8FC; --surface-alt: #F0F4FA;
       --border: #E3EAF4; --border-strong: #C9D6E8;
       --text: #0D1B2A; --text-muted: #64748B;
@@ -41,6 +42,7 @@
       --border: #263754; --border-strong: #3A4D6D;
       --text: #F1F5F9; --text-muted: #94A3B8;
       --primary-light: #172554; --amber-light: #302814;
+      --status-amber: #F59E0B;
       --card-bg: #121D30; --input-bg: #16233A;
       --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
       --shadow-sm: 0 2px 6px rgba(0,0,0,0.35);
@@ -64,7 +66,7 @@
       background: var(--header-bg); color: white;
       padding: 0.95rem 1.05rem 0.9rem;
       border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-      box-shadow: 0 6px 18px rgba(37,99,235,0.22);
+      box-shadow: 0 4px 14px rgba(37,99,235,0.16);
       position: sticky; top: 0; z-index: 50;
       transform: translateZ(0);
       will-change: transform;
@@ -114,10 +116,7 @@
       position: relative; overflow: hidden;
       contain: layout style;
     }
-    .today-bar::before {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-      background: var(--primary);
-    }
+    /* Blue Notebook: strip info polos -- ikon kalender sudah cukup sebagai aksen */
     .today-bar-left { display: flex; align-items: center; gap: 0.5rem; }
     .today-bar-icon {
       width: 36px; height: 36px; padding: 8px;
@@ -148,7 +147,8 @@
     .status-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
     }
-    .status-card.red::before { background: var(--danger); }
+    /* Blue Notebook: belum dilaporkan = perhatian lembut (amber), bukan merah */
+    .status-card.amber::before { background: var(--status-amber); }
     .status-card.green::before { background: var(--success); }
     .status-card-label {
       font-size: 0.6rem; font-weight: 700; color: var(--text-muted);
@@ -158,8 +158,9 @@
       font-size: 1.15rem; font-weight: 800; font-family: 'Outfit', sans-serif;
       margin: 0.3rem 0 0.1rem; letter-spacing: -0.3px;
     }
-    .status-card.red .status-card-amount { color: var(--danger); }
+    .status-card.amber .status-card-amount { color: var(--status-amber); }
     .status-card.green .status-card-amount { color: var(--success); }
+    .status-card.amber .status-card-label { color: var(--status-amber); font-weight: 800; }
     .status-card-count { font-size: 0.62rem; color: var(--text-muted); font-weight: 600; }
     .status-card-count .status-count {
       display: inline-block; background: var(--surface-alt); border-radius: 6px;
@@ -177,7 +178,7 @@
     .btn-action:active { transform: scale(0.96); }
     .btn-report {
       background: var(--primary); color: white;
-      box-shadow: 0 3px 8px rgba(37,99,235,0.25);
+      box-shadow: 0 2px 6px rgba(37,99,235,0.18);
     }
     .btn-history {
       background: var(--card-bg); color: var(--text);
@@ -215,7 +216,7 @@
       content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
       border-radius: var(--radius) 0 0 var(--radius);
     }
-    .tx-card.pending::before { background: var(--danger); }
+    .tx-card.pending::before { background: var(--status-amber); }
     .tx-card.settled::before { background: var(--success); }
     .tx-top {
       display: flex;
@@ -307,11 +308,12 @@
     .fab {
       position: fixed; bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); left: 50%;
       transform: translateX(-50%) translateZ(0);
-      background: var(--amber-gold); color: white;
-      border: none; border-radius: 999px;
+      /* Blue Notebook: FAB = CTA utama -> royal blue, radius besar, shadow lembut */
+      background: var(--primary); color: white;
+      border: none; border-radius: 17px;
       padding: 0.85rem 1.5rem;
-      font-weight: 800; font-size: 0.88rem;
-      box-shadow: 0 6px 16px rgba(217,119,6,0.35);
+      font-weight: 800; font-size: 0.88rem; font-family: 'Outfit', sans-serif; letter-spacing: -0.2px;
+      box-shadow: 0 6px 16px rgba(37,99,235,0.30);
       display: flex; align-items: center; gap: 0.45rem;
       cursor: pointer; z-index: 100;
       transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
@@ -319,7 +321,7 @@
     }
     .fab:active {
       transform: translateX(-50%) scale(0.94);
-      box-shadow: 0 3px 8px rgba(217,119,6,0.4);
+      box-shadow: 0 3px 8px rgba(37,99,235,0.4);
     }
     /* MODAL */
     .modal {
@@ -376,24 +378,25 @@
     }
     .prod-btn:active { transform: scale(0.94); }
     .prod-btn:active { background: var(--border); }
+    /* Blue Notebook: state "in-cart" pakai biru (active state), bukan emas */
     .prod-btn.in-cart {
-      border-color: var(--amber-gold);
-      background: var(--amber-light);
+      border-color: var(--primary);
+      background: var(--primary-light);
     }
-    .prod-btn .p-icon { width: 36px; height: 36px; margin: 0 auto 0.25rem; color: var(--primary); }
-    [data-theme="dark"] .prod-btn .p-icon { color: #60A5FA; }
+    .prod-btn .p-icon { width: 36px; height: 36px; margin: 0 auto 0.25rem; color: var(--primary); background: var(--primary-light); border-radius: 9px; padding: 6px; }
+    [data-theme="dark"] .prod-btn .p-icon { color: #60A5FA; background: #173B7A; }
     .prod-btn .p-icon svg { width: 100%; height: 100%; display: block; }
     .prod-btn .p-name { font-size: 0.64rem; font-weight: 700; color: var(--text); line-height: 1.25; }
-    .prod-btn .p-price { font-size: 0.62rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); margin-top: 0.1rem; }
+    .prod-btn .p-price { font-size: 0.62rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); margin-top: 0.1rem; }
     .p-badge {
       position: absolute; top: -6px; right: -6px;
-      background: var(--amber-gold); color: white;
+      background: var(--primary); color: white;
       font-size: 0.6rem; font-weight: 800;
       min-width: 20px; height: 20px; padding: 0 5px;
       border-radius: 999px;
       display: flex; align-items: center; justify-content: center;
       border: 2px solid var(--card-bg);
-      box-shadow: 0 2px 4px rgba(217,119,6,0.3);
+      box-shadow: 0 2px 4px rgba(37,99,235,0.3);
     }
     [data-theme="dark"] .p-badge { border-color: var(--surface-alt); }
     /* REPORT MODAL */
@@ -916,8 +919,8 @@
       background: var(--surface-alt);
     }
     .fab {
-      background: var(--amber-gold);
-      box-shadow: 0 7px 18px rgba(140,100,20,.25);
+      background: var(--primary);
+      box-shadow: 0 7px 18px rgba(37,99,235,.32);
     }
     .fab:hover { filter: brightness(.97); }
 
@@ -1165,7 +1168,7 @@
       background: linear-gradient(180deg, #121D30 0%, #0F1930 100%);
     }
     [data-theme="dark"] .prod-btn { background: #17243A; }
-    [data-theme="dark"] .prod-btn.in-cart { background: #302814; border-color: #C89B3C; }
+    [data-theme="dark"] .prod-btn.in-cart { background: #173B7A; border-color: #3B82F6; }
   </style>
 </head>
 <body>
@@ -1223,7 +1226,7 @@
     </div>
     <!-- STATUS CARDS -->
     <div class="status-cards">
-      <div class="status-card red">
+      <div class="status-card amber">
         <div class="status-card-label">Belum Dilaporkan</div>
         <div class="status-card-amount" id="belumTotal">Rp 0</div>
         <div class="status-card-count" id="belumCount">0 transaksi</div>
@@ -1253,9 +1256,9 @@
     <div class="tx-list" id="recentList"></div>
   </div>
   <!-- FAB -->
-  <button class="fab" onclick="bukaWizardManual()" aria-label="Catat penjualan baru">
+  <button class="fab" onclick="bukaWizardManual()" aria-label="Catat pembelian baru">
     <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/></svg>
-    <span>Catat Penjualan</span>
+    <span>Catat Pembelian</span>
   </button>
   <!-- ===== WIZARD MODAL ===== -->
   <div class="modal" id="wizardModal" role="dialog" aria-modal="true" aria-label="Wizard transaksi">
@@ -3424,7 +3427,7 @@
       // Mode WA BIASA: buka wa.me (langsung WA reguler)
       if (acct === 'biasa') {
         (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(
-          () => showToast('Rekap disalin! Paste ing WA Biasa.', 'success'),
+          () => showToast('WA dibuka - rekap sudah diisi. Cadangan tersalin di clipboard.', 'success'),
           () => {}
         );
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
