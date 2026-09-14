@@ -4,21 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Catatan Penjualan Kopontren · Gus Lim</title>
-  <meta name="theme-color" content="#006B4F">
+  <meta name="theme-color" content="#1D4ED8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Kopontren">
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png">
+  <link rel="icon" type="image/svg+xml" href="icon-192.svg">
+  <!-- Tema applied sadurunge render — ngindari flash light theme manika user dark mode -->
+  <script>try{if(localStorage.getItem('kopontren_theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #006B4F; --primary-dark: #005640; --primary-light: #E7F3EE;
+      --primary: #1D4ED8; --primary-dark: #1E3A8A; --primary-light: #EFF6FF;
       --amber: #A97920; --amber-light: #FBF4E3; --amber-gold: #C89B3C;
-      --surface: #FFFFFF; --bg: #F6F7F5; --surface-alt: #F1F3F1;
-      --border: #E1E5E2; --border-strong: #C9D0CC;
+      --surface: #FFFFFF; --bg: #F8FAFC; --surface-alt: #F1F5F9;
+      --border: #E2E8F0; --border-strong: #CBD5E1;
       --text: #0F172A; --text-muted: #64748B;
       --danger: #EF4444; --success: #15803D;
       --shadow-xs: 0 1px 2px rgba(15,23,42,0.05);
@@ -26,21 +29,23 @@
       --shadow: 0 4px 12px rgba(15,23,42,0.08);
       --radius: 12px; --radius-md: 14px; --radius-lg: 18px;
       --card-bg: #FFFFFF; --input-bg: #FFFFFF;
-      --header-bg: linear-gradient(135deg, #004936 0%, #006B4F 58%, #087A5B 100%);
+      --header-bg: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 58%, #3B82F6 100%);
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      color-scheme: light;
     }
     [data-theme="dark"] {
-      --surface: #0F1419; --bg: #0B110F; --surface-alt: #151D19;
-      --border: #26332E; --border-strong: #37453F;
+      --surface: #131C2E; --bg: #0E1525; --surface-alt: #1A2538;
+      --border: #2A3A55; --border-strong: #3E5070;
       --text: #F1F5F9; --text-muted: #94A3B8;
-      --primary-light: #0D3D31; --amber-light: #302814;
+      --primary-light: #172554; --amber-light: #302814;
       --card-bg: #161B23; --input-bg: #1A1F28;
       --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
       --shadow-sm: 0 2px 6px rgba(0,0,0,0.35);
       --shadow: 0 4px 12px rgba(0,0,0,0.4);
-      --header-bg: linear-gradient(135deg, #021F18 0%, #043F30 58%, #075A43 100%);
+      --header-bg: linear-gradient(135deg, #0A1530 0%, #172554 58%, #1E3A8A 100%);
       --success: #4ADE80;
-      --primary-dark: #2D9C75;
+      --primary-dark: #60A5FA;
+      color-scheme: dark;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -68,7 +73,7 @@
       width: 38px; height: 38px; flex-shrink: 0;
       border-radius: 10px; overflow: hidden;
       border: 1px solid rgba(255,255,255,0.25);
-      background: #006B4F;
+      background: #1D4ED8;
       display: flex; align-items: center; justify-content: center;
     }
     .brand-logo { width: 100%; height: 100%; object-fit: contain; display: block; }
@@ -223,6 +228,11 @@
     .badge-utang { background: #FEE2E2; color: #991B1B; }
     .badge-pending { background: #FEF3C7; color: #92400E; }
     .badge-settled { background: #D1FAE5; color: #065F46; }
+    /* Dark mode: badge mung "nyala" terang — versi wengi */
+    [data-theme="dark"] .badge-cash, [data-theme="dark"] .badge-settled { background: #064E3B; color: #6EE7B7; }
+    [data-theme="dark"] .badge-tf { background: #1E3A8A; color: #93C5FD; }
+    [data-theme="dark"] .badge-utang { background: #7F1D1D; color: #FCA5A5; }
+    [data-theme="dark"] .badge-pending { background: #45320B; color: #FCD34D; }
     .tx-menu-btn {
       position: absolute; top: 0.55rem; right: 2.8rem;
       background: var(--surface-alt); border: 1px solid var(--border);
@@ -242,7 +252,7 @@
       cursor: pointer; padding: 0;
       transition: transform 0.12s var(--ease), background 0.12s var(--ease);
     }
-    .tx-edit-btn:active { transform: scale(0.9); background: #a7f3d0; }
+    .tx-edit-btn:active { transform: scale(0.9); background: #BFDBFE; }
     .tx-edit-btn svg { width: 14px; height: 14px; }
     .tx-id { font-size: 0.6rem; color: var(--text-muted); font-family: monospace; margin-top: 0.2rem; }
     /* FAB */
@@ -323,7 +333,7 @@
       background: var(--amber-light);
     }
     .prod-btn .p-icon { width: 36px; height: 36px; margin: 0 auto 0.25rem; color: var(--primary); }
-    [data-theme="dark"] .prod-btn .p-icon { color: #34D399; }
+    [data-theme="dark"] .prod-btn .p-icon { color: #60A5FA; }
     .prod-btn .p-icon svg { width: 100%; height: 100%; display: block; }
     .prod-btn .p-name { font-size: 0.64rem; font-weight: 700; color: var(--text); line-height: 1.25; }
     .prod-btn .p-price { font-size: 0.62rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--amber); margin-top: 0.1rem; }
@@ -675,11 +685,20 @@
     }
     /* CONTEXT MENU */
     .ctx-menu {
-      display: none; position: fixed; z-index: 300; background: var(--card-bg);
+      position: fixed; z-index: 300; background: var(--card-bg);
       border-radius: 12px; box-shadow: var(--shadow); padding: 0.4rem;
-      min-width: 160px; border: 1px solid var(--border);
+      min-width: 170px; border: 1px solid var(--border);
+      opacity: 0; visibility: hidden;
+      transform: scale(0.95) translateY(-6px);
+      transform-origin: top right;
+      transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+      pointer-events: none;
     }
-    .ctx-menu.show { display: block; }
+    .ctx-menu.show {
+      opacity: 1; visibility: visible;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
     .ctx-item {
       display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.7rem;
       border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600;
@@ -760,7 +779,6 @@
       box-shadow: 0 5px 18px rgba(0,67,49,.18);
       backdrop-filter: saturate(1.15);
     }
-    .brand-logo { display: block; }
     .brand h1 { font-family: 'Outfit', sans-serif; letter-spacing: -.45px; }
     .brand .tagline { opacity: .82; }
 
@@ -877,6 +895,14 @@
       .nav-btns { flex-wrap: wrap; }
     }
 
+    /* HP layar umum (≤420px): "Tandai Lapor" full width ing dhuwur, Edit & Hapus bareng ing ngisor */
+    @media (max-width: 420px) {
+      .detail-actions { flex-wrap: wrap; }
+      .detail-actions .setor { flex-basis: 100%; }
+      .detail-actions .edit,
+      .detail-actions .delete { flex: 1; }
+    }
+
     @media (min-width: 601px) {
       body { padding-bottom: 110px; }
       .modal-sheet { margin-bottom: 0; }
@@ -970,7 +996,7 @@
     <span>Catat Penjualan</span>
   </button>
   <!-- ===== WIZARD MODAL ===== -->
-  <div class="modal" id="wizardModal">
+  <div class="modal" id="wizardModal" role="dialog" aria-modal="true" aria-label="Wizard transaksi">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">Catat Pembelian</div>
@@ -1046,7 +1072,7 @@
     </div>
   </div>
   <!-- ===== DETAIL MODAL ===== -->
-  <div class="modal" id="detailModal">
+  <div class="modal" id="detailModal" role="dialog" aria-modal="true" aria-label="Detail transaksi">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title" id="dTittle">Detail Transaksi</div>
@@ -1069,7 +1095,7 @@
       <div class="detail-actions">
         <button class="detail-btn setor" id="dSetorBtn" onclick="toggleStatus()">
           <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-          <span id="dSetorText">Tandai Dilaporkan</span>
+          <span id="dSetorText">Tandai Lapor</span>
         </button>
         <button class="detail-btn edit" onclick="editTransaksi()">
           <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
@@ -1083,8 +1109,8 @@
     </div>
   </div>
   <!-- ===== LAPORAN MODAL ===== -->
-  <div class="modal" id="laporanModal">
-    <div class="modal-sheet" style="padding-bottom:1.5rem;">
+  <div class="modal" id="laporanModal" role="dialog" aria-modal="true" aria-label="Laporan ke Pak Kholiq">
+    <div class="modal-sheet" style="padding-bottom:calc(1.5rem + env(safe-area-inset-bottom, 0px));">
       <div class="modal-handle"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
         <div class="modal-title" style="margin:0;">Laporan ke Pak Kholiq</div>
@@ -1101,8 +1127,8 @@
     </div>
   </div>
   <!-- ===== RIWAYAT MODAL ===== -->
-  <div class="modal" id="riwayatModal">
-    <div class="modal-sheet" style="padding-bottom:1.5rem;">
+  <div class="modal" id="riwayatModal" role="dialog" aria-modal="true" aria-label="Riwayat transaksi">
+    <div class="modal-sheet" style="padding-bottom:calc(1.5rem + env(safe-area-inset-bottom, 0px));">
       <div class="modal-handle"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
         <div class="modal-title" style="margin:0;">Riwayat Transaksi</div>
@@ -1131,7 +1157,7 @@
     </div>
   </div>
   <!-- ===== LIYANE MODAL ===== -->
-  <div class="modal" id="lyrModal">
+  <div class="modal" id="lyrModal" role="dialog" aria-modal="true" aria-label="Laporan">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">Lainnya</div>
@@ -1189,7 +1215,7 @@
     </div>
   </div>
   <!-- ===== PRICE SETTINGS MODAL ===== -->
-  <div class="modal" id="priceModal">
+  <div class="modal" id="priceModal" role="dialog" aria-modal="true" aria-label="Harga manual">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">Produk & Harga</div>
@@ -1202,7 +1228,7 @@
     </div>
   </div>
   <!-- ===== EXPORTE MODAL ===== -->
-  <div class="modal" id="exportModal">
+  <div class="modal" id="exportModal" role="dialog" aria-modal="true" aria-label="Ekspor data">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">Ekspor Data</div>
@@ -1225,7 +1251,7 @@
     </div>
   </div>
   <!-- ===== RESTORE MODAL ===== -->
-  <div class="modal" id="restoreModal">
+  <div class="modal" id="restoreModal" role="dialog" aria-modal="true" aria-label="Pulihkan data">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">Restore Data</div>
@@ -1240,13 +1266,13 @@
     </div>
   </div>
   <!-- ===== WA AKUN PICKER MODAL ===== -->
-  <div class="modal" id="waModal">
+  <div class="modal" id="waModal" role="dialog" aria-modal="true" aria-label="Kirim rekap WhatsApp">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">Pilih Akun WhatsApp</div>
       <div class="modal-subtitle">Rekap wis disiapaké. Kirim liwat akun sapa?</div>
       <div class="wa-acct-grid">
-        <button class="wa-acct-btn" id="waBtnBiasa" onclick="kirimWAAkun('biasa')">
+        <button class="wa-acct-btn" id="waBtnBiasa" onclick="kirimWAAkun('biasa')" aria-label="Kirim rekap via WhatsApp Biasa">
           <div class="wa-acct-icon biasa">
             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
           </div>
@@ -1254,7 +1280,7 @@
           <div class="wa-acct-sub">Mebuka langsung WA</div>
           <div class="wa-last-chip" id="waChipBiasa" style="display:none;">Terakhir</div>
         </button>
-        <button class="wa-acct-btn" id="waBtnBisnes" onclick="kirimWAAkun('bisnes')">
+        <button class="wa-acct-btn" id="waBtnBisnes" onclick="kirimWAAkun('bisnes')" aria-label="Kirim rekap via WhatsApp Business">
           <div class="wa-acct-icon bisnes">
             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.24L19.76 8 12 11.76 4.24 8 12 4.24zM4 9.6l7.5 3.75v4.9L4 14.4V9.6zm16 0v4.8l-7.5 3.85v-4.9L20 9.6z"/></svg>
           </div>
@@ -1267,7 +1293,7 @@
     </div>
   </div>
   <!-- ===== KONFIRMASI MODAL (hapus kabeh data) ===== -->
-  <div class="modal" id="confirmModal">
+  <div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-label="Konfirmasi">
     <div class="modal-sheet" style="max-width:400px;">
       <div class="modal-handle"></div>
       <div class="modal-title" id="cfmTitle">Hapus Kabeh Data?</div>
@@ -1332,7 +1358,6 @@
     const PRICE_KEY = 'kopontren_guslim_prices';
     const BACKUP_KEY = 'kopontren_last_backup';
     const THEME_KEY = 'kopontren_theme';
-    let currentView = 'home';
     let currentFilter = 'today';
     let currentSearch = '';
     let currentDateFrom = '';
@@ -1344,8 +1369,6 @@
     let detailId = null;
     let isEditMode = false;
     let ctxId = null;
-    let undoItem = null;
-    let undoTimer = null;
     let pendingRestoreData = null;
     let products = {};
     let _dataCache = null, _dataCacheDirty = true;
@@ -1354,10 +1377,13 @@
         const saved = localStorage.getItem(PRICE_KEY);
         if (saved) {
           const savedProducts = JSON.parse(saved);
-          // Migrasi v17: madu_sachet lawas (mung tier tunggal 6000 datar) → replace karo tier sakderengé (retail <10 + tier box ÷10)
-          if (savedProducts['madu_sachet'] && Array.isArray(savedProducts['madu_sachet'].tiers) && savedProducts['madu_sachet'].tiers.length === 1) {
-            const fresh = PRODUCTS_DATA.find(p => p.id === 'madu_sachet');
-            if (fresh) savedProducts['madu_sachet'].tiers = JSON.parse(JSON.stringify(fresh.tiers));
+          // Migrasi v17/v23: madu_sachet lawas (tier kosong utawa mung 1 tier datar) → replace karo tier anyar
+          if (savedProducts['madu_sachet']) {
+            const sTiers = savedProducts['madu_sachet'].tiers;
+            if (!Array.isArray(sTiers) || sTiers.length <= 1) {
+              const fresh = PRODUCTS_DATA.find(p => p.id === 'madu_sachet');
+              if (fresh) savedProducts['madu_sachet'].tiers = JSON.parse(JSON.stringify(fresh.tiers));
+            }
           }
           // Merge: start from defaults, overlay saved data so new products appear
           products = {};
@@ -1392,6 +1418,13 @@
       if (price > 0) manualPrices[productId] = price;
       else delete manualPrices[productId];
     }
+    // Sinkron harga manual saka input DOM menika state — mangga dipanggil sadurunge validasi/simpan supaya ora basi
+    function syncManualPricesFromDOM() {
+      document.querySelectorAll('#manualPriceInputs input[data-product-id]').forEach(input => {
+        const pid = input.dataset.productId;
+        if (pid) setManualPrice(pid, parseInt(input.value) || 0);
+      });
+    }
     function getEffectivePrice(p, qty) {
       if (p.manualPrice && manualPrices[p.id]) return manualPrices[p.id];
       return getProductPrice(p, qty);
@@ -1425,7 +1458,15 @@
           }
         });
         if (touched) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_dataCache)); } catch(e) {} }
-      } catch(e) { _dataCache = []; }
+      } catch(e) {
+        // Data corrupt: simpen backup mentah sadurunge direset (supaya bisa di-restore)
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw && raw !== '[]' && raw !== 'null') localStorage.setItem('kopontren_corrupt_backup', raw);
+        } catch(e2) {}
+        _dataCache = [];
+        showToast('Data tersimpan korup › direset. Bisa restore dari backup.', 'error');
+      }
       _dataCacheDirty = false;
       return _dataCache;
     }
@@ -1440,6 +1481,12 @@
       }, 120);
     }
     function invalidateDataCache() { _dataCacheDirty = true; }
+    // Sync antar-tab: storage event fire manika tab liyana nyimpen data — invalidate cache + re-render
+    window.addEventListener('storage', (e) => {
+      if (e.key !== STORAGE_KEY) return;
+      invalidateDataCache();
+      try { renderHome(); updateTodayBar(); refreshOpenModals(); } catch(err) {}
+    });
     function genId() {
       const now = new Date();
       const yy = String(now.getFullYear()).slice(-2);
@@ -1447,7 +1494,10 @@
       const dd = String(now.getDate()).padStart(2,'0');
       const ds = yy+mm+dd;
       const todayRecords = loadData().filter(t => t.id.startsWith('TRX-' + ds + '-'));
-      const maxSeq = todayRecords.length > 0 ? Math.max(...todayRecords.map(t => parseInt(t.id.slice(-3)) || 0)) : 0;
+      // Parse angka setalah '-' pungkasan (tahan sebarang jumbane digit, ora mung 3)
+      const maxSeq = todayRecords.length > 0
+        ? Math.max(...todayRecords.map(t => { const m = String(t.id).match(/-(\d+)$/); return m ? (parseInt(m[1]) || 0) : 0; }))
+        : 0;
       const seq = String(maxSeq + 1).padStart(3,'0');
       return `TRX-${ds}-${seq}`;
     }
@@ -1459,15 +1509,9 @@
     // INIT
     // =============================================
     function init() {
-      // Version migration DULU, sebelum render
-      try {
-        const savedVer = localStorage.getItem('kopontren_ver');
-        const curVer = 6.0;
-        if (!savedVer || parseFloat(savedVer) < curVer) {
-          localStorage.removeItem(STORAGE_KEY);
-          localStorage.setItem('kopontren_ver', String(curVer));
-        }
-      } catch(e) {}
+      // CATATAN v23: version migration sing mbusak STORAGE_KEY wis dibusak.
+      // Migrasi format data (legacy → subtotal/totalHarga/status/metode)
+      // wis ditangani kanthi otomatis ing loadData() — ora perlu reset paksa.
       loadProducts();
       applyTheme();
       updateTodayBar();
@@ -1593,7 +1637,7 @@
     function renderTxCard(t) {
       const st = t.status === 'settled' ? 'settled' : 'pending';
       const names = t.items ? t.items.map(i => i.name).join(', ') : (t.barang || 'Transaksi');
-      const qtyInfo = t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||''));
+      const qtyInfo = escHtml(t.items ? t.items.map(i => i.qty + (i.unit||'')).join(', ') : ((t.qty||'') + (t.unit||'')));
       return `<div class="tx-card ${st}" data-id="${t.id}">
         <button class="tx-edit-btn" aria-label="Edit transaksi" onclick="event.stopPropagation(); editTxCard('${t.id}')">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
@@ -1808,6 +1852,8 @@
       } else if (wizardStep === 2) {
         const nama = document.getElementById('wNama').value.trim();
         if (!nama) { showToast('Isi nama pembeli dulu ya', 'error'); return; }
+        // Sinkron harga manual saka DOM menika state sadurunge validasi
+        syncManualPricesFromDOM();
         // Validate manual prices before saving
         const missingManual = cart.some(item => {
           const p = products[item.productId];
@@ -1823,34 +1869,37 @@
       const btn = document.getElementById('wNext');
       btn.classList.add('loading');
       btn.disabled = true;
-      const items = cart.map(item => {
-        const p = products[item.productId];
-        const unitPrice = getEffectivePrice(p, item.qty);
-        return { productId: item.productId, name: p.name, qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty };
-      });
-      const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
-      const tanggal = document.getElementById('wTanggal').value;
-      const jam = document.getElementById('wJam').value;
-      const record = {
-        id: genId(), tanggal, jam,
-        waktuFormat: formatWaktu(tanggal, jam),
-        items, totalHarga,
-        pembeli: document.getElementById('wNama').value.trim(),
-        kategoriPembeli: document.getElementById('wKategori').value,
-        metode: wizardMetode,
-        catatan: document.getElementById('wCatatan').value.trim(),
-        status: 'pending'
-      };
-      const data = loadData();
-      data.push(record);
-      saveData(data);
-      try { localStorage.setItem('kopontren_last_cart', JSON.stringify(cart)); } catch(e) {}
-      tutupModal('wizardModal');
-      renderHome();
-      updateTodayBar();
-      showToast('Tercatat: ' + items.map(i=>i.name+' ×'+i.qty).join(', '), 'success');
-      btn.classList.remove('loading');
-      btn.disabled = false;
+      try {
+        const items = cart.map(item => {
+          const p = products[item.productId];
+          const unitPrice = getEffectivePrice(p, item.qty);
+          return { productId: item.productId, name: p.name, qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty };
+        });
+        const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
+        const tanggal = document.getElementById('wTanggal').value;
+        const jam = document.getElementById('wJam').value;
+        const record = {
+          id: genId(), tanggal, jam,
+          waktuFormat: formatWaktu(tanggal, jam),
+          items, totalHarga,
+          pembeli: document.getElementById('wNama').value.trim(),
+          kategoriPembeli: document.getElementById('wKategori').value,
+          metode: wizardMetode,
+          catatan: document.getElementById('wCatatan').value.trim(),
+          status: 'pending'
+        };
+        const data = loadData();
+        data.push(record);
+        saveData(data);
+        try { localStorage.setItem('kopontren_last_cart', JSON.stringify(cart)); } catch(e) {}
+        tutupModal('wizardModal');
+        renderHome();
+        updateTodayBar();
+        showToast('Tercatat: ' + items.map(i=>i.name+' ×'+i.qty).join(', '), 'success');
+      } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
     }
     // =============================================
     // DETAIL
@@ -1879,7 +1928,7 @@
       const noteEl = document.getElementById('dNote');
       if (t.catatan) { noteEl.style.display = 'block'; document.getElementById('dNoteText').textContent = t.catatan; }
       else noteEl.style.display = 'none';
-      document.getElementById('dSetorText').textContent = t.status === 'settled' ? '✓ Sudah Dilaporkan' : 'Tandai Dilaporkan';
+      document.getElementById('dSetorText').textContent = t.status === 'settled' ? '✓ Sudah Lapor' : 'Tandai Lapor';
       document.getElementById('detailModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -1985,7 +2034,8 @@
       const t = data.find(r => r.id === detailId);
       if (!t) return;
       const newName = t.items ? t.items.map(i=>i.name).join(', ') : (t.barang||'Transaksi');
-      data.splice(data.indexOf(t), 1);
+      const idx = data.indexOf(t);
+      data.splice(idx, 1);
       saveData(data);
       haptic([50, 20, 50]);
       detailId = null;
@@ -1993,7 +2043,7 @@
       renderHome(); updateTodayBar();
       refreshOpenModals();
       showToast(`${newName} dihapus`, 'info', () => {
-        data.push(t);
+        data.splice(Math.min(idx, data.length), 0, t);
         saveData(data);
         renderHome(); updateTodayBar();
         showToast('Dibatalkan › transaksi dikembalikan', 'success');
@@ -2003,20 +2053,27 @@
     // CONTEXT MENU
     // =============================================
     function bukaCtxMenu(e, id) {
+      e.preventDefault();
       e.stopPropagation();
       ctxId = id;
       const menu = document.getElementById('ctxMenu');
-      menu.classList.add('show');
-      const rect = e.target.getBoundingClientRect();
+      // Target bisa anak tombol → ambri rect tombol ••• sendiri
+      const btn = (e.target && e.target.closest) ? e.target.closest('.tx-menu-btn') : null;
+      const rect = (btn || e.target).getBoundingClientRect();
+      // Menu tetep di-layout (visibility hidden) → offsetWidth/Height bisa diukur sakdangu hidden
+      const menuW = menu.offsetWidth || 170;
       const menuH = menu.offsetHeight || 150;
-      const spaceBelow = window.innerHeight - rect.bottom;
-      if (spaceBelow < menuH + 10) {
-        menu.style.top = (rect.top - menuH - 5) + 'px';
-      } else {
-        menu.style.top = (rect.bottom + 5) + 'px';
+      let top = rect.bottom + 8;
+      let left = Math.max(rect.right - menuW, 10);
+      // Menu bakal flip dhuwur menika tekan pinggir ngisor layar
+      if (top + menuH > window.innerHeight - 10) {
+        top = Math.max(rect.top - menuH - 8, 10);
       }
-      menu.style.right = '1rem';
-      menu.style.left = 'auto';
+      if (left + menuW > window.innerWidth - 10) left = window.innerWidth - menuW - 10;
+      menu.style.top = top + 'px';
+      menu.style.left = left + 'px';
+      menu.style.right = 'auto';
+      menu.classList.add('show');
     }
     function tutupCtxMenu() {
       document.getElementById('ctxMenu').classList.remove('show');
@@ -2039,6 +2096,9 @@
         data[idx].jamSetor = new Date().toTimeString().slice(0,5);
       } else {
         data[idx].status = 'pending';
+        // Mekaske metadata setor lawas (supaya ora ana tanggal setur sing nyangkut ing transaksi pending)
+        delete data[idx].tanggalSetor;
+        delete data[idx].jamSetor;
       }
       saveData(data);
       renderHome(); updateTodayBar();
@@ -2063,8 +2123,11 @@
       });
     }
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.tx-menu-btn') && !e.target.closest('.ctx-menu')) tutupCtxMenu();
-    });
+      // Capture phase: kudu mlaku sadurunge handler liyané, supaya ora ana race condition
+      if (e.target.closest('.ctx-menu')) return;      // tap ing njero menu → ora ditutup
+      if (e.target.closest('.tx-menu-btn')) return;   // tap tombol ••• → wis ditangani handleTxListClick
+      tutupCtxMenu();
+    }, true);
     // =============================================
     // LAPORAN (REPORT)
     // =============================================
@@ -2116,11 +2179,34 @@
       const data = loadData();
       const pending = data.filter(t => t.status !== 'settled');
       if (pending.length === 0) { showToast('Tidak ada transaksi untuk dilaporkan', 'info'); return; }
-      pending.forEach(t => { t.status = 'settled'; t.tanggalSetor = getTodayStr(); t.jamSetor = new Date().toTimeString().slice(0,5); });
-      saveData(data);
-      tutupLaporan();
-      renderHome(); updateTodayBar();
-      showToast(`${pending.length} transaksi ditandai dilaporkan`, 'success');
+      // Konfirmasi ing-app + undo (ngindari salah lapor kabeh manika tap nyasar)
+      tanyaKonfirmasi({
+        title: `Laporkan ${pending.length} transaksi?`,
+        desc: 'Kabeh transaksi "ora dilaporake" bakal ditandani wis dilaporake. Isih bisa diurungake.',
+        yesLabel: 'LAPOR KABEH',
+        cb: () => {
+          // Simpen status sadurunge, kanggo undo
+          const prev = pending.map(t => ({ id: t.id, st: t.status, tgl: t.tanggalSetor, jam: t.jamSetor }));
+          const tgl = getTodayStr(), jam = new Date().toTimeString().slice(0,5);
+          pending.forEach(t => { t.status = 'settled'; t.tanggalSetor = tgl; t.jamSetor = jam; });
+          saveData(data);
+          tutupLaporan();
+          renderHome(); updateTodayBar();
+          showToast(`${pending.length} transaksi dilaporkan`, 'success', () => {
+            const d2 = loadData();
+            prev.forEach(p => {
+              const r = d2.find(x => x.id === p.id);
+              if (!r) return;
+              r.status = p.st;
+              if (p.tgl) r.tanggalSetor = p.tgl; else delete r.tanggalSetor;
+              if (p.jam) r.jamSetor = p.jam; else delete r.jamSetor;
+            });
+            saveData(d2);
+            renderHome(); updateTodayBar(); refreshOpenModals();
+            showToast('Dibatalkan › status dikembalikan', 'success');
+          });
+        }
+      });
     }
     // =============================================
     // RIWAYAT (HISTORY)
@@ -2185,7 +2271,8 @@
           const w = new Date(todayDate);
           w.setDate(w.getDate() - 7);
           const ws = ymdLocal(w);
-          data = data.filter(t => t.tanggal >= ws);
+          // Upper bound = hari iki (ora nyakup tanggal masa depan sing salah input)
+          data = data.filter(t => t.tanggal >= ws && t.tanggal <= today);
           break;
         }
         case 'month':
@@ -2452,20 +2539,33 @@
         return t;
       });
       try {
+        // Batalkan pending save supaya ora race karo tulis langsung ing ngisor
+        if (_saveTimer) { clearTimeout(_saveTimer); _saveTimer = null; }
+        _pendingData = null;
+
+        let finalData;
         if (mode === 'replace') {
-          saveData(pendingRestoreData);
-          showToast(`${pendingRestoreData.length} transaksi berhasil dipulihkan`, 'success');
+          finalData = pendingRestoreData;
         } else {
-          const existing = loadData();
-          const combined = [...existing, ...pendingRestoreData];
-          saveData(combined);
-          showToast(`${pendingRestoreData.length} transaksi ditambahkan (${combined.length} total)`, 'success');
+          finalData = [...loadData(), ...pendingRestoreData];
         }
+
+        // Tulis langsung (sinkron) + update cache — render mengko bakal maca data anyar
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(finalData));
+        _dataCache = finalData;
+        _dataCacheDirty = false;
+
         pendingRestoreData = null;
-        invalidateDataCache();
         tutupRestore();
         renderHome();
         updateTodayBar();
+
+        showToast(
+          mode === 'replace'
+            ? `${finalData.length} transaksi berhasil dipulihkan`
+            : `Data ditambahkan (${finalData.length} total)`,
+          'success'
+        );
       } catch(err) { showToast('Gagal memproses file!', 'error'); }
     }
     // =============================================
@@ -2501,8 +2601,13 @@
         yesLabel: 'HAPUS KABEH',
         danger: true,
         cb: () => {
+          // 1. Batalkan pending save — cegah timer 120ms nulis maneh sawise removeItem
+          if (_saveTimer) { clearTimeout(_saveTimer); _saveTimer = null; }
+          _pendingData = null;
+          // 2. Hapus storage
           localStorage.removeItem(STORAGE_KEY);
-          invalidateDataCache();
+          // 3. Reset cache in-memory supaya loadData() ora bali menyang data lawas
+          _dataCache = []; _dataCacheDirty = false;
           renderHome(); updateTodayBar();
           showToast('Semua data sudah dihapus', 'info');
         }
@@ -2540,10 +2645,10 @@
       const msg = buildRekapMsg();
       if (!msg) { showToast('Belum ada transaksi yang perlu dilaporkan', 'info'); return; }
       _waMsg = msg;
-      // Tampilan chip "Terakhir" miturut pilihan pungkasan
+      // Tampilan chip "Terakhir" miturut pilihan pungkasan — katon mung menika wis dipilih sadurungé
       const last = localStorage.getItem(WA_ACCT_KEY);
-      document.getElementById('waChipBiasa').style.display = last === 'bisnes' ? 'none' : 'block';
-      document.getElementById('waChipBisnes').style.display = last === 'bisnes' ? 'block' : 'none';
+      document.getElementById('waChipBiasa').style.display = (last === 'biasa') ? 'block' : 'none';
+      document.getElementById('waChipBisnes').style.display = (last === 'bisnes') ? 'block' : 'none';
       document.getElementById('waModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -2568,8 +2673,10 @@
         if (navigator.share) {
           navigator.share({ text: msg }).then(() => {
             showToast('Rekap dikirim!', 'success');
-          }).catch(() => {
-            // User batal share utawa ora ana app — fallback WA biasa
+          }).catch(err => {
+            // User mindharake (AbortError) → aja mbukak WA Biasa maneh
+            if (err && err.name === 'AbortError') return;
+            // Error liyane / ora ana app → fallback WA Biasa
             window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
             showToast('Ora milih WA Bisnes? Rekap dibukak ing WA Biasa.', 'info');
           });
@@ -2600,22 +2707,30 @@
     // =============================================
     // UTILS
     // =============================================
-    function formatRupiah(angka) { return 'Rp ' + Math.round(angka).toLocaleString('id-ID'); }
+    function formatRupiah(angka) {
+      const n = Number(angka);
+      return 'Rp ' + (Number.isFinite(n) ? Math.round(n) : 0).toLocaleString('id-ID');
+    }
     function escHtml(str) { if (str === null || str === undefined || str === '') return ''; return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
     function formatWaktu(tgl, jam) {
       if (!tgl) return '';
       const d = new Date(tgl + 'T' + (jam || '00:00'));
-      return d.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) + ', ' + (jam || '') + ' WIB';
+      // Guard: tanggal rusak → tampilkan mentah, jangan "Invalid Date"
+      const tanggal = isNaN(d.getTime()) ? tgl : d.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
+      return tanggal + (jam ? ', ' + jam + ' WIB' : '');
     }
     function haptic(pattern) {
       if (navigator.vibrate) navigator.vibrate(Array.isArray(pattern) ? pattern : [pattern]);
     }
     function handleTxListClick(e) {
       const ctxBtn = e.target.closest('.tx-menu-btn');
-      if (ctxBtn && !e.target.closest('.ctx-menu')) {
+      if (ctxBtn) {
+        // Langsung kendalikan menu ing kene → stopPropagation supaya ora ana race condition karo listener document
+        e.preventDefault();
         e.stopPropagation();
         const card = ctxBtn.closest('.tx-card[data-id]');
-        if (card) { ctxId = card.dataset.id; bukaCtxMenu(e, ctxId); return; }
+        if (card) { ctxId = card.dataset.id; bukaCtxMenu(e, ctxId); }
+        return;
       }
       const card = e.target.closest('.tx-card[data-id]');
       if (card && !e.target.closest('.ctx-menu') && !e.target.closest('.tx-menu-btn')) {
@@ -2633,6 +2748,20 @@
         Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
         document.getElementById('wNext').onclick = wizardNext;
         document.getElementById('wNext').textContent = 'Simpan';
+      }
+      // Reset status context menu ••• menika modal kaitan ditutup (supaya ctxId ora ngleket ing transaksi lawas → ngindari salah larep/delete)
+      if (id === 'detailModal' || id === 'wizardModal') {
+        tutupCtxMenu();
+      }
+      // Single source of truth: reset per-modal dipusateke kene (backdrop lan tombol X bareng jalur, ora duplikat logik)
+      if (id === 'laporanModal') {
+        const inp = document.getElementById('laporanSearchInput');
+        if (inp) inp.value = '';
+        currentLaporanSearch = '';
+      }
+      if (id === 'riwayatModal') {
+        currentSearch = '';
+        _riwayatLimit = _riwayatStep;
       }
     }
     // Toast notification
@@ -2662,33 +2791,22 @@
         });
       }
     }
-    // Modal click outside to close
+    // Modal click outside to close — sakabèng ditutup liwat tutupModal (single source of truth)
     document.querySelectorAll('.modal').forEach(modal => {
       modal.addEventListener('click', function(e) {
-        if (e.target === this) {
-          this.classList.remove('show');
-          document.body.style.overflow = '';
-          // Reset wizard state when backdrop closes wizardModal
-          if (this.id === 'wizardModal') {
-            cart = [];
-            detailId = null;
-            Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
-            isEditMode = false;
-            document.getElementById('wNext').onclick = wizardNext;
-            document.getElementById('wNext').textContent = 'Simpan';
-          }
-          // Reset laporan search saat backdrop close
-          if (this.id === 'laporanModal') {
-            const inp = document.getElementById('laporanSearchInput');
-            if (inp) inp.value = '';
-            currentLaporanSearch = '';
-          }
-          // Reset riwayat search & limit saat backdrop close
-          if (this.id === 'riwayatModal') {
-            currentSearch = '';
-            _riwayatLimit = _riwayatStep;
-          }
+        if (e.target !== this) return;
+        // Guard: cart wizard isih ana isi → konfirmasi kapisan (nghindari isi cart ilang tanpa disadar)
+        if (this.id === 'wizardModal' && cart.length > 0) {
+          tanyaKonfirmasi({
+            title: 'Cart isih ana isi',
+            desc: 'Menika ditutup saiki, pilihan cart bakal ilang (ora disimpen).',
+            yesLabel: 'LANJUT TUTUPI',
+            danger: true,
+            cb: () => tutupModal('wizardModal')
+          });
+          return;
         }
+        tutupModal(this.id);
       });
     });
     // Init
@@ -2700,7 +2818,11 @@
       window.addEventListener('load', async () => {
         try {
           const regs = await navigator.serviceWorker.getRegistrations();
-          for (const reg of regs) { if (reg.scope.includes('kopontren')) await reg.unregister(); }
+          // Mung ngusir SW lawas (script URL dudu sw.js pungkasan) — SW anyar ditahan supaya ora di-unregister manika reload
+          for (const reg of regs) {
+            const url = reg.active?.scriptURL || reg.installing?.scriptURL || reg.waiting?.scriptURL || '';
+            if (url && !url.endsWith('/sw.js')) await reg.unregister();
+          }
         } catch(e) {}
         navigator.serviceWorker.register('./sw.js')
           .then(reg => console.log('SW:', reg.scope))
