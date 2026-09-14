@@ -3,49 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Catatan Penjualan Kopontren · Gus Lim</title>
-  <meta name="theme-color" content="#1D4ED8">
+  <title>Catatan Penjualan Kopontren | Gus Lim</title>
+  <meta name="theme-color" content="#2563EB">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Kopontren">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="description" content="Buku catatan penjualan Kopontren khusus Gus Lim — catat, pantau, dan arsipkan transaksi.">
+  <meta name="description" content="Buku catatan penjualan Kopontren khusus Gus Lim - catat, pantau, dan arsipkan transaksi.">
   <meta name="format-detection" content="telephone=no">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png">
   <link rel="icon" type="image/svg+xml" href="icon-192.svg">
-  <!-- Tema applied sadurunge render — ngindari flash light theme manika user dark mode -->
+  <!-- Tema applied sadurunge render - ngindari flash light theme manika user dark mode -->
   <script>try{if(localStorage.getItem('kopontren_theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1D4ED8; --primary-dark: #1E3A8A; --primary-light: #EFF6FF;
+      --primary: #2563EB; --primary-dark: #173B7A; --primary-light: #EEF5FF;
       --amber: #A97920; --amber-light: #FBF4E3; --amber-gold: #C89B3C;
-      --surface: #FFFFFF; --bg: #F8FAFC; --surface-alt: #F1F5F9;
-      --border: #E2E8F0; --border-strong: #CBD5E1;
-      --text: #0F172A; --text-muted: #64748B;
+      --surface: #FFFFFF; --bg: #F6F8FC; --surface-alt: #F0F4FA;
+      --border: #E3EAF4; --border-strong: #C9D6E8;
+      --text: #0D1B2A; --text-muted: #64748B;
       --danger: #EF4444; --success: #15803D;
-      --shadow-xs: 0 1px 2px rgba(15,23,42,0.05);
-      --shadow-sm: 0 2px 6px rgba(15,23,42,0.07);
-      --shadow: 0 4px 12px rgba(15,23,42,0.08);
-      --radius: 12px; --radius-md: 14px; --radius-lg: 18px;
+      --shadow-xs: 0 1px 2px rgba(17,47,91,0.045);
+      --shadow-sm: 0 2px 7px rgba(17,47,91,0.065);
+      --shadow: 0 5px 16px rgba(17,47,91,0.075);
+      --radius: 13px; --radius-md: 15px; --radius-lg: 19px;
       --card-bg: #FFFFFF; --input-bg: #FFFFFF;
-      --header-bg: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 58%, #3B82F6 100%);
+      --header-bg: linear-gradient(135deg, #102E68 0%, #2563EB 55%, #3B82F6 100%);
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
       color-scheme: light;
     }
     [data-theme="dark"] {
-      --surface: #131C2E; --bg: #0E1525; --surface-alt: #1A2538;
-      --border: #2A3A55; --border-strong: #3E5070;
+      --surface: #111B2E; --bg: #0A1220; --surface-alt: #17243A;
+      --border: #263754; --border-strong: #3A4D6D;
       --text: #F1F5F9; --text-muted: #94A3B8;
       --primary-light: #172554; --amber-light: #302814;
-      --card-bg: #161B23; --input-bg: #1A1F28;
+      --card-bg: #121D30; --input-bg: #16233A;
       --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
       --shadow-sm: 0 2px 6px rgba(0,0,0,0.35);
       --shadow: 0 4px 12px rgba(0,0,0,0.4);
-      --header-bg: linear-gradient(135deg, #0A1530 0%, #172554 58%, #1E3A8A 100%);
+      --header-bg: linear-gradient(135deg, #07172F 0%, #102E68 58%, #2563EB 100%);
       --success: #4ADE80;
       --primary-dark: #60A5FA;
       color-scheme: dark;
@@ -64,7 +64,7 @@
       background: var(--header-bg); color: white;
       padding: 0.95rem 1.05rem 0.9rem;
       border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-      box-shadow: 0 6px 16px rgba(5,150,105,0.22);
+      box-shadow: 0 6px 18px rgba(37,99,235,0.22);
       position: sticky; top: 0; z-index: 50;
       transform: translateZ(0);
       will-change: transform;
@@ -76,12 +76,12 @@
       width: 38px; height: 38px; flex-shrink: 0;
       border-radius: 10px; overflow: hidden;
       border: 1px solid rgba(255,255,255,0.25);
-      background: #1D4ED8;
+      background: #2563EB;
       display: flex; align-items: center; justify-content: center;
     }
     .brand-logo { width: 100%; height: 100%; object-fit: contain; transform: scale(1.18); display: block; }
-    /* Item 24/25: wengi → wrap nyetruk menika header gelap supaya kubah tetep katon */
-    [data-theme="dark"] .brand-logo-wrap { background: #1E3A8A; border-color: rgba(255,255,255,0.12); }
+    /* Item 24/25: wengi -> wrap nyetruk menika header gelap supaya kubah tetep katon */
+    [data-theme="dark"] .brand-logo-wrap { background: #173B7A; border-color: rgba(255,255,255,0.12); }
     .brand h1 {
       font-size: 0.92rem; font-weight: 800; letter-spacing: -0.3px; line-height: 1.25;
     }
@@ -177,7 +177,7 @@
     .btn-action:active { transform: scale(0.96); }
     .btn-report {
       background: var(--primary); color: white;
-      box-shadow: 0 3px 8px rgba(5,150,105,0.25);
+      box-shadow: 0 3px 8px rgba(37,99,235,0.25);
     }
     .btn-history {
       background: var(--card-bg); color: var(--text);
@@ -276,7 +276,7 @@
     .badge-utang { background: #FEE2E2; color: #991B1B; }
     .badge-pending { background: #FDE68A; color: #78350F; }
     .badge-settled { background: #D1FAE5; color: #065F46; }
-    /* Dark mode: badge mung "nyala" terang — versi wengi */
+    /* Dark mode: badge mung "nyala" terang - versi wengi */
     [data-theme="dark"] .badge-cash, [data-theme="dark"] .badge-settled { background: #064E3B; color: #6EE7B7; }
     [data-theme="dark"] .badge-tf { background: #334155; color: #E2E8F0; }
     [data-theme="dark"] .badge-utang { background: #7F1D1D; color: #FCA5A5; }
@@ -413,7 +413,7 @@
     }
     .btn-report-wa:active { transform: scale(0.97); background: #1fb855; }
     /* WA AKUN PICKER */
-    .wa-acct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin: 0.5rem 0 0.25rem; }
+    .wa-acct-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 0.5rem 0 0.25rem; }
     .wa-acct-btn {
       position: relative;
       background: var(--surface-alt); border: 2px solid var(--border);
@@ -427,7 +427,7 @@
     .wa-acct-icon.biasa { background: #D1FAE5; color: #065F46; }
     .wa-acct-icon.bisnes { background: #DBEAFE; color: #1E40AF; }
     [data-theme="dark"] .wa-acct-icon.biasa { background: #0D3D31; color: #34D399; }
-    [data-theme="dark"] .wa-acct-icon.bisnes { background: #1E3A8A; color: #93C5FD; }
+    [data-theme="dark"] .wa-acct-icon.bisnes { background: #173B7A; color: #93C5FD; }
     .wa-acct-name { font-size: 0.8rem; font-weight: 800; color: var(--text); }
     .wa-acct-sub { font-size: 0.64rem; color: var(--text-muted); font-weight: 600; }
     .wa-last-chip {
@@ -471,7 +471,7 @@
     .form-group input:focus, .form-group select:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(5,150,105,0.12);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
     }
     .form-group select {
       -webkit-appearance: none; appearance: none;
@@ -523,7 +523,7 @@
     .manual-price-row-inline label svg { width: 14px; height: 14px; vertical-align: middle; margin-right: 0.2rem; }
     .manual-price-row-inline input { flex: 1; min-width: 80px; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
     .manual-price-row input { flex: 1; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
-    .manual-price-row input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5,150,105,0.12); }
+    .manual-price-row input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
     /* NAV BUTTONS */
     .nav-btns { display: flex; gap: 0.5rem; margin-top: 1rem; }
     .btn-back {
@@ -537,7 +537,7 @@
       flex: 1; background: var(--primary); color: white;
       border: none; border-radius: var(--radius); padding: 0.7rem;
       font-weight: 800; font-size: 0.85rem; cursor: pointer;
-      box-shadow: 0 3px 8px rgba(5,150,105,0.25);
+      box-shadow: 0 3px 8px rgba(37,99,235,0.25);
       transition: transform 0.12s var(--ease);
     }
     .btn-next:active { transform: scale(0.97); }
@@ -574,7 +574,7 @@
       transition: transform 0.12s var(--ease);
     }
     .detail-btn:active { transform: scale(0.96); }
-    .detail-btn.setor { background: var(--primary); color: white; box-shadow: 0 3px 8px rgba(5,150,105,0.25); }
+    .detail-btn.setor { background: var(--primary); color: white; box-shadow: 0 3px 8px rgba(37,99,235,0.25); }
     .detail-btn.hapus { background: #FEE2E2; color: var(--danger); }
     [data-theme="dark"] .detail-btn.hapus { background: #2D1515; }
     .detail-btn.edit { background: var(--surface-alt); color: var(--text); border: 1.5px solid var(--border); }
@@ -655,7 +655,7 @@
       font-size: 0.8rem; font-family: inherit; background: var(--input-bg); color: var(--text);
     }
     .date-filter-area input[type="date"]:focus {
-      outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5,150,105,0.12);
+      outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
     }
     .btn-apply-date {
       padding: 0.4rem 0.7rem; border-radius: 8px; border: none;
@@ -681,7 +681,7 @@
     }
     .search-bar input:focus {
       outline: none; border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(5,150,105,0.12);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
     }
     /* LIYANE */
     .other-menu { display: flex; flex-direction: column; gap: 0.2rem; }
@@ -700,7 +700,7 @@
     .other-icon.amber { background: var(--amber-light); color: var(--amber); }
     .other-icon.blue { background: #DBEAFE; color: #2563EB; }
     .other-icon.red { background: #FEE2E2; color: var(--danger); }
-    [data-theme="dark"] .other-icon.blue { background: #1E3A8A; color: #93C5FD; }
+    [data-theme="dark"] .other-icon.blue { background: #173B7A; color: #93C5FD; }
     [data-theme="dark"] .other-icon.red { background: #7F1D1D; color: #FCA5A5; }
     .other-text { flex: 1; }
     .other-text strong { font-size: 0.85rem; font-weight: 700; color: var(--text); display: block; }
@@ -758,27 +758,77 @@
     .ctx-item.danger:active { background: #FEF2F2; }
     [data-theme="dark"] .ctx-item.danger:active { background: #2D1515; }
     .ctx-item svg { width: 16px; height: 16px; flex-shrink: 0; }
-    /* PRICE SETTINGS */
-    .price-product-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.6rem 0; border-bottom: 1.5px solid var(--border); margin-bottom: 0.4rem;
-      cursor: pointer;
+    /* PRICE SETTINGS - v29 card list compact */
+    .price-card-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .price-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
     }
-    .price-product-header .pp-name { font-size: 0.82rem; font-weight: 700; color: var(--text); }
-    .price-product-header .pp-toggle { font-size: 0.72rem; color: var(--text-muted); }
-    .price-tiers { display: none; padding: 0.4rem 0; }
+    .price-card.open { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(37,99,235,0.10); }
+    .price-card-head {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.7rem 0.85rem;
+      cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
+    }
+    .price-card-head:active { background: var(--surface-alt); }
+    .price-card-head .pc-icon {
+      width: 34px; height: 34px; flex-shrink: 0;
+      background: var(--primary-light); color: var(--primary);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .price-card-head .pc-icon svg { width: 20px; height: 20px; }
+    [data-theme="dark"] .price-card-head .pc-icon { background: #173B7A; color: #93C5FD; }
+    .price-card-head .pc-main { flex: 1; min-width: 0; }
+    .price-card-head .pc-name {
+      font-size: 0.85rem; font-weight: 700; color: var(--text); line-height: 1.25;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .price-card-head .pc-preview {
+      font-size: 0.68rem; color: var(--text-muted); margin-top: 0.15rem;
+      font-weight: 600; letter-spacing: 0.1px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .price-card-head .pp-badge-manual {
+      display: inline-block;
+      background: var(--amber-light); color: var(--amber);
+      padding: 0.1rem 0.4rem; border-radius: 5px;
+      font-size: 0.62rem; font-weight: 700;
+    }
+    .price-card-head .pp-toggle {
+      font-size: 0.8rem; font-weight: 800; color: var(--text-muted);
+      flex-shrink: 0; width: 1.1rem; text-align: center;
+    }
+    .price-card.open .pp-toggle { color: var(--primary); }
+    .price-tiers { display: none; padding: 0 0.85rem 0.85rem; }
     .price-tiers.open { display: block; }
-    .price-tier-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; align-items: center; margin-bottom: 0.35rem; }
-    .price-tier-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); }
-    .price-tier-input {
-      width: 100%; padding: 0.45rem 0.55rem;
-      border: 1.5px solid var(--border); border-radius: 8px;
-      font-size: 0.82rem; font-family: inherit; font-weight: 700;
-      background: var(--input-bg); color: var(--text);
-      transition: border-color 0.12s var(--ease);
+    .price-tier-head {
+      font-size: 0.65rem; font-weight: 800; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.4px;
+      margin: 0.1rem 0 0.55rem;
     }
-    .price-tier-input:focus { outline: none; border-color: var(--primary); }
-    .manual-price-label { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 600; }
+    .price-tier-row {
+      display: grid; grid-template-columns: minmax(80px, 1fr) minmax(120px, 1.2fr);
+      gap: 0.5rem; align-items: center; margin-bottom: 0.4rem;
+    }
+    .price-tier-row:last-child { margin-bottom: 0; }
+    .price-tier-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); line-height: 1.2; }
+    .price-tier-input {
+      border: none !important; background: transparent !important;
+      font-size: 0.82rem; font-family: inherit; font-weight: 800;
+      color: var(--text); text-align: right; letter-spacing: 0.2px;
+    }
+    .price-tier-input:focus { outline: none; }
+    .rp-input-wrap.price-tier-wrap {
+      min-width: 0; padding: 0.25rem 0;
+    }
+    .manual-price-label {
+      font-size: 0.72rem; color: var(--text-muted); font-weight: 600;
+      line-height: 1.5; padding: 0.2rem 0;
+    }
     /* DARK MODE TOGGLE */
     .theme-toggle { display: flex; align-items: center; gap: 0.5rem; }
     .theme-switch {
@@ -813,7 +863,7 @@
     [data-theme="dark"] .modal-sheet::-webkit-scrollbar-thumb { background: #333A47; }
 
     /* =========================================================
-       UI POLISH — responsive, accessible, brand-consistent
+       UI POLISH - responsive, accessible, brand-consistent
        ========================================================= */
     html { background: var(--bg); }
     body { min-width: 0; }
@@ -825,7 +875,7 @@
     }
 
     header {
-      box-shadow: 0 5px 18px rgba(0,67,49,.18);
+      box-shadow: 0 5px 18px rgba(37,99,235,.18);
       backdrop-filter: saturate(1.15);
     }
     .brand h1 { font-family: 'Outfit', sans-serif; letter-spacing: -.45px; }
@@ -835,7 +885,7 @@
       box-shadow: 0 1px 3px rgba(15,23,42,.045);
     }
     .today-bar {
-      border-color: rgba(0,107,79,.14);
+      border-color: rgba(37,99,235,.14);
     }
     .today-bar-right .today-amount,
     .tx-total, .prod-total, .detail-item-right {
@@ -856,7 +906,7 @@
 
     .btn-report, .btn-next, .detail-btn.setor {
       background: var(--primary);
-      box-shadow: 0 4px 10px rgba(0,107,79,.18);
+      box-shadow: 0 4px 10px rgba(37,99,235,.18);
     }
     .btn-report:hover, .btn-next:hover, .detail-btn.setor:hover {
       background: var(--primary-dark);
@@ -872,8 +922,8 @@
     .fab:hover { filter: brightness(.97); }
 
     .tx-card:hover {
-      border-color: rgba(0,107,79,.22);
-      box-shadow: 0 4px 14px rgba(15,23,42,.07);
+      border-color: rgba(37,99,235,.22);
+      box-shadow: 0 4px 14px rgba(17,47,91,.07);
     }
     .tx-edit-btn {
       background: var(--primary-light);
@@ -944,7 +994,7 @@
       .nav-btns { flex-wrap: wrap; }
     }
 
-    /* HP layar umum (≤420px): "Tandai Lapor" full width ing dhuwur, Edit & Hapus bareng ing ngisor */
+    /* HP layar umum (<=420px): "Tandai Lapor" full width ing dhuwur, Edit & Hapus bareng ing ngisor */
     @media (max-width: 420px) {
       .detail-actions { flex-wrap: wrap; }
       .detail-actions .setor { flex-basis: 100%; }
@@ -1052,6 +1102,70 @@
 
     /* Animasi hapus kartu (item 23) */
     .tx-card.removing { opacity: 0; transform: translateX(24px) scale(0.96); transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); }
+
+    /* ===== v28: input harga prefix "Rp" + WA copy + dark-mode polish ===== */
+    .rp-input-wrap {
+      flex: 1;
+      min-width: 100px;
+      display: flex;
+      align-items: center;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      transition: border-color 0.12s var(--ease), box-shadow 0.12s var(--ease);
+      overflow: hidden;
+    }
+    .rp-input-wrap:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+    .rp-input-wrap .rp-prefix {
+      padding: 0 0.5rem 0 0.7rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--surface-alt);
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--border);
+    }
+    .rp-input-wrap input {
+      flex: 1;
+      min-width: 0;
+      border: none !important;
+      background: transparent !important;
+      padding: 0.4rem 0.6rem !important;
+      font-size: 0.86rem;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+      text-align: right;
+      letter-spacing: 0.2px;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    .rp-input-wrap input::placeholder {
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    @media (max-width: 400px) {
+      .wa-acct-grid { grid-template-columns: 1fr 1fr; }
+      .wa-acct-grid .wa-acct-btn:nth-child(3) { grid-column: 1 / -1; }
+    }
+    .wa-acct-icon.copy { background: #FEF3C7; color: #92400E; }
+    [data-theme="dark"] .wa-acct-icon.copy { background: #3A2C0F; color: #FCD34D; }
+    [data-theme="dark"] body {
+      background-image: radial-gradient(circle at 20% 0%, rgba(37,99,235,0.06), transparent 60%);
+    }
+    [data-theme="dark"] .tx-card,
+    [data-theme="dark"] .status-card,
+    [data-theme="dark"] .today-bar {
+      background: linear-gradient(180deg, #121D30 0%, #0F1930 100%);
+    }
+    [data-theme="dark"] .prod-btn { background: #17243A; }
+    [data-theme="dark"] .prod-btn.in-cart { background: #302814; border-color: #C89B3C; }
   </style>
 </head>
 <body>
@@ -1064,7 +1178,7 @@
         </div>
         <div>
           <h1>KOPONTREN AL ITTIHAD</h1>
-          <div class="tagline">Catatan Penjualan · Gus Lim</div>
+          <div class="tagline">Catatan Penjualan | Gus Lim</div>
         </div>
       </div>
       <div class="header-actions">
@@ -1134,7 +1248,7 @@
     <!-- RECENT TRANSACTIONS -->
     <div class="section-title">
       Transaksi Terakhir
-      <span class="see-all" onclick="bukaRiwayat()">Lihat semua ›</span>
+      <span class="see-all" onclick="bukaRiwayat()">Lihat semua</span>
     </div>
     <div class="tx-list" id="recentList"></div>
   </div>
@@ -1157,7 +1271,7 @@
       <div class="wizard-step active" id="wstep1">
         <div id="wizardProductSections"></div>
         <div class="cart-summary" id="wizardCart">
-          <div class="cart-empty">Keranjang masih kosong › pilih produk di atas</div>
+          <div class="cart-empty">Keranjang masih kosong - pilih produk di atas</div>
         </div>
       </div>
       <!-- STEP 2: Details -->
@@ -1225,7 +1339,7 @@
       </div>
       <div class="nav-btns">
         <button class="btn-back" id="wBack" onclick="wizardBack()" style="display:none;">Kembali</button>
-        <button class="btn-next" id="wNext" onclick="wizardNext()" disabled>Lanjut ›</button>
+        <button class="btn-next" id="wNext" onclick="wizardNext()" disabled>Lanjut</button>
       </div>
     </div>
   </div>
@@ -1280,7 +1394,7 @@
       <div id="laporanContent"></div>
       <div class="nav-btns">
         <button class="btn-back" onclick="tutupLaporan()">Tutup</button>
-        <button class="btn-next" id="laporanBtn" onclick="tandaiSemuaLapor()" style="display:none;">✓ Tandai Sudah Dilaporkan</button>
+        <button class="btn-next" id="laporanBtn" onclick="tandaiSemuaLapor()" style="display:none;">Tandai Sudah Dilaporkan</button>
       </div>
     </div>
   </div>
@@ -1300,7 +1414,7 @@
         <button class="filter-btn" data-filter="yesterday" onclick="setFilter('yesterday')">Kemarin</button>
         <button class="filter-btn" data-filter="week" onclick="setFilter('week')">7 Hari</button>
         <button class="filter-btn" data-filter="month" onclick="setFilter('month')">Bulan Ini</button>
-        <button class="filter-btn" data-filter="date" onclick="toggleDateFilter()">📅 Tanggal</button>
+        <button class="filter-btn" data-filter="date" onclick="toggleDateFilter()">Tanggal</button>
         <button class="filter-btn" data-filter="all" onclick="setFilter('all')">Semua</button>
       </div>
       <div class="date-filter-area" id="dateFilterArea">
@@ -1326,42 +1440,42 @@
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
           </div>
           <div class="other-text"><strong>Produk & Harga</strong><small>Kelola harga & tier diskon</small></div>
-          <div class="other-arrow">›</div>
+          <div class="other-arrow"></div>
         </div>
         <div class="other-item" onclick="eksporData()">
           <div class="other-icon blue">
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
           </div>
           <div class="other-text"><strong>Ekspor Data</strong><small>Unduh Excel/CSV atau JSON</small></div>
-          <div class="other-arrow">›</div>
+          <div class="other-arrow"></div>
         </div>
         <div class="other-item" onclick="backupData()">
           <div class="other-icon green">
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
           </div>
           <div class="other-text"><strong>Backup</strong><small>Simpan data ke file</small></div>
-          <div class="other-arrow">›</div>
+          <div class="other-arrow"></div>
         </div>
         <div class="other-item" onclick="restoreData()">
           <div class="other-icon blue">
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
           </div>
           <div class="other-text"><strong>Restore</strong><small>Pulihkan dari file backup</small></div>
-          <div class="other-arrow">›</div>
+          <div class="other-arrow"></div>
         </div>
         <div class="other-item" onclick="toggleTheme()">
           <div class="other-icon green">
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg>
           </div>
           <div class="other-text"><strong>Mode Gelap</strong><small>Ubah tampilan terang/gelap</small></div>
-          <div class="other-arrow" id="themeArrow">›</div>
+          <div class="other-arrow" id="themeArrow"></div>
         </div>
         <div class="other-item" onclick="resetAllData()">
           <div class="other-icon red">
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
           </div>
           <div class="other-text"><strong>Hapus Semua Data</strong><small>Reset aplikasi ke kosong</small></div>
-          <div class="other-arrow">›</div>
+          <div class="other-arrow"></div>
         </div>
       </div>
       <div style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:10px;">
@@ -1377,10 +1491,10 @@
       </div>
       <div style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:var(--amber-light);border-radius:10px;font-size:0.7rem;color:#92400E;line-height:1.5;">
         Data tersimpan di perangkat ini<br>
-        Backup terakhir: <span id="lastBackup">›</span><br>
+        Backup terakhir: <span id="lastBackup"></span><br>
         <span id="storageInfo" style="display:block;margin-top:0.25rem;"></span>
       </div>
-      <button class="err-toggle" id="errToggle" onclick="toggleErrLog()" style="width:100%;">Debug › lihat log error terakhir</button>
+      <button class="err-toggle" id="errToggle" onclick="toggleErrLog()" style="width:100%;">Debug - lihat log error terakhir</button>
       <div class="err-log-box" id="errLogBox"><pre id="errLogDetail"></pre></div>
       <button class="lyr-close" onclick="tutupLiyane()" style="width:100%;background:transparent;border:none;padding:0.7rem;font-size:0.85rem;font-weight:700;color:var(--text-muted);cursor:pointer;border-top:1px solid var(--border);margin-top:0.5rem;">Tutup</button>
     </div>
@@ -1415,16 +1529,22 @@
   </div>
   <!-- ===== PRICE SETTINGS MODAL ===== -->
   <div class="modal" id="priceModal" role="dialog" aria-modal="true" aria-label="Harga manual">
-    <div class="modal-sheet">
+    <div class="modal-sheet" style="padding-bottom:calc(0.9rem + env(safe-area-inset-bottom,0px));">
       <div class="modal-handle"></div>
-      <div class="modal-title">Produk & Harga</div>
-      <div class="modal-subtitle">Ubah harga tier per produk</div>
-      <div id="priceBody"></div>
-      <div class="nav-btns">
-        <button class="btn-back" onclick="tutupPengaturanHarga()">Tutup</button>
-        <button class="btn-next" style="flex:1.3;" onclick="simpanHarga()">Simpan Harga</button>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;margin-bottom:0.85rem;">
+        <div>
+          <div class="modal-title" style="margin:0;">Produk &amp; Harga</div>
+          <div class="modal-subtitle" style="margin:0.15rem 0 0;">Ketuk produk untuk ubah harga tier</div>
+        </div>
       </div>
-      <button onclick="resetHargaDefault()" style="width:100%;margin-top:0.5rem;min-height:42px;background:var(--surface-alt);color:var(--text);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:0.8rem;cursor:pointer;">↺ Reset ke Harga Default</button>
+      <div id="priceBody"></div>
+      <div style="position:sticky;bottom:0;background:var(--card-bg);padding-top:0.6rem;margin-top:0.6rem;border-top:1px solid var(--border);">
+        <div class="nav-btns" style="margin-top:0;">
+          <button class="btn-back" onclick="tutupPengaturanHarga()" style="flex:0.8;">Tutup</button>
+          <button class="btn-next" onclick="simpanHarga()">Simpan Harga</button>
+        </div>
+        <button onclick="resetHargaDefault()" style="width:100%;margin-top:0.5rem;min-height:40px;background:var(--surface-alt);color:var(--text-muted);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:0.75rem;cursor:pointer;">Reset ke Harga Default</button>
+      </div>
     </div>
   </div>
   <!-- ===== EXPORTE MODAL ===== -->
@@ -1470,14 +1590,14 @@
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">Pilih Akun WhatsApp</div>
-      <div class="modal-subtitle">Rekap wis disiapaké. Kirim liwat akun sapa?</div>
+      <div class="modal-subtitle">Rekap wis disiapake. Kirim liwat akun sapa?</div>
       <div class="wa-acct-grid">
         <button class="wa-acct-btn" id="waBtnBiasa" onclick="kirimWAAkun('biasa')" aria-label="Kirim rekap via WhatsApp Biasa">
           <div class="wa-acct-icon biasa">
             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
           </div>
           <div class="wa-acct-name">WhatsApp Biasa</div>
-          <div class="wa-acct-sub">Mebuka langsung WA</div>
+          <div class="wa-acct-sub">Buka langsung WA</div>
           <div class="wa-last-chip" id="waChipBiasa" style="display:none;">Terakhir</div>
         </button>
         <button class="wa-acct-btn" id="waBtnBisnes" onclick="kirimWAAkun('bisnes')" aria-label="Kirim rekap via WhatsApp Business">
@@ -1485,8 +1605,16 @@
             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.24L19.76 8 12 11.76 4.24 8 12 4.24zM4 9.6l7.5 3.75v4.9L4 14.4V9.6zm16 0v4.8l-7.5 3.85v-4.9L20 9.6z"/></svg>
           </div>
           <div class="wa-acct-name">WhatsApp Bisnes</div>
-          <div class="wa-acct-sub">Pilih akun ing share menu</div>
+          <div class="wa-acct-sub">Share sheet (kalau support)</div>
           <div class="wa-last-chip" id="waChipBisnes" style="display:none;">Terakhir</div>
+        </button>
+        <button class="wa-acct-btn" id="waBtnCopy" onclick="kirimWAAkun('copy')" aria-label="Copy pesan ke clipboard">
+          <div class="wa-acct-icon copy">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 5 6 5.9 6 7v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          </div>
+          <div class="wa-acct-name">Copy Pesan</div>
+          <div class="wa-acct-sub">Salin &amp; paste manual</div>
+          <div class="wa-last-chip" id="waChipCopy" style="display:none;">Terakhir</div>
         </button>
       </div>
       <button class="lyr-close" onclick="tutupWaPicker()" style="width:100%;background:transparent;border:none;padding:0.7rem;font-size:0.85rem;font-weight:700;color:var(--text-muted);cursor:pointer;border-top:1px solid var(--border);">Batal</button>
@@ -1530,7 +1658,7 @@
   <div class="toast-container" id="toastContainer"></div>
   <script>
     // =============================================
-    // DATA PRODUK › SATU SUMBER KEBENARAN
+    // DATA PRODUK | SATU SUMBER KEBENARAN
     // =============================================
     const PRODUCTS_DATA = [
       { id:'madu_sachet',name:'Madu Sachet Baitina',cat:'Baitina', icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18H6z"/><path d="M6 7h12"/><path d="M10 3V1"/><path d="M14 3V1"/></svg>`, unit:'sachet',
@@ -1590,7 +1718,7 @@
         const saved = localStorage.getItem(PRICE_KEY);
         if (saved) {
           const savedProducts = JSON.parse(saved);
-          // Migrasi v17/v23: madu_sachet lawas (tier kosong utawa mung 1 tier datar) → replace karo tier anyar
+          // Migrasi v17/v23: madu_sachet lawas (tier kosong utawa mung 1 tier datar) -> replace karo tier anyar
           if (savedProducts['madu_sachet']) {
             const sTiers = savedProducts['madu_sachet'].tiers;
             if (!Array.isArray(sTiers) || sTiers.length <= 1) {
@@ -1625,17 +1753,17 @@
       }
       return p.tiers[0]?.price || 0;
     }
-    // Harga manual per item di cart › key: productId
+    // Harga manual per item di cart, key: productId
     const manualPrices = {};
     function setManualPrice(productId, price) {
       if (price > 0) manualPrices[productId] = price;
       else delete manualPrices[productId];
     }
-    // Sinkron harga manual saka input DOM menika state — mangga dipanggil sadurunge validasi/simpan supaya ora basi
+    // Sinkron harga manual saka input DOM menika state - mangga dipanggil sadurunge validasi/simpan supaya ora basi
     function syncManualPricesFromDOM() {
       document.querySelectorAll('#manualPriceInputs input[data-product-id]').forEach(input => {
         const pid = input.dataset.productId;
-        if (pid) setManualPrice(pid, parseInt(input.value) || 0);
+        if (pid) setManualPrice(pid, parseInt(String(input.value).replace(/\D/g, ''), 10) || 0);
       });
     }
     function getEffectivePrice(p, qty) {
@@ -1649,7 +1777,7 @@
       if (!_dataCacheDirty && _dataCache) return _dataCache;
       try {
         _dataCache = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        // Migrasi otomatis: transaksi lawas (qty/harga, tanpa totalHarga) → total dianggepai bener
+        // Migrasi otomatis: transaksi lawas (qty/harga, tanpa totalHarga) -> total dianggepai bener
         let touched = false;
         _dataCache.forEach(t => {
           const hasLegacy = t.totalHarga == null && (
@@ -1657,7 +1785,7 @@
             ((Array.isArray(t.items) && t.items.length) && t.items.some(i => (i.subtotal == null || i.totalHarga == null) && i.harga != null))
           );
           if (hasLegacy || (Array.isArray(t.items) && t.items.length && t.items.every(i => i.subtotal == null))) {
-            // item lawas: subtotal = harga (yèn duwe qty, harga = per item)
+            // item lawas: subtotal = harga (yen duwe qty, harga = per item)
             (Array.isArray(t.items) ? t.items : []).forEach(i => {
               if (i.subtotal == null) i.subtotal = (i.qty ? (i.harga||0) * i.qty : (i.harga||0));
             });
@@ -1678,7 +1806,7 @@
           if (raw && raw !== '[]' && raw !== 'null') localStorage.setItem('kopontren_corrupt_backup', raw);
         } catch(e2) {}
         _dataCache = [];
-        showToast('Data tersimpan korup › direset. Bisa restore dari backup.', 'error');
+        showToast('Data tersimpan korup, direset. Bisa restore dari backup.', 'error');
       }
       _dataCacheDirty = false;
       return _dataCache;
@@ -1694,7 +1822,7 @@
       }, 120);
     }
     function invalidateDataCache() { _dataCacheDirty = true; }
-    // Sync antar-tab: storage event fire manika tab liyana nyimpen data — invalidate cache + re-render
+    // Sync antar-tab: storage event fire manika tab liyana nyimpen data - invalidate cache + re-render
     window.addEventListener('storage', (e) => {
       if (e.key !== STORAGE_KEY) return;
       invalidateDataCache();
@@ -1755,7 +1883,7 @@
       dl.innerHTML = names.slice(0, 20).map(n => `<option value="${escHtml(n)}"></option>`).join('');
     }
 
-    // Item 1: cek kesehatan backup → banner pengingat
+    // Item 1: cek kesehatan backup -> banner pengingat
     function checkBackupHealth() {
       const banner = document.getElementById('dataBanner');
       if (!banner) return;
@@ -1796,7 +1924,7 @@
         updateLastBackup();
         checkBackupHealth();
         showToast('Auto-backup harian tersimpan', 'success');
-      } catch(e) { /* unduh diblokir → user backup manual lewat banner */ }
+      } catch(e) { /* unduh diblokir -> user backup manual lewat banner */ }
     }
 
     // Item 18: muat ulang saat update SW tersedia
@@ -1838,8 +1966,8 @@
       if (!box.classList.contains('show')) {
         try { _errLog = JSON.parse(localStorage.getItem(ERRLOG_KEY) || '[]'); } catch(e) { _errLog = []; }
         pre.textContent = _errLog.length
-          ? _errLog.map(e => `[${e.t}]\n${e.msg}\n@ ${e.src || 'inline'}:${e.line}:${e.col}${e.stack ? '\n' + e.stack : ''}`).join('\n\n────────\n\n')
-          : 'Belum ada error tercatat di sesi terakhir ✓';
+          ? _errLog.map(e => `[${e.t}]\n${e.msg}\n@ ${e.src || 'inline'}:${e.line}:${e.col}${e.stack ? '\n' + e.stack : ''}`).join('\n\n--------\n\n')
+          : 'Belum ada error tercatat di sesi terakhir';
         box.classList.add('show');
       } else {
         box.classList.remove('show');
@@ -1851,8 +1979,8 @@
     // =============================================
     function init() {
       // CATATAN v23: version migration sing mbusak STORAGE_KEY wis dibusak.
-      // Migrasi format data (legacy → subtotal/totalHarga/status/metode)
-      // wis ditangani kanthi otomatis ing loadData() — ora perlu reset paksa.
+      // Migrasi format data (legacy -> subtotal/totalHarga/status/metode)
+      // wis ditangani kanthi otomatis ing loadData() - ora perlu reset paksa.
       loadProducts();
       applyTheme();
       updateTodayBar();
@@ -1907,7 +2035,7 @@
           fab.addEventListener(ev, () => clearTimeout(_fabTimer), { passive: true })
         );
       }
-      // Visibility change → force save
+      // Visibility change -> force save
       document.addEventListener('visibilitychange', () => {
         if (document.hidden && _pendingData) {
           clearTimeout(_saveTimer);
@@ -1931,7 +2059,7 @@
       // Item 26: tangkap error runtime + unhandled rejection
       window.addEventListener('error', e => captureError(e.message, e.filename, e.lineno, e.colno, e.error));
       window.addEventListener('unhandledrejection', e => captureError('Unhandled rejection: ' + String(e.reason && e.reason.message || e.reason), '', 0, 0, e.reason));
-      // Item 1: cek kesehatan backup → banner pengingat
+      // Item 1: cek kesehatan backup -> banner pengingat
       checkBackupHealth();
       // (maybeAutoBackup() tersedia sebagai utilitas bila mau auto-download harian, tapi
       //  sengaja TIDAK dipanggil otomatis di init: unduh file tanpa gestur user di PWA
@@ -2010,7 +2138,7 @@
       // Nama pendek: hapus "Baitina"/"Ruqyah" (konsisten dgn rekap v25)
       const short = (n) => String(n || '').replace(/\s*Baitina\s*/gi, '').replace(/\s*Ruqyah\s*/gi, '').trim() || n;
 
-      // Nama ringkas: >1 item → "Item1 + N item", 1 item → nama utuh, legacy → t.barang
+      // Nama ringkas: >1 item -> "Item1 + N item", 1 item -> nama utuh, legacy -> t.barang
       let names;
       if (itemCount === 0) {
         names = short(t.barang || 'Transaksi');
@@ -2020,7 +2148,7 @@
         names = short(t.items[0].name) + ' + ' + (itemCount - 1) + ' item';
       }
 
-      // Info qty: >1 item → "N item", 1 item → qty+unit asli, legacy → t.qty+t.unit
+      // Info qty: >1 item -> "N item", 1 item -> qty+unit asli, legacy -> t.qty+t.unit
       const itemInfo = itemCount > 1
         ? itemCount + ' item'
         : (itemCount === 1
@@ -2029,10 +2157,10 @@
 
       // Preview daftar item (ringkas, 1 baris, dipotong CSS)
       const itemListShort = itemCount > 1
-        ? t.items.map(i => short(i.name)).join(' · ')
+        ? t.items.map(i => short(i.name)).join(' | ')
         : '';
 
-      // Waktu ringkas ("14 Sep 2026, 07:33 WIB" → "14 Sep 07:33"; "14 Sep 2026" → "14 Sep")
+      // Waktu ringkas ("14 Sep 2026, 07:33 WIB" -> "14 Sep 07:33"; "14 Sep 2026" -> "14 Sep")
       const waktuShort = String(t.waktuFormat || t.tanggal || '')
         .replace(/\s+\d{4}/, '')
         .replace(/\s*,\s*/g, ' ')
@@ -2042,7 +2170,7 @@
         <button class="tx-edit-btn" aria-label="Edit transaksi" onclick="event.stopPropagation(); editTxCard('${t.id}')">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </button>
-        <button class="tx-menu-btn" aria-label="Menu transaksi">•••</button>
+        <button class="tx-menu-btn" aria-label="Menu transaksi">...</button>
 
         <!-- Baris 1: Nama ringkas + Total -->
         <div class="tx-top">
@@ -2051,7 +2179,7 @@
         </div>
 
         <!-- Baris 2: Pembeli + jumlah item -->
-        <div class="tx-buyer">${escHtml(t.pembeli || '-')} · ${itemInfo}</div>
+        <div class="tx-buyer">${escHtml(t.pembeli || '-')} | ${itemInfo}</div>
 
         ${itemListShort ? `<div class="tx-items-preview">${escHtml(itemListShort)}</div>` : ''}
 
@@ -2093,7 +2221,7 @@
       document.getElementById('wdot2').className = 'w-dot ' + (step>=2?(step>2?'done':'active'): '');
       document.getElementById('stepLabel').textContent = step;
       document.getElementById('wBack').style.display = step > 1 ? 'block' : 'none';
-      document.getElementById('wNext').textContent = isEditMode ? 'Update Transaksi' : (step === 2 ? 'Simpan' : 'Lanjut ›');
+      document.getElementById('wNext').textContent = isEditMode ? 'Update Transaksi' : (step === 2 ? 'Simpan' : 'Lanjut');
       if (step === 1) {
         renderWizardProducts();
         renderWizardCart();
@@ -2164,7 +2292,7 @@
     function renderWizardCart() {
       const el = document.getElementById('wizardCart');
       if (cart.length === 0) {
-        el.innerHTML = '<div class="cart-empty">Keranjang masih kosong › pilih produk di atas</div>';
+        el.innerHTML = '<div class="cart-empty">Keranjang masih kosong - pilih produk di atas</div>';
         return;
       }
       let html = '<div class="cart-title">Keranjang</div>';
@@ -2175,24 +2303,24 @@
         const price = getEffectivePrice(p, item.qty);
         const sub = price * item.qty;
         grand += sub;
-        const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Setel ›') : formatRupiah(price);
-        // Hint tier aktif: contone '10–40 sachet' supaya katon jang level harga
+        const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Setel') : formatRupiah(price);
+        // Hint tier aktif: contone '10-40 sachet' supaya katon jang level harga
         const activeTier = p.tiers ? p.tiers.find(t => item.qty >= t.min && item.qty <= t.max) : null;
         let tierHint = '';
         if (activeTier && p.tiers && p.tiers.length > 1) {
           const lo = activeTier.min;
-          const hi = activeTier.max >= 99999 ? lo + '+' : lo + '–' + activeTier.max;
+          const hi = activeTier.max >= 99999 ? lo + '+' : lo + '-' + activeTier.max;
           tierHint = ` <span style="font-size:0.58rem;color:var(--primary);font-weight:700;">[${hi} ${p.unit}]</span>`;
         }
         html += `<div class="cart-item">
           <div><div class="cart-item-name">${p.icon} ${p.name}</div>
-          <div style="font-size:0.65rem;color:var(--text-muted);">${item.qty} ${p.unit} × ${priceStr}${tierHint}</div></div>
+          <div style="font-size:0.65rem;color:var(--text-muted);">${item.qty} ${p.unit} x ${priceStr}${tierHint}</div></div>
           <div style="display:flex;align-items:center;gap:0.3rem;">
-            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.8rem;padding:0 0.2rem;" onclick="changeQty('${item.productId}',-1)">−</button>
+            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.8rem;padding:0 0.2rem;" onclick="changeQty('${item.productId}',-1)">-</button>
             <span style="font-weight:800;font-size:0.8rem;min-width:16px;text-align:center;">${item.qty}</span>
             <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.8rem;padding:0 0.2rem;" onclick="changeQty('${item.productId}',1)">+</button>
             <span class="cart-item-total">${sub>0?formatRupiah(sub):'Manual'}</span>
-            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:0.75rem;padding:0 0.3rem;margin-left:0.3rem;" onclick="removeFromCart('${item.productId}')">✕</button>
+            <button class="cart-remove" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:0.75rem;padding:0 0.3rem;margin-left:0.3rem;" onclick="removeFromCart('${item.productId}')">x</button>
           </div>
         </div>`;
       });
@@ -2223,16 +2351,20 @@
         const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Belum disetel!') : formatRupiah(price);
         const activeTier = p.tiers ? p.tiers.find(t => item.qty >= t.min && item.qty <= t.max) : null;
         const tierHint = (activeTier && p.tiers && p.tiers.length > 1)
-          ? ` <span style="font-size:0.58rem;color:var(--primary);font-weight:700;">[${activeTier.max>=99999 ? activeTier.min+'+' : activeTier.min+'–'+activeTier.max} ${p.unit}]</span>` : '';
-        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">×${item.qty} ${priceStr}</span>${tierHint}</div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
+          ? ` <span style="font-size:0.58rem;color:var(--primary);font-weight:700;">[${activeTier.max>=99999 ? activeTier.min+'+' : activeTier.min+'-'+activeTier.max} ${p.unit}]</span>` : '';
+        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">x${item.qty} ${priceStr}</span>${tierHint}</div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
         if (p.manualPrice) {
           hasManual = true;
           const currentVal = manualPrices[p.id] || '';
+          const displayVal = currentVal ? Number(currentVal).toLocaleString('id-ID') : '';
           manualHtml += `<div class="manual-price-row-inline" style="margin-bottom:0.3rem;">
             <label>${p.icon} ${p.name} (${p.unit}):</label>
-            <input type="number" min="0" placeholder="Harga..." value="${currentVal}" 
-              data-product-id="${p.id}"
-              onchange="onManualPriceChange('${p.id}', this.value)" onfocus="this.select()">
+            <div class="rp-input-wrap">
+              <span class="rp-prefix">Rp</span>
+              <input type="text" inputmode="numeric" placeholder="0" value="${displayVal}"
+                data-product-id="${p.id}"
+                oninput="onManualPriceChange('${p.id}', this)">
+            </div>
           </div>`;
         }
       });
@@ -2247,10 +2379,27 @@
         manualRow.style.display = 'none';
       }
     }
-    function onManualPriceChange(productId, value) {
-      const val = parseInt(value) || 0;
+    function onManualPriceChange(productId, inputEl) {
+      const raw = (typeof inputEl === 'string') ? inputEl : (inputEl && inputEl.value || '');
+      const val = parseInt(String(raw).replace(/\D/g, ''), 10) || 0;
+      if (inputEl && typeof inputEl === 'object') {
+        const wasAtEnd = inputEl.selectionStart === inputEl.value.length;
+        inputEl.value = val ? val.toLocaleString('id-ID') : '';
+        if (wasAtEnd) {
+          try { inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length); } catch(e) {}
+        }
+      }
       setManualPrice(productId, val);
-      renderWizardCart2();
+      let grand = 0;
+      cart.forEach(item => {
+        const p = products[item.productId];
+        if (!p) return;
+        grand += getEffectivePrice(p, item.qty) * item.qty;
+      });
+      const wsv = document.getElementById('wizardStickyVal');
+      if (wsv) wsv.textContent = grand > 0 ? formatRupiah(grand) : 'Rp 0';
+      const summary = document.querySelector('#wizardCartStep2 .cart-total-amount');
+      if (summary) summary.textContent = grand > 0 ? formatRupiah(grand) : '-';
     }
     function pilihMetode(m) {
       wizardMetode = m;
@@ -2292,7 +2441,7 @@
         const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
         const tanggal = document.getElementById('wTanggal').value;
         const jam = document.getElementById('wJam').value;
-        if (tanggal && tanggal > getTodayStr()) showToast('Tanggal di masa depan — data tetap disimpan', 'info'); // item 13
+        if (tanggal && tanggal > getTodayStr()) showToast('Tanggal di masa depan - data tetap disimpan', 'info'); // item 13
         const record = {
           id: genId(), tanggal, jam,
           waktuFormat: formatWaktu(tanggal, jam),
@@ -2315,7 +2464,7 @@
         tutupModal('wizardModal');
         renderHome();
         updateTodayBar();
-        showToast('Tercatat: ' + items.map(i=>i.name+' ×'+i.qty).join(', '), 'success');
+        showToast('Tercatat: ' + items.map(i=>i.name+' x'+i.qty).join(', '), 'success');
       } finally {
         _saving = false; // item 10
         btn.classList.remove('loading');
@@ -2338,7 +2487,7 @@
       if (t.items?.length) {
         itemsEl.innerHTML = t.items.map(i => `
           <div class="detail-item-row">
-            <span class="detail-item-left">${i.name} · ${i.qty}${i.unit||''}</span>
+            <span class="detail-item-left">${i.name} | ${i.qty}${i.unit||''}</span>
             <span class="detail-item-right">${formatRupiah(i.subtotal != null ? i.subtotal : ((i.harga||0) * (i.qty||1)))}</span>
           </div>`).join('');
       }
@@ -2349,7 +2498,7 @@
       const noteEl = document.getElementById('dNote');
       if (t.catatan) { noteEl.style.display = 'block'; document.getElementById('dNoteText').textContent = t.catatan; }
       else noteEl.style.display = 'none';
-      document.getElementById('dSetorText').textContent = t.status === 'settled' ? '✓ Sudah Lapor' : 'Tandai Lapor';
+      document.getElementById('dSetorText').textContent = t.status === 'settled' ? 'Sudah Lapor' : 'Tandai Lapor';
       document.getElementById('detailModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -2376,7 +2525,7 @@
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
       refreshOpenModals();
-      showToast(data[idx].status === 'settled' ? 'Sudah ditandai dilaporkan' : 'Dibatalkan › kembali belum dilaporkan', 'success');
+      showToast(data[idx].status === 'settled' ? 'Sudah ditandai dilaporkan' : 'Dibatalkan, kembali belum dilaporkan', 'success');
     }
     function editTransaksi() {
       if (!detailId) return;
@@ -2418,7 +2567,7 @@
       const data = loadData();
       const idx = data.findIndex(r => r.id === detailId);
       if (idx === -1) return;
-      // Item 4: multi-tab — kalau record baru berubah di tab/perangkat lain selama edit, konfirmasi dulu
+      // Item 4: multi-tab - kalau record baru berubah di tab/perangkat lain selama edit, konfirmasi dulu
       if (!force && _editBaselineUpdatedAt != null && data[idx].updatedAt != null && data[idx].updatedAt !== _editBaselineUpdatedAt) {
         tanyaKonfirmasi({
           title: 'Transaksi sudah berubah',
@@ -2437,7 +2586,7 @@
       if (missingManual) { showToast('Isi harga manual untuk semua produk Kopontren!', 'error'); return; }
       // Read manual prices from inputs
       document.querySelectorAll('#manualPriceInputs input[data-product-id]').forEach(input => {
-        const val = parseInt(input.value) || 0;
+        const val = parseInt(String(input.value).replace(/\D/g, ''), 10) || 0;
         const pid = input.dataset.productId;
         if (pid) setManualPrice(pid, val);
       });
@@ -2494,7 +2643,7 @@
         saveData(data);
         if (isSyncEnabled()) syncPush(t);
         renderHome(); updateTodayBar();
-        showToast('Dibatalkan › transaksi dikembalikan', 'success');
+        showToast('Dibatalkan, transaksi dikembalikan', 'success');
       });
     }
     // =============================================
@@ -2505,10 +2654,10 @@
       e.stopPropagation();
       ctxId = id;
       const menu = document.getElementById('ctxMenu');
-      // Target bisa anak tombol → ambri rect tombol ••• sendiri
+      // Target bisa anak tombol -> ambri rect tombol ... sendiri
       const btn = (e.target && e.target.closest) ? e.target.closest('.tx-menu-btn') : null;
       const rect = (btn || e.target).getBoundingClientRect();
-      // Menu tetep di-layout (visibility hidden) → offsetWidth/Height bisa diukur sakdangu hidden
+      // Menu tetep di-layout (visibility hidden) -> offsetWidth/Height bisa diukur sakdangu hidden
       const menuW = menu.offsetWidth || 170;
       const menuH = menu.offsetHeight || 150;
       let top = rect.bottom + 8;
@@ -2528,7 +2677,7 @@
       ctxId = null;
     }
     function ctxEdit() {
-      const id = ctxId;               // Ambrati DULUAN — tutupCtxMenu() mbusak ctxId
+      const id = ctxId;               // Ambrati DULUAN - tutupCtxMenu() mbusak ctxId
       tutupCtxMenu();
       if (id) bukaDetail(id);
     }
@@ -2537,7 +2686,7 @@
       editTransaksi();
     }
     function ctxSetor() {
-      const id = ctxId;               // Ambrati DULUAN — tutupCtxMenu() mbusak ctxId
+      const id = ctxId;               // Ambrati DULUAN - tutupCtxMenu() mbusak ctxId
       tutupCtxMenu();
       if (!id) return;
       const data = loadData();
@@ -2558,7 +2707,7 @@
       showToast(data[idx].status === 'settled' ? 'Sudah dilaporkan' : 'Dibatalkan', 'success');
     }
     function ctxHapus() {
-      const id = ctxId;               // Ambrati DULUAN — tutupCtxMenu() mbusak ctxId
+      const id = ctxId;               // Ambrati DULUAN - tutupCtxMenu() mbusak ctxId
       tutupCtxMenu();
       if (!id) return;
       const data = loadData();
@@ -2576,8 +2725,8 @@
         showToast('Dibatalkan', 'success');
       });
     }
-    // ==== CONTEXT MENU — event delegation (pointerdown, mung mobile-responsif) ====
-    // 1) Tap item menu (edit/setor/hapus) — pointerdown luwih cepet saka click (ora ana delay 300ms)
+    // ==== CONTEXT MENU - event delegation (pointerdown, mung mobile-responsif) ====
+    // 1) Tap item menu (edit/setor/hapus) - pointerdown luwih cepet saka click (ora ana delay 300ms)
     document.getElementById('ctxMenu').addEventListener('pointerdown', (e) => {
       const item = e.target.closest('.ctx-item[data-action]');
       if (!item) return;
@@ -2588,10 +2737,10 @@
       else if (action === 'setor') ctxSetor();
       else if (action === 'hapus') ctxHapus();
     });
-    // 2) Tutup menu yen tap diluar — bubble phase (ORA capture), mung yen menu wis katon
+    // 2) Tutup menu yen tap diluar - bubble phase (ORA capture), mung yen menu wis katon
     document.addEventListener('pointerdown', (e) => {
-      if (e.target.closest('.ctx-menu')) return;      // tap njero menu → wis ditangani #1
-      if (e.target.closest('.tx-menu-btn')) return;  // tap tombol ••• → handleTxListClick ngatur
+      if (e.target.closest('.ctx-menu')) return;      // tap njero menu -> wis ditangani #1
+      if (e.target.closest('.tx-menu-btn')) return;  // tap tombol ... -> handleTxListClick ngatur
       const menu = document.getElementById('ctxMenu');
       if (menu && menu.classList.contains('show')) tutupCtxMenu();
     });
@@ -2670,7 +2819,7 @@
             });
             saveData(d2);
             renderHome(); updateTodayBar(); refreshOpenModals();
-            showToast('Dibatalkan › status dikembalikan', 'success');
+            showToast('Dibatalkan, status dikembalikan', 'success');
           });
         }
       });
@@ -2771,7 +2920,7 @@
         const title = noDataAtAll ? 'Belum ada transaksi' : 'Tidak ada transaksi';
         const sub = noDataAtAll ? 'Mulai catat penjualanmu pertama' : 'Coba ubah filter atau kata kunci';
         // Item 17: CTA actionable di empty state
-        const cta = `<button class="empty-cta" onclick="tutupRiwayat();bukaWizardManual()">＋ Buat Transaksi</button>`;
+        const cta = `<button class="empty-cta" onclick="tutupRiwayat();bukaWizardManual()">+ Buat Transaksi</button>`;
         list.innerHTML = `<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div><p>${title}</p><div class="empty-sub">${sub}</div>${cta}</div>`;
         return;
       }
@@ -2830,9 +2979,9 @@
         const bytes = new Blob([JSON.stringify(loadData())]).size;
         const kb = (bytes / 1024).toFixed(1);
         document.getElementById('storageInfo').textContent = `Penyimpanan: ${kb} KB`;
-        // Item 2: peringatan quota — >4MB dari limit ~5MB
+        // Item 2: peringatan quota - >4MB dari limit ~5MB
         if (bytes > 4 * 1024 * 1024) {
-          showToast('Penyimpanan hampir penuh — backup & hapus data lama', 'error');
+          showToast('Penyimpanan hampir penuh - backup & hapus data lama', 'error');
         }
       } catch(e) {
         document.getElementById('storageInfo').textContent = '';
@@ -2861,45 +3010,74 @@
         if (!cats[cat]) cats[cat] = [];
         cats[cat].push({id, ...p});
       });
+      const rp = (n) => Number(n||0).toLocaleString('id-ID');
       let idx = 0;
       for (const [cat, items] of Object.entries(cats)) {
-        html += `<div class="cat-label" style="margin-top:0.5rem;">${cat}</div>`;
+        html += `<div class="cat-label" style="margin:0.7rem 0 0.4rem;">${cat}</div>`;
+        html += `<div class="price-card-list">`;
         items.forEach(p => {
           const cardIdx = idx++;
-          html += `<div class="price-product-header" onclick="togglePriceSection(${cardIdx})">
-            <span class="pp-name">${p.icon} ${p.name}</span>
-            <span class="pp-toggle" id="ppToggle${cardIdx}">▶</span>
-          </div>
-          <div class="price-tiers" id="priceTiers${cardIdx}">`;
+          let preview = '';
           if (p.manualPrice) {
-            html += `<div class="manual-price-label">Harga bisa diubah manual per transaksi</div>`;
+            preview = `<span class="pp-badge-manual">Harga manual</span>`;
           } else {
-            html += `<div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:0.3rem;font-weight:600;">Tier harga (per ${p.unit}):</div>`;
+            const prices = p.tiers.map(t => rp(t.price));
+            preview = prices.slice(0, 3).join(' | ') + (prices.length > 3 ? ' ...' : '');
+          }
+          html += `<div class="price-card" id="priceCard${cardIdx}">
+            <div class="price-card-head" onclick="togglePriceSection(${cardIdx})">
+              <div class="pc-icon">${p.icon}</div>
+              <div class="pc-main">
+                <div class="pc-name">${p.name}</div>
+                <div class="pc-preview">${preview}</div>
+              </div>
+              <div class="pp-toggle" id="ppToggle${cardIdx}">+</div>
+            </div>
+            <div class="price-tiers" id="priceTiers${cardIdx}">`;
+          if (p.manualPrice) {
+            html += `<div class="manual-price-label">Harga diisi manual saat transaksi (tidak perlu diset di sini).</div>`;
+          } else {
+            html += `<div class="price-tier-head">Tier (per ${p.unit})</div>`;
             p.tiers.forEach((tier, tidx) => {
-              const label = tier.max >= 99999 ? (tier.min + '+' + p.unit) : (tier.min + '–' + tier.max + ' ' + p.unit);
+              const label = tier.max >= 99999 ? (tier.min + '+ ' + p.unit) : (tier.min + '-' + tier.max + ' ' + p.unit);
               html += `<div class="price-tier-row">
                 <span class="price-tier-label">${label}</span>
-                <input class="price-tier-input" type="number" min="0" value="${tier.price}" data-key="${p.id}" data-tier="${tidx}">
+                <div class="rp-input-wrap price-tier-wrap">
+                  <span class="rp-prefix">Rp</span>
+                  <input class="price-tier-input" type="text" inputmode="numeric" value="${rp(tier.price)}" data-key="${p.id}" data-tier="${tidx}" oninput="onPriceTierInput(this)" placeholder="0">
+                </div>
               </div>`;
             });
           }
-          html += '</div>';
+          html += `</div></div>`;
         });
+        html += `</div>`;
       }
       body.innerHTML = html;
+    }
+    function onPriceTierInput(inputEl) {
+      const digits = String(inputEl.value).replace(/\D/g, '');
+      const val = parseInt(digits, 10) || 0;
+      const wasAtEnd = inputEl.selectionStart === inputEl.value.length;
+      inputEl.value = val ? val.toLocaleString('id-ID') : '';
+      if (wasAtEnd) { try { inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length); } catch(e) {} }
     }
     function togglePriceSection(idx) {
       const el = document.getElementById('priceTiers' + idx);
       const toggle = document.getElementById('ppToggle' + idx);
-      if (el.classList.contains('open')) { el.classList.remove('open'); toggle.textContent = '▶'; }
-      else { el.classList.add('open'); toggle.textContent = '▼'; }
+      const card = document.getElementById('priceCard' + idx);
+      const open = el.classList.toggle('open');
+      toggle.textContent = open ? '-' : '+';
+      if (card) card.classList.toggle('open', open);
     }
     function simpanHarga() {
       document.querySelectorAll('.price-tier-input').forEach(input => {
         const key = input.dataset.key;
         const tierIdx = parseInt(input.dataset.tier);
-        const val = parseInt(input.value) || 0;
-        products[key].tiers[tierIdx].price = val;
+        const val = parseInt(String(input.value).replace(/\D/g, ''), 10) || 0;
+        if (products[key] && products[key].tiers && products[key].tiers[tierIdx]) {
+          products[key].tiers[tierIdx].price = val;
+        }
       });
       saveProducts();
       tutupPengaturanHarga();
@@ -2993,7 +3171,7 @@
     function handleRestore(e) {
       const file = e.target.files[0];
       if (!file) return;
-      // Item 5: validasi ukuran — cegah file >10MB bikin app hang
+      // Item 5: validasi ukuran - cegah file >10MB bikin app hang
       if (file.size > 10 * 1024 * 1024) {
         document.getElementById('restoreInfo').textContent = 'File terlalu besar (maks 10 MB)';
         showToast('File terlalu besar (maks 10 MB)', 'error');
@@ -3005,7 +3183,7 @@
         try {
           const data = JSON.parse(ev.target.result);
           if (!Array.isArray(data)) { showToast('Format file salah!', 'error'); return; }
-          // Item 5: validasi struktur — sample record wajib punya field dikenal
+          // Item 5: validasi struktur - sample record wajib punya field dikenal
           if (data.length > 0) {
             const s = data[0];
             if (!s || typeof s !== 'object' || !(s.id || s.tanggal || s.barang || s.items || s.pembeli || s.totalHarga)) {
@@ -3056,7 +3234,7 @@
           finalData = [...loadData(), ...pendingRestoreData];
         }
 
-        // Tulis langsung (sinkron) + update cache — render mengko bakal maca data anyar
+        // Tulis langsung (sinkron) + update cache - render mengko bakal maca data anyar
         localStorage.setItem(STORAGE_KEY, JSON.stringify(finalData));
         _dataCache = finalData;
         _dataCacheDirty = false;
@@ -3107,7 +3285,7 @@
         yesLabel: 'HAPUS KABEH',
         danger: true,
         cb: () => {
-          // 1. Batalkan pending save — cegah timer 120ms nulis maneh sawise removeItem
+          // 1. Batalkan pending save - cegah timer 120ms nulis maneh sawise removeItem
           if (_saveTimer) { clearTimeout(_saveTimer); _saveTimer = null; }
           _pendingData = null;
           // 2. Hapus storage
@@ -3143,10 +3321,10 @@
           .replace(/\s*Ruqyah\s*/gi, '')
           .trim() || name;
 
-      // Helper: angka style rupiah tanpa "Rp " (pemisah ribuan ".") — biar kolom rapi
+      // Helper: angka style rupiah tanpa "Rp " (pemisah ribuan ".") - biar kolom rapi
       const rpShort = (n) => Math.round(Number(n) || 0).toLocaleString('id-ID');
 
-      // Header — plain ASCII, 100% aman di semua versi WA
+      // Header - plain ASCII, 100% aman di semua versi WA
       let msg = `*LAPORAN PENJUALAN KOPONTREN*\n`;
       msg += `Al Ittihad - ${today}\n`;
       msg += `==============================\n\n`;
@@ -3161,7 +3339,7 @@
         // Nomor urut + nama pembeli (bold)
         msg += `\n*${idx + 1}. ${pembeli}*\n\n`;
 
-        // Item list — siji item 2 baris (nama + hitungan)
+        // Item list - siji item 2 baris (nama + hitungan)
         if (Array.isArray(t.items) && t.items.length) {
           t.items.forEach((i) => {
             const nama = shortName(i.name);
@@ -3201,10 +3379,11 @@
       const msg = buildRekapMsg();
       if (!msg) { showToast('Belum ada transaksi yang perlu dilaporkan', 'info'); return; }
       _waMsg = msg;
-      // Tampilan chip "Terakhir" miturut pilihan pungkasan — katon mung menika wis dipilih sadurungé
+      // Tampilan chip "Terakhir" miturut pilihan pungkasan - katon mung menika wis dipilih sadurunge
       const last = localStorage.getItem(WA_ACCT_KEY);
       document.getElementById('waChipBiasa').style.display = (last === 'biasa') ? 'block' : 'none';
       document.getElementById('waChipBisnes').style.display = (last === 'bisnes') ? 'block' : 'none';
+      document.getElementById('waChipCopy').style.display = (last === 'copy') ? 'block' : 'none';
       document.getElementById('waModal').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -3217,29 +3396,58 @@
       if (!msg) return;
       try { localStorage.setItem(WA_ACCT_KEY, acct); } catch(e) {}
       tutupWaPicker();
+
+      // Mode COPY: salin saja
+      if (acct === 'copy') {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(msg).then(
+            () => showToast('Rekap disalin! Buka WA mana pun, paste di chat', 'success'),
+            () => showToast('Gagal menyalin - coba lagi', 'error')
+          );
+        } else {
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = msg;
+            ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast('Rekap disalin! Paste di WA mana pun', 'success');
+          } catch(e) {
+            showToast('Perangkat tidak mendukung copy', 'error');
+          }
+        }
+        return;
+      }
+
+      // Mode WA BIASA: buka wa.me (langsung WA reguler)
       if (acct === 'biasa') {
-        // WA Biasa: link wa.me (default handler HP) + salin rekap
         (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(
           () => showToast('Rekap disalin! Paste ing WA Biasa.', 'success'),
           () => {}
         );
         window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-      } else {
-        // WA Bisnes: share sheet → milih aplikasi "WhatsApp Bisnes"
+        return;
+      }
+
+      // Mode WA BISNES: share sheet -> pilih WA Bisnes
+      if (acct === 'bisnes') {
         if (navigator.share) {
           navigator.share({ text: msg }).then(() => {
             showToast('Rekap dikirim!', 'success');
           }).catch(err => {
-            // User mindharake (AbortError) → aja mbukak WA Biasa maneh
             if (err && err.name === 'AbortError') return;
-            // Error liyane / ora ana app → fallback WA Biasa
-            window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-            showToast('Ora milih WA Bisnes? Rekap dibukak ing WA Biasa.', 'info');
+            if (navigator.clipboard) navigator.clipboard.writeText(msg).then(() => {}, () => {});
+            showToast('Share dibatalkan. Rekap sudah disalin - paste di WA Bisnes.', 'info');
           });
         } else {
-          window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-          showToast('Peranti iki durung duwe share menu. Rekap dibukak ing WA Biasa.', 'info');
+          if (navigator.clipboard) navigator.clipboard.writeText(msg).then(
+            () => showToast('Perangkat tidak support share. Rekap disalin - paste di WA Bisnes.', 'info'),
+            () => showToast('Perangkat tidak support share & copy', 'error')
+          );
         }
+        return;
       }
     }
     // =============================================
@@ -3250,14 +3458,14 @@
       const next = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem(THEME_KEY, next);
-      document.getElementById('themeArrow').textContent = next === 'dark' ? '🌙' : '🌞';
+      document.getElementById('themeArrow').textContent = next === 'dark' ? 'Gelap' : 'Terang';
       showToast(next === 'dark' ? 'Mode gelap aktif' : 'Mode terang aktif', 'info');
     }
     function applyTheme() {
       const saved = localStorage.getItem(THEME_KEY);
       if (saved === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeArrow').textContent = '🌙';
+        document.getElementById('themeArrow').textContent = 'Gelap';
       }
     }
     // =============================================
@@ -3271,7 +3479,7 @@
     function formatWaktu(tgl, jam) {
       if (!tgl) return '';
       const d = new Date(tgl + 'T' + (jam || '00:00'));
-      // Guard: tanggal rusak → tampilkan mentah, jangan "Invalid Date"
+      // Guard: tanggal rusak -> tampilkan mentah, jangan "Invalid Date"
       const tanggal = isNaN(d.getTime()) ? tgl : d.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
       return tanggal + (jam ? ', ' + jam + ' WIB' : '');
     }
@@ -3281,7 +3489,7 @@
     function handleTxListClick(e) {
       const ctxBtn = e.target.closest('.tx-menu-btn');
       if (ctxBtn) {
-        // Langsung kendalikan menu ing kene → stopPropagation supaya ora ana race condition karo listener document
+        // Langsung kendalikan menu ing kene -> stopPropagation supaya ora ana race condition karo listener document
         e.preventDefault();
         e.stopPropagation();
         const card = ctxBtn.closest('.tx-card[data-id]');
@@ -3305,7 +3513,7 @@
         document.getElementById('wNext').onclick = wizardNext;
         document.getElementById('wNext').textContent = 'Simpan';
       }
-      // Reset status context menu ••• menika modal kaitan ditutup (supaya ctxId ora ngleket ing transaksi lawas → ngindari salah larep/delete)
+      // Reset status context menu ... menika modal kaitan ditutup (supaya ctxId ora ngleket ing transaksi lawas -> ngindari salah larep/delete)
       if (id === 'detailModal' || id === 'wizardModal') {
         tutupCtxMenu();
       }
@@ -3347,11 +3555,11 @@
         });
       }
     }
-    // Modal click outside to close — sakabèng ditutup liwat tutupModal (single source of truth)
+    // Modal click outside to close - sakabeng ditutup liwat tutupModal (single source of truth)
     document.querySelectorAll('.modal').forEach(modal => {
       modal.addEventListener('click', function(e) {
         if (e.target !== this) return;
-        // Guard: cart wizard isih ana isi → konfirmasi kapisan (nghindari isi cart ilang tanpa disadar)
+        // Guard: cart wizard isih ana isi -> konfirmasi kapisan (nghindari isi cart ilang tanpa disadar)
         if (this.id === 'wizardModal' && cart.length > 0) {
           tanyaKonfirmasi({
             title: 'Cart isih ana isi',
@@ -3366,7 +3574,7 @@
       });
     });
     // =============================================
-    // CLOUD SYNC — Google Sheets (Apps Script Web App)
+    // CLOUD SYNC - Google Sheets (Apps Script Web App)
     // Multi-device sync: push/pull transaksi via Google Sheets
     // =============================================
     const SYNC_URL_KEY='kopontren_sync_url', SYNC_TOKEN_KEY='kopontren_sync_token', SYNC_DEVICE_KEY='kopontren_sync_device', SYNC_LAST_KEY='kopontren_last_sync';
@@ -3425,13 +3633,13 @@
         if (main) main.textContent = 'Aktifkan Sync';
         return;
       }
-      if (mode === 'error') { status.textContent = '● Gagal'; status.style.color = 'var(--danger)'; }
+      if (mode === 'error') { status.textContent = 'x Gagal'; status.style.color = 'var(--danger)'; }
       else {
         const last = localStorage.getItem(SYNC_LAST_KEY);
-        if (last) { status.textContent = '● '+relTime(last); status.style.color = 'var(--success)'; }
-        else { status.textContent = '○ Belum sync'; status.style.color = 'var(--text-muted)'; }
+        if (last) { status.textContent = 'x '+relTime(last); status.style.color = 'var(--success)'; }
+        else { status.textContent = 'o Belum sync'; status.style.color = 'var(--text-muted)'; }
       }
-      if (desc) desc.textContent = 'Terhubung Google Sheets — data tersinkron otomatis tiap 5 menit.';
+      if (desc) desc.textContent = 'Terhubung Google Sheets - data tersinkron otomatis tiap 5 menit.';
       if (main) main.textContent = 'Sinkronisasi Sekarang';
     }
     function syncMainAction() { if (!isSyncEnabled()) bukaSettingSync(); else syncNow(); }
@@ -3463,9 +3671,9 @@
       try {
         const res = await fetch(url + '?token=' + encodeURIComponent(token));
         const data = await parseAppScript(res);
-        if (data && data.ok) showToast('Koneksi OK — '+(data.count||0)+' transaksi di cloud','success');
+        if (data && data.ok) showToast('Koneksi OK - '+(data.count||0)+' transaksi di cloud','success');
         else showToast('Gagal: '+((data&&data.error)||'respons tidak valid'),'error');
-      } catch(e) { showToast('Tidak bisa terhubung — cek URL / akses Web App','error'); }
+      } catch(e) { showToast('Tidak bisa terhubung - cek URL / akses Web App','error'); }
     }
 
     function rowToRecord(row) {
@@ -3514,7 +3722,7 @@
         localStorage.setItem(SYNC_LAST_KEY, new Date().toISOString());
         updateSyncStatusUI();
         renderHome(); updateTodayBar(); refreshOpenModals();
-        if (!silent) showToast('Tersinkron — '+merged.length+' transaksi','success');
+        if (!silent) showToast('Tersinkron - '+merged.length+' transaksi','success');
         return { ok:true, total:merged.length, newFromCloud, pushed:toPush.length };
       } catch(e) {
         _syncing=false;
@@ -3552,7 +3760,7 @@
       window.addEventListener('load', async () => {
         try {
           const regs = await navigator.serviceWorker.getRegistrations();
-          // Mung ngusir SW lawas (script URL dudu sw.js pungkasan) — SW anyar ditahan supaya ora di-unregister manika reload
+          // Mung ngusir SW lawas (script URL dudu sw.js pungkasan) - SW anyar ditahan supaya ora di-unregister manika reload
           for (const reg of regs) {
             const url = reg.active?.scriptURL || reg.installing?.scriptURL || reg.waiting?.scriptURL || '';
             if (url && !url.endsWith('/sw.js')) await reg.unregister();
@@ -3560,7 +3768,7 @@
         } catch(e) {}
         navigator.serviceWorker.register('./sw.js')
           .then(reg => {
-            // Item 18: detect update SW baru → tampilkan banner "Muat Ulang"
+            // Item 18: detect update SW baru -> tampilkan banner "Muat Ulang"
             reg.addEventListener('updatefound', () => {
               const newSW = reg.installing;
               newSW.addEventListener('statechange', () => {
