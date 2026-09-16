@@ -526,6 +526,12 @@
     .manual-name-input { flex: 1; min-width: 110px; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
     .manual-name-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
     .manual-name-input::placeholder { color: var(--text-muted); }
+    /* v31: jumlah di Ringkasan Pesanan - kolom terpisah, bisa dituk untuk ubah */
+    .qty-pill { flex: 0 0 auto; min-width: 1.9rem; text-align: center; padding: 0.15rem 0.45rem; border: 1.5px solid var(--border); border-radius: 999px; background: var(--surface-alt); color: var(--text); font-size: 0.72rem; font-weight: 800; cursor: pointer; font-family: 'Outfit', sans-serif; line-height: 1.2; }
+    .qty-pill:active { border-color: var(--primary); color: var(--primary); }
+    .qty-inline-input { width: 2.8rem; padding: 0.1rem 0.2rem; font-size: 0.78rem; font-weight: 800; font-family: 'Outfit', sans-serif; text-align: center; border: 1.5px solid var(--primary); border-radius: 6px; background: var(--input-bg); color: var(--text); }
+    .qty-inline-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+    .qty-price-hint { font-size: 0.65rem; color: var(--text-muted); flex: 0 0 auto; margin: 0 0.5rem 0 0.5rem; }
     .manual-price-row-inline label svg { width: 14px; height: 14px; vertical-align: middle; margin-right: 0.2rem; }
     .manual-price-row-inline input { flex: 1; min-width: 80px; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
     .manual-price-row input { flex: 1; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
@@ -2360,7 +2366,7 @@
     // v31: Bangun "Ringkasan Pesanan" + input nama/harga manual (dipakai renderWizardCart2 & onManualNameChange)
     function buildCartSummary() {
       if (cart.length === 0) return null;
-      let html = '<div class="cart-title">Ringkasan Pesanan</div>';
+      let html = '<div class="cart-title">Ringkasan Pesanan <span style="font-size:0.6rem;font-weight:400;color:var(--text-muted);">- ketuk jumlah untuk ubah</span></div>';
       let grand = 0;
       let hasManual = false;
       let manualHtml = '';
@@ -2375,7 +2381,7 @@
         const activeTier = p.tiers ? p.tiers.find(t => item.qty >= t.min && item.qty <= t.max) : null;
         const tierHint = (activeTier && p.tiers && p.tiers.length > 1)
           ? ` <span style="font-size:0.58rem;color:var(--primary);font-weight:700;">[${activeTier.max>=99999 ? activeTier.min+'+' : activeTier.min+'-'+activeTier.max} ${p.unit}]</span>` : '';
-        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${displayName} <span style="font-size:0.65rem;color:var(--text-muted);">x${item.qty} ${priceStr}</span>${tierHint}</div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
+        html += `<div class="cart-item"><div class="cart-item-name" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.icon} ${displayName}</div><button type="button" class="qty-pill" data-qid="${p.id}" onclick="editQty('${p.id}')" title="Ketuk untuk ubah jumlah">${item.qty}</button><span class="qty-price-hint">${priceStr}${tierHint}</span><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
         if (p.manualPrice) {
           hasManual = true;
           const currentVal = manualPrices[p.id] || '';
@@ -2429,6 +2435,35 @@
       if (!s) return;
       document.getElementById('wizardCartStep2').innerHTML = s.html;
       const wsv = document.getElementById('wizardStickyVal'); if (wsv) wsv.textContent = s.grand > 0 ? formatRupiah(s.grand) : 'Rp 0';
+    }
+    // v31: ketuk jumlah di Ringkasan Pesanan -> input inline (Enter/blur = simpan), 0 = item dipindah
+    function editQty(id) {
+      const el = document.querySelector('.qty-pill[data-qid="' + id + '"]');
+      if (!el) return;
+      const item = cart.find(c => c.productId === id);
+      const inp = document.createElement('input');
+      inp.type = 'text'; inp.inputMode = 'numeric'; inp.className = 'qty-inline-input';
+      inp.value = item ? item.qty : 1;
+      el.textContent = '';
+      el.appendChild(inp);
+      try { inp.focus(); inp.select(); } catch(e) {}
+      let done = false;
+      const commit = () => {
+        if (done) return; done = true;
+        const v = parseInt(String(inp.value).replace(/\D/g, ''), 10);
+        setCartQty(id, isNaN(v) ? (item ? item.qty : 1) : v);
+      };
+      inp.addEventListener('blur', commit);
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); inp.blur(); } });
+    }
+    function setCartQty(id, qty) {
+      const item = cart.find(c => c.productId === id);
+      if (!item) return;
+      const q = Math.min(99999, Math.max(0, parseInt(qty, 10) || 0));
+      if (q <= 0) cart = cart.filter(c => c.productId !== id);
+      else item.qty = q;
+      renderWizardCart2();
+      validateWizard();
     }
     function onManualPriceChange(productId, inputEl) {
       const raw = (typeof inputEl === 'string') ? inputEl : (inputEl && inputEl.value || '');
