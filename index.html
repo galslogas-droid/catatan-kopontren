@@ -523,6 +523,9 @@
     .prod-total { font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); font-size: 0.9rem; margin-left: auto; }
     .manual-price-row-inline { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; flex-wrap: wrap; }
     .manual-price-row-inline label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin: 0; white-space: nowrap; }
+    .manual-name-input { flex: 1; min-width: 110px; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
+    .manual-name-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+    .manual-name-input::placeholder { color: var(--text-muted); }
     .manual-price-row-inline label svg { width: 14px; height: 14px; vertical-align: middle; margin-right: 0.2rem; }
     .manual-price-row-inline input { flex: 1; min-width: 80px; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
     .manual-price-row input { flex: 1; padding: 0.4rem 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
@@ -1762,6 +1765,26 @@
       if (price > 0) manualPrices[productId] = price;
       else delete manualPrices[productId];
     }
+    // v31: Nama barang per item harga manual, key: productId (mis. "Barang Lain" diberi nama)
+    const manualNames = {};
+    function setManualName(productId, name) {
+      const n = String(name || '').trim();
+      if (n) manualNames[productId] = n;
+      else delete manualNames[productId];
+    }
+    // Nama tampil: pakai nama custom klo wis diisikake, mungkuh namane produk
+    function getDisplayName(p) {
+      if (p?.manualPrice && manualNames[p.id]) return manualNames[p.id];
+      return p.name;
+    }
+    // Sinkron nama manual saka input DOM - mangga dipanggil sadurunge validasi/simpan
+    function syncManualNamesFromDOM() {
+      document.querySelectorAll('#manualPriceInputs input[data-name-product-id]').forEach(input => {
+        const pid = input.dataset.nameProductId;
+        if (pid) setManualName(pid, input.value);
+      });
+    }
+    function escAttr(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
     // Sinkron harga manual saka input DOM menika state - mangga dipanggil sadurunge validasi/simpan supaya ora basi
     function syncManualPricesFromDOM() {
       document.querySelectorAll('#manualPriceInputs input[data-product-id]').forEach(input => {
@@ -2021,6 +2044,7 @@
                 _fabLongPressed = true;
                 detailId = null; isEditMode = false;
                 Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+                Object.keys(manualNames).forEach(k => delete manualNames[k]);
                 cart = preset.map(i => ({productId: i.productId, qty: i.qty}));
                 document.getElementById('wNext').onclick = wizardNext;
                 showWizardStep(1);
@@ -2201,6 +2225,7 @@
       cart = []; wizardStep = 1; wizardMetode = 'CASH';
       detailId = null; isEditMode = false;
       Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+      Object.keys(manualNames).forEach(k => delete manualNames[k]);
       document.getElementById('wNext').onclick = wizardNext;
       showWizardStep(1);
       document.getElementById('wizardModal').classList.add('show');
@@ -2211,6 +2236,7 @@
       wizardStep = 1; wizardMetode = 'CASH';
       detailId = null; isEditMode = false;
       Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+      Object.keys(manualNames).forEach(k => delete manualNames[k]);
       document.getElementById('wNext').onclick = wizardNext;
       showWizardStep(1);
       document.getElementById('wizardModal').classList.add('show');
@@ -2331,16 +2357,9 @@
       el.innerHTML = html;
       validateWizard();
     }
-    function renderWizardCart2() {
-      const el = document.getElementById('wizardCartStep2');
-      const manualRow = document.getElementById('manualPriceStep2');
-      const manualInputs = document.getElementById('manualPriceInputs');
-      if (cart.length === 0) {
-        el.innerHTML = '<div class="cart-empty">Keranjang kosong!</div>';
-        manualRow.style.display = 'none';
-        const wsv0 = document.getElementById('wizardStickyVal'); if (wsv0) wsv0.textContent = 'Rp 0'; // item 15
-        return;
-      }
+    // v31: Bangun "Ringkasan Pesanan" + input nama/harga manual (dipakai renderWizardCart2 & onManualNameChange)
+    function buildCartSummary() {
+      if (cart.length === 0) return null;
       let html = '<div class="cart-title">Ringkasan Pesanan</div>';
       let grand = 0;
       let hasManual = false;
@@ -2352,16 +2371,24 @@
         const sub = price * item.qty;
         grand += sub;
         const priceStr = p.manualPrice ? (manualPrices[p.id] ? formatRupiah(manualPrices[p.id]) : 'Belum disetel!') : formatRupiah(price);
+        const displayName = getDisplayName(p);
         const activeTier = p.tiers ? p.tiers.find(t => item.qty >= t.min && item.qty <= t.max) : null;
         const tierHint = (activeTier && p.tiers && p.tiers.length > 1)
           ? ` <span style="font-size:0.58rem;color:var(--primary);font-weight:700;">[${activeTier.max>=99999 ? activeTier.min+'+' : activeTier.min+'-'+activeTier.max} ${p.unit}]</span>` : '';
-        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${p.name} <span style="font-size:0.65rem;color:var(--text-muted);">x${item.qty} ${priceStr}</span>${tierHint}</div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
+        html += `<div class="cart-item"><div class="cart-item-name">${p.icon} ${displayName} <span style="font-size:0.65rem;color:var(--text-muted);">x${item.qty} ${priceStr}</span>${tierHint}</div><span class="cart-item-total">${sub>0?formatRupiah(sub):'-'}</span></div>`;
         if (p.manualPrice) {
           hasManual = true;
           const currentVal = manualPrices[p.id] || '';
           const displayVal = currentVal ? Number(currentVal).toLocaleString('id-ID') : '';
-          manualHtml += `<div class="manual-price-row-inline" style="margin-bottom:0.3rem;">
+          const nameVal = manualNames[p.id] || '';
+          manualHtml += `<div class="manual-price-row-inline" style="margin-bottom:0.15rem;">
             <label>${p.icon} ${p.name} (${p.unit}):</label>
+            <input type="text" class="manual-name-input" placeholder="Nama barang (opsional)" value="${escAttr(nameVal)}"
+              data-name-product-id="${p.id}"
+              oninput="onManualNameChange('${p.id}', this)"
+              autocomplete="off" autocapitalize="off">
+          </div>
+          <div class="manual-price-row-inline" style="margin-bottom:0.3rem;">
             <div class="rp-input-wrap">
               <span class="rp-prefix">Rp</span>
               <input type="text" inputmode="numeric" placeholder="0" value="${displayVal}"
@@ -2372,15 +2399,36 @@
         }
       });
       html += `<div class="cart-total-row"><span class="cart-total-label">Total</span><span class="cart-total-amount">${grand>0?formatRupiah(grand):'-'}</span></div>`;
-      el.innerHTML = html;
+      return {html, grand, hasManual, manualHtml};
+    }
+    function renderWizardCart2() {
+      const el = document.getElementById('wizardCartStep2');
+      const manualRow = document.getElementById('manualPriceStep2');
+      const manualInputs = document.getElementById('manualPriceInputs');
+      if (cart.length === 0) {
+        el.innerHTML = '<div class="cart-empty">Keranjang kosong!</div>';
+        manualRow.style.display = 'none';
+        const wsv0 = document.getElementById('wizardStickyVal'); if (wsv0) wsv0.textContent = 'Rp 0'; // item 15
+        return;
+      }
+      const s = buildCartSummary();
+      el.innerHTML = s.html;
       // Item 15: total sticky di bawah wizard step 2
-      const wsv = document.getElementById('wizardStickyVal'); if (wsv) wsv.textContent = grand > 0 ? formatRupiah(grand) : 'Rp 0';
-      if (hasManual) {
+      const wsv = document.getElementById('wizardStickyVal'); if (wsv) wsv.textContent = s.grand > 0 ? formatRupiah(s.grand) : 'Rp 0';
+      if (s.hasManual) {
         manualRow.style.display = 'block';
-        manualInputs.innerHTML = manualHtml;
+        manualInputs.innerHTML = s.manualHtml;
       } else {
         manualRow.style.display = 'none';
       }
+    }
+    // v31: input "Nama Barang" - update state + refresh ringkasan mung; input DOM ora disentuh supaya fokus aman
+    function onManualNameChange(productId, inputEl) {
+      setManualName(productId, inputEl ? inputEl.value : '');
+      const s = buildCartSummary();
+      if (!s) return;
+      document.getElementById('wizardCartStep2').innerHTML = s.html;
+      const wsv = document.getElementById('wizardStickyVal'); if (wsv) wsv.textContent = s.grand > 0 ? formatRupiah(s.grand) : 'Rp 0';
     }
     function onManualPriceChange(productId, inputEl) {
       const raw = (typeof inputEl === 'string') ? inputEl : (inputEl && inputEl.value || '');
@@ -2436,10 +2484,11 @@
       btn.classList.add('loading');
       btn.disabled = true;
       try {
+        syncManualNamesFromDOM(); // v31: ambil nama barang saka input DOM sadurunge simpan
         const items = cart.map(item => {
           const p = products[item.productId];
           const unitPrice = getEffectivePrice(p, item.qty);
-          return { productId: item.productId, name: p.name, qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty };
+          return { productId: item.productId, name: getDisplayName(p), qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty };
         });
         const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
         const tanggal = document.getElementById('wTanggal').value;
@@ -2540,12 +2589,14 @@
       isEditMode = true;
       cart = t.items ? t.items.map(i => ({productId: i.productId, qty: i.qty})) : [];
       wizardStep = 2; wizardMetode = t.metode || 'CASH';
-      // Populate manualPrices from saved transaction
+      // Populate manualPrices + manualNames saka transaksi sing disimpen
       Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+      Object.keys(manualNames).forEach(k => delete manualNames[k]);
       if (t.items) {
         t.items.forEach(i => {
           const p = products[i.productId];
           if (p?.manualPrice && i.hargaSatuan) setManualPrice(i.productId, i.hargaSatuan);
+          if (p?.manualPrice && i.name && String(i.name).trim() && String(i.name).trim() !== p.name) setManualName(i.productId, i.name);
         });
       }
       document.getElementById('wNama').value = t.pembeli || '';
@@ -2593,10 +2644,11 @@
         const pid = input.dataset.productId;
         if (pid) setManualPrice(pid, val);
       });
+      syncManualNamesFromDOM(); // v31: ambil nama barang saka input DOM
       const items = cart.map(item => {
         const p = products[item.productId];
         const unitPrice = getEffectivePrice(p, item.qty);
-        return {productId: item.productId, name: p.name, qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty};
+        return {productId: item.productId, name: getDisplayName(p), qty: item.qty, unit: p.unit, hargaSatuan: unitPrice, subtotal: unitPrice * item.qty};
       });
       const totalHarga = items.reduce((s,i) => s + i.subtotal, 0);
       data[idx] = {...data[idx], items, totalHarga,
@@ -3513,6 +3565,7 @@
         detailId = null; isEditMode = false;
         cart = [];
         Object.keys(manualPrices).forEach(k => delete manualPrices[k]);
+        Object.keys(manualNames).forEach(k => delete manualNames[k]);
         document.getElementById('wNext').onclick = wizardNext;
         document.getElementById('wNext').textContent = 'Simpan';
       }
