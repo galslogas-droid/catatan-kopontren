@@ -1,7 +1,7 @@
 {
-  "name": "Catatan Kopontren - Gus Lim",
-  "short_name": "Kopontren",
-  "description": "Buku Catatan Penjualan Kopontren Khusus Gus Lim",
+  "name": "Layang Kas - Gus Lim",
+  "short_name": "Layang Kas",
+  "description": "Buku Catatan Penjualan Layang Kas Khusus Gus Lim",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -39,6 +39,30 @@
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

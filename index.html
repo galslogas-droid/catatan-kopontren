@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Catatan Penjualan Kopontren | Gus Lim</title>
+  <title>Layang Kas | Gus Lim</title>
   <meta name="theme-color" content="#2563EB">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Kopontren">
+  <meta name="apple-mobile-web-app-title" content="Layang Kas">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="description" content="Buku catatan penjualan Kopontren khusus Gus Lim - catat, pantau, dan arsipkan transaksi.">
+  <meta name="description" content="Buku catatan penjualan Layang Kas khusus Gus Lim - catat, pantau, dan arsipkan transaksi.">
   <meta name="format-detection" content="telephone=no">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png">
   <link rel="icon" type="image/svg+xml" href="icon-192.svg">
+  <link rel="icon" src="./icon-512-maskable.png" sizes="512x512" purpose="maskable">
+  <link rel="icon" src="./icon-192-maskable.png" sizes="192x192" purpose="maskable">
   <!-- Tema applied sadurunge render - ngindari flash light theme manika user dark mode -->
   <script>try{if(localStorage.getItem('kopontren_theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1189,7 +1191,7 @@
           <img class="brand-logo" src="./icon-192.svg" alt="Logo Al Ittihad" />
         </div>
         <div>
-          <h1>KOPONTREN AL ITTIHAD</h1>
+          <h1>LAYANG KAS</h1>
           <div class="tagline">Catatan Penjualan | Gus Lim</div>
         </div>
       </div>
@@ -1949,7 +1951,7 @@
         const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url; a.download = 'backup_kopontren_' + today + '.json';
+        a.href = url; a.download = 'backup_layangkas_' + today + '.json';
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
         URL.revokeObjectURL(url);
         try { localStorage.setItem(AUTO_BACKUP_KEY, today); localStorage.setItem(BACKUP_KEY, new Date().toISOString()); } catch(e) {}
@@ -3217,7 +3219,7 @@
       const blob = new Blob([csv], {type: 'text/csv'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'kopontren_' + getTodayStr() + '.csv';
+      a.href = url; a.download = 'layangkas_' + getTodayStr() + '.csv';
       a.click(); URL.revokeObjectURL(url);
       tutupExport();
       showToast('File CSV berhasil diunduh', 'success');
@@ -3228,7 +3230,7 @@
       const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'backup_kopontren_' + getTodayStr() + '.json';
+      a.href = url; a.download = 'backup_layangkas_' + getTodayStr() + '.json';
       a.click(); URL.revokeObjectURL(url);
       tutupExport();
       localStorage.setItem(BACKUP_KEY, new Date().toISOString());
@@ -3242,7 +3244,7 @@
       const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'backup_kopontren_' + getTodayStr() + '.json';
+      a.href = url; a.download = 'backup_layangkas_' + getTodayStr() + '.json';
       a.click(); URL.revokeObjectURL(url);
       localStorage.setItem(BACKUP_KEY, new Date().toISOString());
       updateLastBackup();
@@ -3415,7 +3417,7 @@
       const rpShort = (n) => Math.round(Number(n) || 0).toLocaleString('id-ID');
 
       // Header - plain ASCII, 100% aman di semua versi WA
-      let msg = `*LAPORAN PENJUALAN KOPONTREN*\n`;
+      let msg = `*LAPORAN PENJUALAN LAYANG KAS*\n`;
       msg += `Al Ittihad - ${today}\n`;
       msg += `==============================\n\n`;
       msg += `*BELUM DILAPORKAN* (${pending.length} transaksi)\n`;

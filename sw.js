@@ -1,5 +1,5 @@
 // Service Worker Cache Offline untuk Kopontren Gus Lim
-const CACHE_NAME = 'kopontren-v29';
+const CACHE_NAME = 'kopontren-v31';
 // PENTING: mung aset sing DI-DEPLOY (ora ing .gitignore) sing kena di-cache.
 const ASSETS = [
   './',
@@ -7,7 +7,11 @@ const ASSETS = [
   './manifest.json',
   './icon-192.svg',
   './icon-512.svg',
-  './icon-180.png'
+  './icon-180.png',
+  './icon-192.png',
+  './icon-192-maskable.png',
+  './icon-512.png',
+  './icon-512-maskable.png'
 ];
 
 self.addEventListener('install', (e) => {
