@@ -1,12 +1,10 @@
-// Service Worker Cache Offline untuk Kopontren Gus Lim
-const CACHE_NAME = 'kopontren-v31';
+// Service Worker Cache Offline untuk Layang Kas (Kopontren) Gus Lim
+const CACHE_NAME = 'kopontren-v32';
 // PENTING: mung aset sing DI-DEPLOY (ora ing .gitignore) sing kena di-cache.
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icon-192.svg',
-  './icon-512.svg',
   './icon-180.png',
   './icon-192.png',
   './icon-192-maskable.png',
