@@ -1045,6 +1045,23 @@
     .net-status.offline .dot { background: #F87171; box-shadow: 0 0 0 3px rgba(248,113,113,0.22); }
     @media (max-width: 370px) { .net-status .net-label { display: none; } .net-status { padding: 0.22rem 0.4rem; } }
 
+    /* Indikator status sync Sheets (auto-push + retry queue) */
+    .sync-status {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.6rem; font-weight: 700;
+      padding: 0.22rem 0.48rem; border-radius: 999px;
+      background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);
+      white-space: nowrap;
+    }
+    .sync-status .dot { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: #94A3B8; }
+    .sync-status[data-state="synced"] .dot { background: #4ADE80; }
+    .sync-status[data-state="syncing"] .dot { background: #FCD34D; animation: syncPulse 1s infinite; }
+    .sync-status[data-state="pending"] .dot { background: #FB923C; }
+    .sync-status[data-state="failed"] .dot { background: #F87171; }
+    .sync-status[data-state="off"] .dot { background: #94A3B8; }
+    @keyframes syncPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @media (max-width: 370px) { .sync-status .sync-label { display: none; } .sync-status { padding: 0.22rem 0.4rem; } }
+
     /* Banner pengingat backup / data (item 1) */
     .data-banner {
       margin: 0.6rem 0.85rem 0; padding: 0.65rem 0.8rem;
@@ -1197,6 +1214,7 @@
       </div>
       <div class="header-actions">
         <span class="net-status" id="netStatus" title="Status koneksi"><span class="dot"></span><span class="net-label">Online</span></span>
+        <span class="sync-status" id="syncStatusBadge" data-state="off" title="Status sync ke Google Sheets"><span class="dot"></span><span class="sync-label">Sync Off</span></span>
         <button class="icon-btn" onclick="bukaRiwayatCari()" title="Cari transaksi" aria-label="Cari transaksi">
           <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         </button>
@@ -1498,6 +1516,8 @@
           <span id="syncStatus" style="font-size:0.7rem;font-weight:700;color:var(--text-muted);">Belum aktif</span>
         </div>
         <div id="syncDesc" style="margin-top:0.3rem;font-size:0.7rem;color:var(--text-muted);line-height:1.45;">Aktifkan untuk sinkronkan data antar device (HP &amp; laptop) via Google Sheets.</div>
+        <div id="syncQueueInfo" style="margin-top:0.4rem;font-size:0.68rem;color:var(--text-muted);"></div>
+        <button type="button" id="syncRetryBtn" onclick="syncRetryQueue()" style="display:none;margin-top:0.5rem;width:100%;min-height:36px;background:var(--surface-alt);color:var(--text);border:1px solid var(--border);border-radius:8px;font-weight:700;font-size:0.75rem;cursor:pointer;">Coba Kirim Ulang Queue</button>
         <div style="display:flex;gap:0.5rem;margin-top:0.6rem;">
           <button type="button" id="syncMainBtn" onclick="syncMainAction()" style="flex:1.4;min-height:42px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.8rem;cursor:pointer;">Aktifkan Sync</button>
           <button type="button" onclick="bukaSettingSync()" style="flex:1;min-height:42px;background:var(--surface-alt);color:var(--text);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:0.8rem;cursor:pointer;">Pengaturan</button>
@@ -2025,6 +2045,9 @@
       autoSyncNow();
       startPeriodicSync();
       updateSyncStatusUI();
+      // AUTO-PUSH: proses queue tertunda + muat indikator sync di header
+      syncQueueFlush();
+      updateSyncIndicator();
       // Event delegation for tx cards
       const rl = document.getElementById('riwayatList');
       const rcl = document.getElementById('recentList');
@@ -2091,6 +2114,12 @@
       updateNetStatus();
       window.addEventListener('online', updateNetStatus);
       window.addEventListener('offline', updateNetStatus);
+      // AUTO-PUSH: online kembali -> flush queue + sinkron penuh (silent)
+      window.addEventListener('online', async () => {
+        syncLog('online kembali, proses queue');
+        await syncQueueFlush();
+        syncNow(true);
+      });
       // Item 26: tangkap error runtime + unhandled rejection
       window.addEventListener('error', e => captureError(e.message, e.filename, e.lineno, e.colno, e.error));
       window.addEventListener('unhandledrejection', e => captureError('Unhandled rejection: ' + String(e.reason && e.reason.message || e.reason), '', 0, 0, e.reason));
@@ -2545,7 +2574,7 @@
         const data = loadData();
         data.push(record);
         saveData(data);
-        if (isSyncEnabled()) syncPush(record);
+        syncPushOrQueue(record); // AUTO-PUSH: kirim langsung / antre kalau gagal
         try {
           localStorage.setItem('kopontren_last_cart', JSON.stringify(cart));
           localStorage.setItem(DEF_METODE_KEY, wizardMetode); // item 11: ingat metode terakhir
@@ -2610,7 +2639,7 @@
         data[idx].jamSetor = null;
       }
       saveData(data);
-      if (isSyncEnabled()) syncPush(data[idx]);
+      syncPushOrQueue(data[idx]); // AUTO-PUSH: tandai lapor -> kirim / antre
       tutupModal('detailModal');
       renderHome(); updateTodayBar();
       refreshOpenModals();
@@ -2704,7 +2733,7 @@
       if (_btnU) { _btnU.disabled = true; _btnU.classList.add('loading'); }
       try {
         saveData(data);
-        if (isSyncEnabled()) syncPush(data[idx]);
+        syncPushOrQueue(data[idx]); // AUTO-PUSH: edit -> kirim / antre
         tutupModal('wizardModal');
         renderHome();
         updateTodayBar();
@@ -2724,7 +2753,7 @@
       const idx = data.indexOf(t);
       data.splice(idx, 1);
       saveData(data);
-      if (isSyncEnabled()) syncDelete(t.id);
+      syncDeleteOrQueue(t.id); // AUTO-PUSH: hapus -> kirim / antre
       haptic([50, 20, 50]);
       detailId = null;
       tutupModal('detailModal');
@@ -2733,7 +2762,7 @@
       showToast(`${newName} dihapus`, 'info', () => {
         data.splice(Math.min(idx, data.length), 0, t);
         saveData(data);
-        if (isSyncEnabled()) syncPush(t);
+        syncPushOrQueue(t); // AUTO-PUSH: undo hapus -> kirim / antre
         renderHome(); updateTodayBar();
         showToast('Dibatalkan, transaksi dikembalikan', 'success');
       });
@@ -3696,6 +3725,7 @@
       try { return JSON.parse(text); } catch(_) { return null; }
     }
     function syncPush(record) {
+      syncLog('syncPush kepanggile - id=' + (record ? record.id : 'null'));
       if (!isSyncEnabled() || !record) return Promise.resolve({ ok:false });
       const c = getSyncConfig();
       const payload = { action:'upsert', token:c.token, device:c.device, record:{
@@ -3706,13 +3736,144 @@
         status:record.status||'pending', updatedAt:new Date().toISOString(), deleted:!!record.deleted
       }};
       return fetch(c.url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload) })
-        .then(parseAppScript).catch(e => ({ ok:false, error:String(e) }));
+        .then(parseAppScript)
+        .then(data => { syncLog('syncPush rampung - ok=' + !!(data && data.ok)); return data; })
+        .catch(e => { syncLog('syncPush error - ' + String(e)); return { ok:false, error:String(e) }; });
     }
     function syncDelete(id) {
+      syncLog('syncDelete kepanggile - id=' + id);
       if (!isSyncEnabled() || !id) return Promise.resolve({ ok:false });
       const c = getSyncConfig();
       return fetch(c.url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify({ action:'delete', token:c.token, device:c.device, id }) })
-        .then(parseAppScript).catch(e => ({ ok:false, error:String(e) }));
+        .then(parseAppScript)
+        .then(data => { syncLog('syncDelete rampung - ok=' + !!(data && data.ok)); return data; })
+        .catch(e => { syncLog('syncDelete error - ' + String(e)); return { ok:false, error:String(e) }; });
+    }
+    // =====================================================
+    // AUTO-PUSH + RETRY QUEUE (push yang gagal/offline)
+    // =====================================================
+    const PUSH_QUEUE_KEY = 'kopontren_push_queue', SYNC_PUSH_OK_KEY = 'kopontren_last_push_ok';
+    window.__DEBUG_SYNC = false; // setke true saka console manawa mahu log [Sync]
+    // Log debug kanthi prefix [Sync] (mung nalika __DEBUG_SYNC aktif)
+    function syncLog() { if (window.__DEBUG_SYNC) { try { console.log.apply(console, ['[Sync]'].concat([].slice.call(arguments))); } catch(e) {} } }
+    // Baca queue push (localStorage, aman)
+    function syncQueueGet() {
+      try { const q = JSON.parse(localStorage.getItem(PUSH_QUEUE_KEY) || '[]'); return Array.isArray(q) ? q : []; }
+      catch(e) { return []; }
+    }
+    // Simpen queue push
+    function syncQueueSave(q) { try { localStorage.setItem(PUSH_QUEUE_KEY, JSON.stringify(q)); } catch(e) {} }
+    // Tambah item menika queue (dedup: id + action sing padha -> ganti item lawas)
+    function syncQueueAdd(action, id, record) {
+      const q = syncQueueGet();
+      const idx = q.findIndex(x => x.id === id && x.action === action);
+      const item = { action: action, id: id, record: record, ts: Date.now() };
+      if (idx >= 0) q[idx] = item; else q.push(item);
+      syncQueueSave(q);
+      syncLog('queue +' + action + ' id=' + id + ' (menunggu ' + q.length + ')');
+      updateSyncIndicator('pending');
+    }
+    // Buwang queue: coba kirim ulang item sing keprungu (mung nalika online)
+    async function syncQueueFlush() {
+      if (!isSyncEnabled()) { updateSyncIndicator(); return; }
+      const q = syncQueueGet();
+      if (!q.length) { updateSyncIndicator(); return; }
+      if (!navigator.onLine) { syncLog('queue keprungu - device offline'); updateSyncIndicator('pending'); return; }
+      syncLog('nyedhiyakna queue (' + q.length + ' item)');
+      const remaining = [];
+      for (const item of q) {
+        try {
+          let res;
+          if (item.action === 'delete') res = await syncDelete(item.id);
+          else res = await syncPush(item.record);
+          if (!res || !res.ok) throw new Error((res && res.error) || 'push failed');
+        } catch(e) {
+          remaining.push(item);
+          syncLog('item queue gagal: ' + item.action + ' ' + item.id + ' - ' + String(e));
+        }
+      }
+      syncQueueSave(remaining);
+      if (!remaining.length) { try { localStorage.setItem(SYNC_PUSH_OK_KEY, new Date().toISOString()); } catch(e) {} }
+      syncLog('queue rampung - ketunggalan ' + remaining.length);
+      updateSyncIndicator(remaining.length ? 'failed' : 'synced');
+    }
+    // AUTO-PUSH: kirim langsung saat online, fallback ke queue saat gagal/offline
+    async function syncPushOrQueue(record) {
+      if (!isSyncEnabled() || !record) return;
+      if (!navigator.onLine) { syncLog('offline - ' + record.id + ' masuk queue'); syncQueueAdd('upsert', record.id, record); return; }
+      updateSyncIndicator('syncing');
+      try {
+        const res = await syncPush(record);
+        if (!res || !res.ok) throw new Error((res && res.error) || 'push failed');
+        try { localStorage.setItem(SYNC_PUSH_OK_KEY, new Date().toISOString()); } catch(e) {}
+        updateSyncIndicator('synced');
+      } catch(e) {
+        syncLog('push gagal - masuk queue: ' + record.id + ' - ' + String(e));
+        syncQueueAdd('upsert', record.id, record);
+        updateSyncIndicator('failed');
+      }
+    }
+    // AUTO-DELETE: kirim langsung saat online, fallback ke queue saat gagal/offline
+    async function syncDeleteOrQueue(id) {
+      if (!isSyncEnabled() || !id) return;
+      if (!navigator.onLine) { syncLog('offline - delete ' + id + ' masuk queue'); syncQueueAdd('delete', id, null); return; }
+      updateSyncIndicator('syncing');
+      try {
+        const res = await syncDelete(id);
+        if (!res || !res.ok) throw new Error((res && res.error) || 'delete failed');
+        try { localStorage.setItem(SYNC_PUSH_OK_KEY, new Date().toISOString()); } catch(e) {}
+        updateSyncIndicator('synced');
+      } catch(e) {
+        syncLog('delete gagal - masuk queue: ' + id + ' - ' + String(e));
+        syncQueueAdd('delete', id, null);
+        updateSyncIndicator('failed');
+      }
+    }
+    // Indikator kecil di header (dekat indikator Online): synced/syncing/pending/failed/off
+    function updateSyncIndicator(state) {
+      const el = document.getElementById('syncStatusBadge');
+      if (el) {
+        const enabled = isSyncEnabled();
+        const q = syncQueueGet();
+        let s = state;
+        if (!enabled) s = 'off';
+        else if (q.length > 0 && !state) s = 'pending';
+        el.dataset.state = s || 'synced';
+        const label = el.querySelector('.sync-label');
+        if (label) {
+          if (s === 'off') label.textContent = 'Sync Off';
+          else if (s === 'syncing') label.textContent = 'Menyinkron...';
+          else if (s === 'pending') label.textContent = 'Pending ' + q.length;
+          else if (s === 'failed') label.textContent = 'Gagal';
+          else label.textContent = 'Tersinkron';
+        }
+      }
+      syncUpdateMenuSyncUI();
+    }
+    // Info queue di menu "Lainnya" (jumlah pending + waktu push terakhir sukses)
+    function syncUpdateMenuSyncUI() {
+      const info = document.getElementById('syncQueueInfo');
+      const retryBtn = document.getElementById('syncRetryBtn');
+      if (!info && !retryBtn) return;
+      if (!isSyncEnabled()) {
+        if (info) info.textContent = 'Sync belum aktif.';
+        if (retryBtn) retryBtn.style.display = 'none';
+        return;
+      }
+      const q = syncQueueGet();
+      if (info) {
+        let last = '';
+        try { last = localStorage.getItem(SYNC_PUSH_OK_KEY) || ''; } catch(e) {}
+        info.textContent = (q.length === 0 ? 'Semua data sudah tersinkron.' : q.length + ' data menunggu dikirim ke Sheets.')
+          + (last ? ' Push terakhir: ' + relTime(last) : '');
+      }
+      if (retryBtn) retryBtn.style.display = q.length > 0 ? 'block' : 'none';
+    }
+    // Tombol "Coba Kirim Ulang Queue" di menu Lainnya
+    function syncRetryQueue() {
+      if (!syncQueueGet().length) return;
+      if (!navigator.onLine) { showToast('Tunggu - device masih offline', 'error'); return; }
+      syncQueueFlush().then(() => syncNow());
     }
     function updateSyncStatusUI(mode) {
       const status = document.getElementById('syncStatus');
@@ -3720,6 +3881,7 @@
       const main = document.getElementById('syncMainBtn');
       if (!status) return;
       const enabled = isSyncEnabled();
+      updateSyncIndicator(); // selarasakna badge header + info queue (mung ngandhani state, ora nengkuh state mbiyen)
       if (!enabled) {
         status.textContent = 'Belum aktif'; status.style.color = 'var(--text-muted)';
         if (desc) desc.textContent = 'Aktifkan untuk sinkronkan data antar device (HP & laptop) via Google Sheets.';
@@ -3811,9 +3973,15 @@
         const merged = Array.from(map.values());
         localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
         _dataCache = merged; _dataCacheDirty = false;
-        for (const t of toPush) await syncPush(t);
+        // AUTO-PUSH: sing gagal dipanggu ing queue (di-coba maneh wektu online/kembesan)
+        for (const t of toPush) {
+          let r;
+          try { r = await syncPush(t); } catch(e) { r = { ok:false, error:String(e) }; }
+          if (!r || !r.ok) syncQueueAdd('upsert', t.id, t);
+        }
         localStorage.setItem(SYNC_LAST_KEY, new Date().toISOString());
         updateSyncStatusUI();
+        updateSyncIndicator();
         renderHome(); updateTodayBar(); refreshOpenModals();
         if (!silent) showToast('Tersinkron - '+merged.length+' transaksi','success');
         return { ok:true, total:merged.length, newFromCloud, pushed:toPush.length };
@@ -3821,6 +3989,7 @@
         _syncing=false;
         if (!silent) showToast('Sync error: '+String(e),'error');
         updateSyncStatusUI('error');
+        updateSyncIndicator('failed');
         return { ok:false, error:String(e) };
       }
     }
@@ -3829,7 +3998,7 @@
     }
     function startPeriodicSync() {
       if (window.__syncTimer) return;
-      window.__syncTimer = setInterval(() => { if (isSyncEnabled() && document.visibilityState==='visible') syncNow(true); }, 5*60*1000);
+      window.__syncTimer = setInterval(() => { if (isSyncEnabled() && document.visibilityState==='visible') { syncQueueFlush(); syncNow(true); } }, 5*60*1000);
     }
     function relTime(iso) {
       if (!iso) return '';
