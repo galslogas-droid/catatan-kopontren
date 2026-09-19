@@ -2041,9 +2041,9 @@
       renderHome();
       setDefaultDateTime();
       updateLastBackup();
-      // CLOUD SYNC: auto-pull saat buka + timer berkala + muat status
+      // CLOUD SYNC: auto-pull saat buka + muat status (timer berkala ditiadakan -
+      // sync terjadi tiap ada simpan/edit/hapus lewat syncPushOrQueue/syncDeleteOrQueue)
       autoSyncNow();
-      startPeriodicSync();
       updateSyncStatusUI();
       // AUTO-PUSH: proses queue tertunda + muat indikator sync di header
       syncQueueFlush();
@@ -3807,6 +3807,7 @@
         if (!res || !res.ok) throw new Error((res && res.error) || 'push failed');
         try { localStorage.setItem(SYNC_PUSH_OK_KEY, new Date().toISOString()); } catch(e) {}
         updateSyncIndicator('synced');
+        if (syncQueueGet().length) syncQueueFlush(); // backlog antrian ikut dikirim (pengganti timer berkala)
       } catch(e) {
         syncLog('push gagal - masuk queue: ' + record.id + ' - ' + String(e));
         syncQueueAdd('upsert', record.id, record);
@@ -3823,6 +3824,7 @@
         if (!res || !res.ok) throw new Error((res && res.error) || 'delete failed');
         try { localStorage.setItem(SYNC_PUSH_OK_KEY, new Date().toISOString()); } catch(e) {}
         updateSyncIndicator('synced');
+        if (syncQueueGet().length) syncQueueFlush(); // backlog antrian ikut dikirim (pengganti timer berkala)
       } catch(e) {
         syncLog('delete gagal - masuk queue: ' + id + ' - ' + String(e));
         syncQueueAdd('delete', id, null);
@@ -3894,7 +3896,7 @@
         if (last) { status.textContent = 'x '+relTime(last); status.style.color = 'var(--success)'; }
         else { status.textContent = 'o Belum sync'; status.style.color = 'var(--text-muted)'; }
       }
-      if (desc) desc.textContent = 'Terhubung Google Sheets - data tersinkron otomatis tiap 5 menit.';
+      if (desc) desc.textContent = 'Terhubung Google Sheets - data terkirim otomatis setiap simpan/edit/hapus.';
       if (main) main.textContent = 'Sinkronisasi Sekarang';
     }
     function syncMainAction() { if (!isSyncEnabled()) bukaSettingSync(); else syncNow(); }
@@ -3995,10 +3997,6 @@
     }
     function autoSyncNow() {
       try { const last = localStorage.getItem(SYNC_LAST_KEY); if (isSyncEnabled() && (!last || Date.now()-Date.parse(last) > 5*60*1000)) syncNow(true); } catch(e) {}
-    }
-    function startPeriodicSync() {
-      if (window.__syncTimer) return;
-      window.__syncTimer = setInterval(() => { if (isSyncEnabled() && document.visibilityState==='visible') { syncQueueFlush(); syncNow(true); } }, 5*60*1000);
     }
     function relTime(iso) {
       if (!iso) return '';
